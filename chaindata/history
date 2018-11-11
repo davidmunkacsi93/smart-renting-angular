@@ -1,3 +1,0 @@
-mist
-miner.start(1)
-miner.stop()
