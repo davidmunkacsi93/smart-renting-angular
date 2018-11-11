@@ -1,0 +1,72 @@
+=============== Nov 11, 2018 (CET) ===============
+14:27:08.629779 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:27:08.637786 db@open opening
+14:27:08.640784 version@stat F·[] S·0B[] Sc·[]
+14:27:08.643849 db@janitor F·2 G·0
+14:27:08.643849 db@open done T·6.0629ms
+14:38:41.691682 db@close closing
+14:38:41.692682 db@close done T·999.8µs
+=============== Nov 11, 2018 (CET) ===============
+14:40:10.436583 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:40:10.439581 version@stat F·[] S·0B[] Sc·[]
+14:40:10.439581 db@open opening
+14:40:10.440581 journal@recovery F·1
+14:40:10.443579 journal@recovery recovering @1
+14:40:10.464598 memdb@flush created L0@2 N·3400 S·83KiB "n:\x00..ing,v1375":"version,v1"
+14:40:10.468597 version@stat F·[1] S·83KiB[83KiB] Sc·[0.25]
+14:40:10.478693 db@janitor F·3 G·0
+14:40:10.478693 db@open done T·39.1113ms
+14:46:09.682155 db@close closing
+14:46:09.690156 db@close done T·8.0004ms
+=============== Nov 11, 2018 (CET) ===============
+14:46:23.163583 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:46:23.164582 version@stat F·[1] S·83KiB[83KiB] Sc·[0.25]
+14:46:23.164582 db@open opening
+14:46:23.164582 journal@recovery F·1
+14:46:23.167580 journal@recovery recovering @3
+14:46:23.179569 memdb@flush created L0@5 N·1465 S·45KiB "n:\x00..ver,v4806":"n:\xff..ong,v3524"
+14:46:23.182568 version@stat F·[2] S·128KiB[128KiB] Sc·[0.50]
+14:46:23.194618 db@janitor F·4 G·0
+14:46:23.194618 db@open done T·30.0359ms
+14:46:23.205611 table@compaction L0·2 -> L1·0 S·128KiB Q·4867
+14:46:23.223600 table@build created L1@8 N·2605 S·93KiB "n:\x00..ing,v1375":"version,v1"
+14:46:23.223600 version@stat F·[0 1] S·93KiB[0B 93KiB] Sc·[0.00 0.00]
+14:46:23.225599 table@compaction committed F-1 S-34KiB Ke·0 D·2260 T·19.9875ms
+14:46:23.225599 table@remove removed @5
+14:46:23.226597 table@remove removed @2
+14:46:59.763109 db@close closing
+14:46:59.770107 db@close done T·6.9972ms
+=============== Nov 11, 2018 (CET) ===============
+14:47:56.324203 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:47:56.325202 version@stat F·[0 1] S·93KiB[0B 93KiB] Sc·[0.00 0.00]
+14:47:56.325202 db@open opening
+14:47:56.325202 journal@recovery F·1
+14:47:56.327202 journal@recovery recovering @6
+14:47:56.332198 memdb@flush created L0@9 N·285 S·11KiB "n:\t..ing,v4920":"n:\xff..ong,v5074"
+14:47:56.334198 version@stat F·[1 1] S·104KiB[11KiB 93KiB] Sc·[0.25 0.00]
+14:47:56.346189 db@janitor F·4 G·0
+14:47:56.346189 db@open done T·20.987ms
+14:47:56.352186 table@compaction L0·1 -> L1·1 S·104KiB Q·5153
+14:47:56.360180 table@build created L1@12 N·2831 S·100KiB "n:\x00..ing,v1375":"version,v1"
+14:47:56.360180 version@stat F·[0 1] S·100KiB[0B 100KiB] Sc·[0.00 0.00]
+14:47:56.366177 table@compaction committed F-1 S-3KiB Ke·0 D·59 T·13.9918ms
+14:47:56.366177 table@remove removed @9
+14:47:56.366177 table@remove removed @8
+14:48:02.206502 db@close closing
+14:48:02.217495 db@close done T·10.9926ms
+=============== Nov 11, 2018 (CET) ===============
+14:48:19.048971 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:48:19.049970 version@stat F·[0 1] S·100KiB[0B 100KiB] Sc·[0.00 0.00]
+14:48:19.049970 db@open opening
+14:48:19.049970 journal@recovery F·1
+14:48:19.052968 journal@recovery recovering @10
+14:48:19.064969 memdb@flush created L0@13 N·46 S·1KiB "n:s..ing,v5197":"n:\xf5..ong,v5158"
+14:48:19.067963 version@stat F·[1 1] S·102KiB[1KiB 100KiB] Sc·[0.25 0.00]
+14:48:19.087002 db@janitor F·4 G·0
+14:48:19.087002 db@open done T·37.0312ms
+14:48:19.105987 table@compaction L0·1 -> L1·1 S·102KiB Q·5200
+14:48:19.120978 table@build created L1@16 N·2863 S·101KiB "n:\x00..ing,v1375":"version,v1"
+14:48:19.120978 version@stat F·[0 1] S·101KiB[0B 101KiB] Sc·[0.00 0.00]
+14:48:19.122976 table@compaction committed F-1 S-731B Ke·0 D·14 T·16.9897ms
+14:48:19.122976 table@remove removed @13
+14:48:19.122976 table@remove removed @12
