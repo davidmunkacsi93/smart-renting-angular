@@ -1,0 +1,21 @@
+version: "3"
+services:
+  eth-bootnode:
+    hostname: eth-bootnode
+    environment:
+      - nodekeyhex=cd9ac2d41a1ca0c282919c76d4388a5f413645e70f73d27960c310e3672c3c0f
+      #enode:29ad21e141bc71addf0aea44773b1ab26e8c5178dc6668e54dd99544e9cd92e31db07ef133d486de77d89dab9a952ba8d8bb35f20b250aad82b830ae9a6b32b0
+    build:
+      context: ./bootnode
+    ports:
+      - 30301:30301/udp
+    networks:
+      chainnet:
+        ipv4_address: 192.168.0.12
+
+networks:
+  chainnet:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 192.168.0.0/24

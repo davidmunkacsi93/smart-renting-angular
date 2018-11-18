@@ -1,0 +1,20 @@
+FROM ubuntu:xenial
+
+RUN apt-get update && apt-get install -y wget software-properties-common && rm -rf /var/lib/apt/lists/*
+
+WORKDIR "/root"
+
+# Adding Ethereum repository.
+RUN add-apt-repository -y ppa:ethereum/ethereum
+
+# Installing Etheruem on the container.
+ARG binary
+RUN apt-get update && apt-get install -y ethereum
+
+# Creating a boot node. Node key needs to be fixed, so other nodes can be bootstrapped to the network.
+ENV nodekeyhex=""
+CMD exec bootnode -nodekeyhex $nodekeyhex
+
+# Exporting ports from our container.
+EXPOSE 30301/udp
+EXPOSE 30303/udp
