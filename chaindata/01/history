@@ -1,0 +1,5 @@
+admin.nodeInfo.enode
+gdfg
+admin.addPeer("enode://5e18b1f3406b01669efcc6041c254d9a3e28737a9832e3029143b3350998fbbcc9310677b7040a1bc15a11d06ddd4b88671a20d66aa79dd9acc43f7c0271a718@127.0.0.1:33858?discport=0")
+admin.nodeInfo
+web3.net

@@ -1,0 +1,8 @@
+admin.addPeer("enode://722f3d42650a52c18b1eced23f1c520766d9f145d00b3fc7466cf8492f220fc93c6f75e07a46fd799300a64e6698479e2ea955fd3d798708f429aacd690aaa62@127.0.0.1:33867?discport=0")
+admin.nodeInfo.enode
+web3.net
+admin.nodeInfo
+web3.net
+admin.peers
+admin.nodeInfo
+admin.nodeInfo.enode
