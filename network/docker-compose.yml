@@ -7,6 +7,7 @@ services:
       #enodeId:29ad21e141bc71addf0aea44773b1ab26e8c5178dc6668e54dd99544e9cd92e31db07ef133d486de77d89dab9a952ba8d8bb35f20b250aad82b830ae9a6b32b0
     build:
       context: ./bootnode
+    container_name: eth-bootnode
     ports:
       - 30301:30301/udp
     networks:
@@ -40,8 +41,8 @@ services:
       chainnet:
         ipv4_address: 192.168.0.13
 
-  eth-miner:
-    hostname: eth-miner
+  eth-miner-1:
+    hostname: eth-miner-1
     depends_on:
       - eth-bootnode
     environment:
@@ -53,12 +54,45 @@ services:
       args:
         privatekey: 49d70fbb33d9cdeb75ef7fa937c67bb89eb7ce679c4566a7536272081d4c922d
         password: pa$$word123
-    container_name: eth-miner
+    container_name: eth-miner-2
     volumes:
       - eth-data-2:/root/.ethash
     networks:
       chainnet:
         ipv4_address: 192.168.0.14
+
+  eth-miner-2:
+    hostname: eth-miner-2
+    depends_on:
+      - eth-bootnode
+    environment:
+      - address=0x173507934e9e2531a573fc7b0f4a496e08b443b1
+      - bootnodeId=29ad21e141bc71addf0aea44773b1ab26e8c5178dc6668e54dd99544e9cd92e31db07ef133d486de77d89dab9a952ba8d8bb35f20b250aad82b830ae9a6b32b0
+      - bootnodeIp=192.168.0.12
+    build:
+      context: ./miner
+      args:
+        privatekey: 56f7a7aeecf11b9e84b42c065d988ade866f0989bb08a86c477bb0b3724d64b3
+        password: pa$$word123
+    container_name: eth-miner-2
+    volumes:
+      - eth-data-3:/root/.ethash
+    networks:
+      chainnet:
+        ipv4_address: 192.168.0.15
+
+  eth-explorer:
+    hostname: eth-explorer
+    depends_on:
+      - eth-dev-node
+    ports:
+      - 8080:8080
+    build:
+      context: ./explorer
+    container_name: eth-explorer
+    networks:
+      chainnet:
+        ipv4_address: 192.168.0.16
 
 networks:
   chainnet:
@@ -70,3 +104,4 @@ networks:
 volumes:
   eth-data-1:
   eth-data-2:
+  eth-data-3:
