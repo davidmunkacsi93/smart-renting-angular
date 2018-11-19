@@ -54,7 +54,7 @@ services:
       args:
         privatekey: 49d70fbb33d9cdeb75ef7fa937c67bb89eb7ce679c4566a7536272081d4c922d
         password: pa$$word123
-    container_name: eth-miner-2
+    container_name: eth-miner-1
     volumes:
       - eth-data-2:/root/.ethash
     networks:
