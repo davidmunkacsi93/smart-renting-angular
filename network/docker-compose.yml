@@ -18,14 +18,14 @@ services:
     depends_on:
       - eth-bootnode
     environment:
-      - address=0xf626abdeaea1b0b64b79a428546cd26e246bad39 
+      - address=0x8ade7d546792c1964c8bbc1b100c35bea8a01cd2 
       - bootnodeId=29ad21e141bc71addf0aea44773b1ab26e8c5178dc6668e54dd99544e9cd92e31db07ef133d486de77d89dab9a952ba8d8bb35f20b250aad82b830ae9a6b32b0
       - bootnodeIp=192.168.0.12
     build:
       context: ./node
       args:
-        privatekey: b6ee4970a790426040a33756a00da0f537a6bca40356fd012b6d461650223a98
-        password: pa$$word1234
+        privatekey: d528fb64cde3808822e9ebd213cac227724e826a5f0efe7f2aa4c5499050f437
+        password: pa$$word123
     container_name: eth-dev-node
     ports:
       - 8545:8545
@@ -45,13 +45,13 @@ services:
     depends_on:
       - eth-bootnode
     environment:
-      - address=0x8a44081dd0068d697441ee7a32e06b0175fc25b7
+      - address=0x73f14c9fba38420ea8ea3de7f8d66c720fb2a784
       - bootnodeId=29ad21e141bc71addf0aea44773b1ab26e8c5178dc6668e54dd99544e9cd92e31db07ef133d486de77d89dab9a952ba8d8bb35f20b250aad82b830ae9a6b32b0
       - bootnodeIp=192.168.0.12
     build:
       context: ./miner
       args:
-        privatekey: 49b7379618709fad2a985d6a7520667b8f7044e2b738ca11d555b8f987479c7f
+        privatekey: 49d70fbb33d9cdeb75ef7fa937c67bb89eb7ce679c4566a7536272081d4c922d
         password: pa$$word123
     container_name: eth-miner
     volumes:
