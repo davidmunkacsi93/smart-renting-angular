@@ -1,6 +1,7 @@
 {
   "name": "pj-ods",
   "version": "0.0.0",
+  "host": "localhost",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
