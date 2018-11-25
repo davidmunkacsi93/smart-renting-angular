@@ -7,6 +7,6 @@ export class AuthenticationService {
   constructor(@Inject(Web3Provider) private provider : Web3) {}
 
   public getEthereumAccounts() {
-    return this.provider.eth.accounts;
+    return this.provider.eth.getAccounts().then(accounts => accounts.forEach(acc => console.log(acc)));
   }
 };
