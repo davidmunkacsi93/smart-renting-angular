@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "node patch.js"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +30,7 @@
     "rxjs": "~6.3.3",
     "web3": "^1.0.0-beta.36",
     "web3-utils": "1.0.0-beta.36",
+    "webpack": "^4.26.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
