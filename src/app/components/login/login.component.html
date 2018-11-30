@@ -1,3 +1,14 @@
 <div class="container">
-This is the login component :)
+    <form name="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmitForm()">
+        <div>
+            <div class="form-group">
+                <label>Username</label>
+                <input>
+            </div>
+
+            <button mat-button type="submit">
+                Login
+            </button>
+        </div>
+    </form>
 </div>
