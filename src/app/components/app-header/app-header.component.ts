@@ -14,6 +14,5 @@ export class AppHeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.authenticationService.getEthereumAccounts());
     }
 }

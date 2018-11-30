@@ -3,17 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AppHeaderComponent } from './components/app-header/app-header.component';
+
+import { MaterialModule } from './material.module';
+
 import { AuthenticationService } from './core/services/authentication.service';
+
+import { AppHeaderComponent } from './components/app-header/app-header.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppHeaderComponent
+    AppHeaderComponent,
+    LoginComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule
+    BrowserModule
   ],
   providers: [
     AuthenticationService
