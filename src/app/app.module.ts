@@ -16,6 +16,7 @@ import { AppHeaderComponent } from './components/app-header/app-header.component
 import { DialogComponent } from './components/dialog/dialog.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { UserContract } from './core/contracts/user.contract';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { RegisterComponent } from './components/register/register.component';
   ],
   providers: [
     AuthenticationService,
-    DialogService
+    DialogService,
+    UserContract
   ],
   entryComponents: [
     DialogComponent
