@@ -44,15 +44,39 @@ body {
     height: 100%;
 }
 
+label.app-input-label {
+    font-family: 'Roboto-Light';
+    font-size: 16px;
+    color: white;
+}
+
+span.app-span {
+    font-family: 'Roboto-Light';
+    font-size: 14px;
+    color: white;
+}
+
 button.app-button {
     width: 142px;
     height: 36px;
     color: white;
     font-family: 'Roboto-Regular';
     font-size: 18px;
-    background: linear-gradient(180deg, rgba(102, 186, 6, 1) 0%, rgba(102, 186, 6, 1) 0%, rgba(78, 145, 4, 1) 100%, rgba(78, 145, 4, 1) 100%);
+    background: linear-gradient(180deg, rgba(186, 6, 15, 1) 0%, rgba(186, 6, 21, 1) 0%, rgba(186, 6, 27, 1) 100%, rgba(186, 6, 33, 1) 100%);
     border: none;
     align-self: baseline;
     text-align: center;
     margin-top: 28px; 
+}
+
+.margin-left-10 {
+    margin-left: 10px !important;
+}
+
+.margin-top-10 {
+    margin-top: 10px !important;
+}
+
+.margin-top-50 {
+    margin-top: 50px !important;
 }

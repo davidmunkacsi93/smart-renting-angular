@@ -1,12 +1,14 @@
 .container {
-    background-color: rgba(81, 81, 81, 1);
+    background-color: #2e4a62;
     height: 100%;
+    width: 100%;
     position: absolute;
     left: 0;
     right: 0;
 }
 
 .login-container {
+    margin-top: 20px;
     padding: 16px 0 0 0;
     position: relative;
     z-index: 1;
@@ -24,10 +26,13 @@ span.login-title {
     text-align: center;
 }
 
-.ethereum-logo {
+.background-logo {
     position: fixed;
-    left: 8px;
-    top: 8px;
-    width: 30px;
-    height: 30px;
+    right: -35px;
+    bottom: -60px;
+    width: 500px;
+}
+
+.form-control {
+    width: 300px;
 }
