@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core'
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
@@ -14,20 +14,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     submitted: boolean = false;
 
     constructor(
-        private formBuilder: FormBuilder,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private formBuilder : FormBuilder
     ) {
 
     }
+
     ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
-          });
+        // this.loginForm = this.formBuilder.group({
+        //     username: ['', Validators.required],
+        //     password: ['', Validators.required]
+        //   });
     }
 
     ngOnDestroy() {
 
+    }
+
+    get form() {
+        return this.loginForm.controls;
     }
 
     onSubmitForm() {
