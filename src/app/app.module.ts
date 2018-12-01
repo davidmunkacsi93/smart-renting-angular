@@ -9,8 +9,10 @@ import { appRoutes } from './app.routes';
 import { MaterialModule } from './material.module';
 
 import { AuthenticationService } from './core/services/authentication.service';
+import { DialogService } from './core/services/dialog.service';
 
 import { AppHeaderComponent } from './components/app-header/app-header.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
@@ -18,6 +20,7 @@ import { RegisterComponent } from './components/register/register.component';
   declarations: [
     AppComponent,
     AppHeaderComponent,
+    DialogComponent,
     LoginComponent,
     RegisterComponent
   ],
@@ -29,7 +32,8 @@ import { RegisterComponent } from './components/register/register.component';
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    DialogService
   ],
   bootstrap: [AppComponent]
 })

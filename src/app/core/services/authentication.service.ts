@@ -9,4 +9,11 @@ export class AuthenticationService {
   public getEthereumAccounts() {
     return this.provider.eth.getAccounts().then(accounts => accounts.forEach(acc => console.log(acc)));
   }
+
+  public login(username: string, password: string): void {
+  }
+
+  public logout(): void {
+
+  }
 };
