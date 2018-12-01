@@ -1,5 +1,5 @@
-var User = artifacts.require("./User.sol");
+var UserContract = artifacts.require("./UserContract.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(User);
+  deployer.deploy(UserContract);
 };

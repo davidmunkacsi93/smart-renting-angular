@@ -1,5 +1,5 @@
 // solium-disable linebreak-style
-pragma solidity ^0.5.0;
+pragma solidity ^0.4.23;
 
 contract UserContract {
 
