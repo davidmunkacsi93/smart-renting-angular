@@ -21,10 +21,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        // this.loginForm = this.formBuilder.group({
-        //     username: ['', Validators.required],
-        //     password: ['', Validators.required]
-        //   });
+        this.loginForm = this.formBuilder.group({
+            username: ['', Validators.required],
+            password: ['', Validators.required]
+          });
     }
 
     ngOnDestroy() {

@@ -1,6 +1,12 @@
 <div class="container">
     <form name="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmitForm()">
-        <div>
+        <div class="login-container">
+            <div class="login-header-row row">
+                <div class="col-sm-auto">
+                    <img class="ethereum-logo img-fluid" src="../../../assets/ethereum-icon.png" />
+                </div>
+                <span class="login-title col-sm-12">Smart Renting</span>
+            </div>
             <div class="form-group">
                 <label>Username</label>
                 <input>

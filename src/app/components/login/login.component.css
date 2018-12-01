@@ -6,3 +6,28 @@
     right: 0;
 }
 
+.login-container {
+    padding: 16px 0 0 0;
+    position: relative;
+    z-index: 1;
+}
+
+.form-group {
+    padding-right: 16px;
+}
+
+span.login-title {
+    color: white;
+    font-family: 'Roboto-Light';
+    font-size: 36px;
+    align-self: flex-end;
+    text-align: center;
+}
+
+.ethereum-logo {
+    position: fixed;
+    left: 8px;
+    top: 8px;
+    width: 30px;
+    height: 30px;
+}
