@@ -2,12 +2,12 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-var ethereumHost = require("../../package.json").ethereumHost;
-var ethereumPort = require("../../package.json").ethereumPort;
+var config = require("../../package.json");
 
 export const environment = {
   production: false,
-  ethereumDevelopmentUrl: "http://" + ethereumHost + ":" + ethereumPort
+  ethereumDevelopmentUrl: "http://" + config.ethereumHost + ":" + config.ethereumPort,
+  ethereumMasterAccount: config.ethereumMasterAccount
 };
 
 /*

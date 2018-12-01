@@ -2,6 +2,7 @@ import { Injectable, Inject } from "@angular/core";
 import Web3  from 'web3'
 import { Web3Provider } from '../providers/web3.provider'
 import { UserContract } from "../contracts/user.contract";
+import { environment } from "../../../environments/environment";
 
 @Injectable()
 export class AuthenticationService {
@@ -18,8 +19,23 @@ export class AuthenticationService {
   public logout(): void {
   }
 
-  public register(username: string, password: string) {
-    this.userContract.createUser(username, password);
-    return this.provider.eth.personal.newAccount(password)
+  public async register(username: string, password: string) {
+    console.log(environment);
+    var address = await this.provider.eth.personal.newAccount(password).then(address => {
+      const transactionObject = {
+        from: environment.ethereumMasterAccount,
+        to: address
+      }
+
+      console.log(transactionObject);
+
+      this.provider.eth.sendTransaction(transactionObject).then(reason => console.log(reason));
+      this.provider.eth.personal.unlockAccount(address, password, 100);
+      return address;
+    });
+
+    console.log(address);
+    this.userContract.createUser(username, password, address)
+    return address;
   }
 };

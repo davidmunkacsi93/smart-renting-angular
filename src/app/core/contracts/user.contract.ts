@@ -24,7 +24,6 @@ export class UserContract {
         const transactionObject = {
             from: userAddress
         };
-
         this.contract.methods.createUser(username, password).send(transactionObject).then(result => console.log(result));
     }
 }
