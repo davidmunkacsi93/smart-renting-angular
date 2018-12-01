@@ -12,12 +12,14 @@ import { AuthenticationService } from './core/services/authentication.service';
 
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppHeaderComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,10 @@
 <div class="container">
-    <form name="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmitForm()">
-        <div class="login-container">
-            <div class="login-header-row row">
-                <span class="login-title col-sm-12">Smart Renting</span>
+    <form name="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmitForm()">
+        <div class="register-container">
+            <div class="register-header-row row">
+                <span class="register-title col-sm-12">Smart Renting</span>
             </div>
-            <div class="row d-flex justify-content-center margin-top-50">
+            <div class="margin-top-50">
                 <div class="form-group">
                     <label for="username" class="app-input-label">Username</label>
                     <input id="username" type="text" class="form-control" formControlName="username">
@@ -20,11 +20,8 @@
                     </div>
                 </div>
                 <button mat-button class="app-button" type="submit">
-                    Login
+                    Register
                 </button>
-            </div>
-            <div class="row d-flex justify-content-center margin-top-10">
-                <span class="app-span">If you don't have an account you can register <a href="/register">here.</a></span>
             </div>
         </div>
         <img class="background-logo img-fluid" src="../../../assets/images/ethereum-icon.png" />
