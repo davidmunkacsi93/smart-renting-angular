@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
     loginForm: FormGroup;
     submitted: boolean = false;
+    loading: boolean = false;
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -45,5 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.loginForm.invalid) {
           return;
         }
+
+        this.loading = true;
     }
 }

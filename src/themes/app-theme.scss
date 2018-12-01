@@ -62,7 +62,7 @@ button.app-button {
     color: white;
     font-family: 'Roboto-Regular';
     font-size: 18px;
-    background: linear-gradient(180deg, rgba(186, 6, 15, 1) 0%, rgba(186, 6, 21, 1) 0%, rgba(186, 6, 27, 1) 100%, rgba(186, 6, 33, 1) 100%);
+    background: linear-gradient(180deg, rgba(102, 186, 6, 1) 0%, rgba(102, 186, 6, 1) 0%, rgba(78, 145, 4, 1) 100%, rgba(78, 145, 4, 1) 100%);
     border: none;
     align-self: baseline;
     text-align: center;
@@ -79,4 +79,10 @@ button.app-button {
 
 .margin-top-50 {
     margin-top: 50px !important;
+}
+
+.validation-message {
+    margin-top: 5px;
+    font-size: 100%;
+    color: rgb(245, 8, 20);
 }
