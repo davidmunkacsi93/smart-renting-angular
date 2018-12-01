@@ -37,6 +37,9 @@ import { RegisterComponent } from './components/register/register.component';
     AuthenticationService,
     DialogService
   ],
+  entryComponents: [
+    DialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
