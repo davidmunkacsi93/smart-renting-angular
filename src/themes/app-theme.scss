@@ -43,3 +43,16 @@ body {
     min-height: 100%;
     height: 100%;
 }
+
+button.app-button {
+    width: 142px;
+    height: 36px;
+    color: white;
+    font-family: 'Roboto-Regular';
+    font-size: 18px;
+    background: linear-gradient(180deg, rgba(102, 186, 6, 1) 0%, rgba(102, 186, 6, 1) 0%, rgba(78, 145, 4, 1) 100%, rgba(78, 145, 4, 1) 100%);
+    border: none;
+    align-self: baseline;
+    text-align: center;
+    margin-top: 28px; 
+}
