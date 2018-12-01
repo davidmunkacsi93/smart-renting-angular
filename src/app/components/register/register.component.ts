@@ -50,7 +50,14 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         this.loading = true;
-        this.authenticationService.register(this.form.username.value, this.form.password.value);
-        this.dialogService.openDialog("Registration Error", "The user could not be registered. Please try again!");
+        this.authenticationService.register(this.form.username.value, this.form.password.value)
+            .then(address => {
+                this.dialogService.openDialog("Registration successful", "The user was created with the following address: " + address + "\n\nYou can now login.");
+            })
+            .catch(reason => {
+                console.error(reason);
+                this.dialogService.openDialog("Registration error", "The user could not be registered. Please try again!");
+            });
+        
     }
 }

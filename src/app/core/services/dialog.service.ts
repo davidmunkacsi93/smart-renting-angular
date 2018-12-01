@@ -8,7 +8,7 @@ export class DialogService {
 
     public openDialog(title: string, message: string, icon?: string) {
         this.dialog.open(DialogComponent, {
-            width: '400px',
+            width: '500px',
             data: {
                 icon: icon,
                 message: message,

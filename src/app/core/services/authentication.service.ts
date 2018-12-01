@@ -16,6 +16,7 @@ export class AuthenticationService {
   public logout(): void {
   }
 
-  public register(username: string, password: string): void {
+  public register(username: string, password: string) {
+    return this.provider.eth.personal.newAccount(password)
   }
 };
