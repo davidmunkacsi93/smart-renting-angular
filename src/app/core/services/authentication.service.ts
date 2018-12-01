@@ -4,6 +4,8 @@ import { Web3Provider } from '../providers/web3.provider'
 import { UserContract } from "../contracts/user.contract";
 import { environment } from "../../../environments/environment";
 
+const INITIAL_BALANCE = 10000000000;
+
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -20,22 +22,19 @@ export class AuthenticationService {
   }
 
   public async register(username: string, password: string) {
-    console.log(environment);
-    var address = await this.provider.eth.personal.newAccount(password).then(address => {
-      const transactionObject = {
-        from: environment.ethereumMasterAccount,
-        to: address
-      }
+    var address = await this.provider.eth.personal.newAccount(password);
+    this.provider.eth.personal.unlockAccount(address, password, 100);
 
-      console.log(transactionObject);
+    const transactionObject = {
+      from: environment.ethereumMasterAccount,
+      to: address,
+      value: INITIAL_BALANCE
+    }
 
-      this.provider.eth.sendTransaction(transactionObject).then(reason => console.log(reason));
-      this.provider.eth.personal.unlockAccount(address, password, 100);
-      return address;
-    });
+    // Transferring the new account initial balance;
+    await this.provider.eth.sendTransaction(transactionObject);
+    this.userContract.createUser(username, password, address);
 
-    console.log(address);
-    this.userContract.createUser(username, password, address)
     return address;
   }
 };

@@ -20,10 +20,16 @@ export class UserContract {
         console.log(this.contract);
     }
 
-    public createUser(username : string, password : string, userAddress: string) {
+    public async createUser(username : string, password : string, userAddress: string) {
+        var estimatedGas = await this.contract.methods.createUser(username, password).estimateGas();
+
+        console.log(estimatedGas);
+
         const transactionObject = {
-            from: userAddress
+            from: userAddress,
+            gas: 500000
         };
+
         this.contract.methods.createUser(username, password).send(transactionObject).then(result => console.log(result));
     }
 }
