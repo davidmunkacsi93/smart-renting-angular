@@ -1,3 +1,16 @@
 <div class="mat-typography">
-
+    <div mat-dialog-title>
+        <span class="dialog-title">{{dialogData.title}}</span>
+    </div>
+    <div mat-dialog-content>
+        <span class="dialog-content">{{dialogData.message}}</span>
+        <hr>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button 
+            mat-button 
+            class="ok-button"
+            tabindex="-1" 
+            (click)="closeDialog()">OK</button>
+    </div>   
 </div>
