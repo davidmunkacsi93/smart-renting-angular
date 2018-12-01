@@ -14,6 +14,8 @@ export class AuthenticationService {
   }
 
   public logout(): void {
+  }
 
+  public register(username: string, password: string): void {
   }
 };

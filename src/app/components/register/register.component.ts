@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ElementRef, AfterViewInit } from '@angula
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { DialogService } from 'src/app/core/services/dialog.service';
 
 @Component({
     selector: 'app-register',
@@ -16,6 +17,7 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
 
     constructor(
         private authenticationService: AuthenticationService,
+        private dialogService: DialogService,
         private elementRef: ElementRef,
         private formBuilder : FormBuilder
     ) {
@@ -48,5 +50,7 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         this.loading = true;
+        this.authenticationService.register(this.form.username.value, this.form.password.value);
+        this.dialogService.openDialog("Registration Error", "The user could not be registered. Please try again!");
     }
 }

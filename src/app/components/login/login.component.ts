@@ -51,6 +51,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.loading = true;
         this.authenticationService.login(this.form.username.value, this.form.password.value);
-        this.dialogService.openDialog("Login Error", "Invalid username or password. Please try another time!");
+        this.dialogService.openDialog("Login Error", "Invalid username or password. Please try again!");
     }
 }
