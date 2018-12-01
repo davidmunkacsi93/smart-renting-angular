@@ -5,8 +5,8 @@
   "ethereumPort": "8545",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "xcopy /F /Y /s \"./ethereum/build/contracts/*.*\" \"./src/contracts-json/\" && ng serve",
+    "build": "xcopy /F /Y /s \"./ethereum/build/contracts/*.*\" \"./src/contracts-json/\" && ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
