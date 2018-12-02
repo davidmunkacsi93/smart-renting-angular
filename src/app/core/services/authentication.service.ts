@@ -22,10 +22,12 @@ export class AuthenticationService {
   }
 
   public async register(username: string, password: string) {
+    const isExisting = await this.userContract.isUsernameExisting(username);
+    if (isExisting) {
+      throw("Username already exists! Please choose another username.");
+    }
     var address = await this.provider.eth.personal.newAccount(password);
     this.provider.eth.personal.unlockAccount(address, password, 100);
-
-    console.log(this.provider.utils.toWei(INITIAL_BALANCE.toString(), "ether"));
 
     const transactionObject = {
       from: environment.ethereumMasterAccount,
