@@ -13,9 +13,9 @@ export interface DialogData {
 })
 export class DialogComponent {
     constructor(
+        @Inject(MAT_DIALOG_DATA) public dialogData: DialogData,
         public dialog: MatDialog,
-        public dialogReference: MatDialogRef<DialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public dialogData: DialogData
+        public dialogReference: MatDialogRef<DialogComponent>
     ) {}
 
     closeDialog(): void {

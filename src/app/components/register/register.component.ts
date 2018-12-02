@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ElementRef, AfterViewInit } from '@angular/core'
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router'
 
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
         private authenticationService: AuthenticationService,
         private dialogService: DialogService,
         private elementRef: ElementRef,
-        private formBuilder : FormBuilder
+        private formBuilder : FormBuilder,
+        private router: Router
     ) {
 
     }
@@ -54,6 +56,7 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
             .then(address => {
                 this.loading = false;
                 this.dialogService.openDialog("Registration successful", "The user was created with the following address: " + address + "\n\nYou can now login.");
+                this.router.navigate(['/login'], { skipLocationChange: true });
             })
             .catch(exc => {
                 this.loading = false;
