@@ -18,11 +18,15 @@ export class AuthenticationService {
 
   }
 
-  public getCurrentUser() {
+  public getCurrentUser() : User {
     var userJSON = localStorage.getItem(CURRENT_USER_KEY);
     if (userJSON === null) return null;
 
-    var currentUser : User = JSON.parse(userJSON)
+    var currentUser : User = JSON.parse(userJSON);
+  }
+
+  public getBalance(userAddress : string) {
+    return this.provider.eth.getBalance(userAddress);
   }
 
   public isAuthenticated(): boolean {
