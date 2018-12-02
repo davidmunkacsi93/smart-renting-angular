@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ElementRef, AfterViewInit } from '@angular/core'
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         private authenticationService: AuthenticationService,
         private dialogService: DialogService,
         private elementRef: ElementRef,
-        private formBuilder : FormBuilder
+        private formBuilder : FormBuilder,
+        private router: Router
     ) {
 
     }
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#2e4a62';
+        this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#0C374D';
     }
 
     get form() {
@@ -53,7 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.authenticationService.login(this.form.username.value, this.form.password.value)
         .then(() => {
             this.loading = false;
-            // Navigate to the user landing page.
+            this.router.navigate(['/home'], { skipLocationChange: false })
         })
         .catch(_ => {
             this.loading = false;

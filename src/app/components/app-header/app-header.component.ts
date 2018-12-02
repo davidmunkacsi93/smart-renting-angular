@@ -8,11 +8,18 @@ import { AuthenticationService } from "../../core/services/authentication.servic
 })
 export class AppHeaderComponent implements OnInit {
 
+    private username: string;
+    private currentBalanceInEur: number;
+    private currentBalanceInEth: number;
+
     constructor(
         private authenticationService: AuthenticationService
     ) {
     }
 
     ngOnInit() {
+        this.username = "david.munkacsi";
+        this.currentBalanceInEur = 100;
+        this.currentBalanceInEth = 100;
     }
 }

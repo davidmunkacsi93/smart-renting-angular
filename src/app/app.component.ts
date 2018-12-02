@@ -10,8 +10,8 @@ export class AppComponent {
 
   constructor(private authenticationService: AuthenticationService) {}
 
-  // @HostListener('window:beforeunload')
-  // autoLogout() {
-  //   this.authenticationService.logout();
-  // }
+  @HostListener('window:beforeunload')
+  autoLogout() {
+    this.authenticationService.logout();
+  }
 }

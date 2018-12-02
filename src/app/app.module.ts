@@ -14,6 +14,7 @@ import { DialogService } from './core/services/dialog.service';
 
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserContract } from './core/contracts/user.contract';
@@ -23,6 +24,7 @@ import { UserContract } from './core/contracts/user.contract';
     AppComponent,
     AppHeaderComponent,
     DialogComponent,
+    HomeComponent,
     LoginComponent,
     RegisterComponent
   ],
