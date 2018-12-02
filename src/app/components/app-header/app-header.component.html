@@ -1,1 +1,5 @@
-<div class="header-container"></div>
+<div *ngIf=authenticationService.isAuthenticated()>
+    <div class="header-container">
+        Logged in.
+    </div>
+</div>

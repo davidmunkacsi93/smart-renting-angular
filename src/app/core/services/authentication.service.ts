@@ -17,6 +17,10 @@ export class AuthenticationService {
 
   }
 
+  public isAuthenticated(): boolean {
+    return localStorage.getItem(CURRENT_USER_KEY) !== null;
+  }
+
   public async login(username: string, password: string) {
     const user = await this.userContract.authenticate(username, password);
     localStorage.setItem(CURRENT_USER_KEY, user.Username);
