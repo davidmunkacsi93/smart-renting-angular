@@ -7,21 +7,24 @@ contract UserContract {
         string username;
         bytes32 password;
         address userAddress;
-        bool isExisting;
     }
 
-    mapping (string => User) userMapping;
+    mapping (bytes32 => User) userMapping;
+    mapping (bytes32 => bool) userExists;
 
     function createUser(string memory username, string memory password) public {
-        User memory user = User(username, keccak256(abi.encode(password)), msg.sender, true);
-        userMapping[username] = user;
+        User memory user = User(username, keccak256(abi.encode(password)), msg.sender);
+        bytes32 usernameHash = keccak256(abi.encode(username));
+        userMapping[usernameHash] = user;
+        userExists[usernameHash] = true;
     }
 
     function authenticate(string memory username, string memory password)
         public view returns (bool _success, string memory _username, address _userAddress) {
 
-        if (userMapping[username].password == keccak256(abi.encode(password))) {
-            User storage user = userMapping[username];
+        bytes32 usernameHash = keccak256(abi.encode(username));
+        if (userMapping[usernameHash].password == keccak256(abi.encode(password))) {
+            User storage user = userMapping[usernameHash];
             return (true, user.username, user.userAddress);
         }
 
@@ -29,7 +32,7 @@ contract UserContract {
     }
 
     function isUsernameExisting(string memory username) public view returns (bool) {
-        if (userMapping[username].isExisting) return false;
-        return true;
+        bytes32 usernameHash = keccak256(abi.encode(username));
+        return userExists[usernameHash];
     }
 }
