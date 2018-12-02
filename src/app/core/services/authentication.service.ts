@@ -3,10 +3,11 @@ import Web3  from 'web3'
 import { Web3Provider } from '../providers/web3.provider'
 import { UserContract } from "../contracts/user.contract";
 import { environment } from "../../../environments/environment";
+import { User } from "../model/user";
 
 const INITIAL_BALANCE = Math.pow(10, 15);
 const CURRENT_USER_KEY = 'currentUser';
-const CURRENT_USER_ADDRESS_KEY = 'currentUserAddress';
+
 
 @Injectable()
 export class AuthenticationService {
@@ -17,19 +18,24 @@ export class AuthenticationService {
 
   }
 
+  public getCurrentUser() {
+    var userJSON = localStorage.getItem(CURRENT_USER_KEY);
+    if (userJSON === null) return null;
+
+    var currentUser : User = JSON.parse(userJSON)
+  }
+
   public isAuthenticated(): boolean {
     return localStorage.getItem(CURRENT_USER_KEY) !== null;
   }
 
   public async login(username: string, password: string) {
     const user = await this.userContract.authenticate(username, password);
-    localStorage.setItem(CURRENT_USER_KEY, user.Username);
-    localStorage.setItem(CURRENT_USER_ADDRESS_KEY, user.Address);
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
   }
 
   public logout(): void {
     localStorage.removeItem(CURRENT_USER_KEY);
-    localStorage.removeItem(CURRENT_USER_ADDRESS_KEY);
   }
 
   public async register(username: string, password: string) {

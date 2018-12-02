@@ -1,4 +1,4 @@
-import { OnInit, Component } from "@angular/core";
+import { OnInit, Component, AfterViewInit } from "@angular/core";
 import { AuthenticationService } from "../../core/services/authentication.service"
 
 @Component({
@@ -6,20 +6,23 @@ import { AuthenticationService } from "../../core/services/authentication.servic
     templateUrl: './app-header.component.html',
     styleUrls: ['./app-header.component.scss']
 })
-export class AppHeaderComponent implements OnInit {
+export class AppHeaderComponent implements AfterViewInit {
 
-    private username: string;
-    private currentBalanceInEur: number;
-    private currentBalanceInEth: number;
+    username: string;
+    balanceInEth: number;
+    balanceInEur: number;
 
     constructor(
         private authenticationService: AuthenticationService
     ) {
+
     }
 
-    ngOnInit() {
-        this.username = "david.munkacsi";
-        this.currentBalanceInEur = 100;
-        this.currentBalanceInEth = 100;
+    ngAfterViewInit(): void {
+        var user = this.authenticationService.getCurrentUser();
+        console.log(user);
+        this.username = user.Username;
+        this.balanceInEth = user.BalanceInEth;
+        this.balanceInEur = user.BalanceInEur;
     }
 }

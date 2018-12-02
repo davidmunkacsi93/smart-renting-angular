@@ -78,7 +78,9 @@ export class UserContract {
     private parseUserResponse(userResponse) : User {
         return {
             Username: userResponse[1],
-            Address: userResponse[2]
+            Address: userResponse[2],
+            BalanceInEth: 0,
+            BalanceInEur: 0
         }
     }
 }
