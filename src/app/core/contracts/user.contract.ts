@@ -25,8 +25,6 @@ export class UserContract {
     public async createUser(username : string, password : string, userAddress: string) {
         var estimatedGas = await this.contract.methods.createUser(username, password).estimateGas();
 
-        console.log(estimatedGas);
-
         const transactionObject = {
             from: userAddress,
             gas: 5000000,

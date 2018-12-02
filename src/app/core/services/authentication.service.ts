@@ -4,7 +4,7 @@ import { Web3Provider } from '../providers/web3.provider'
 import { UserContract } from "../contracts/user.contract";
 import { environment } from "../../../environments/environment";
 
-const INITIAL_BALANCE = 10000000000;
+const INITIAL_BALANCE = Math.pow(10, 15);
 
 @Injectable()
 export class AuthenticationService {
@@ -25,6 +25,8 @@ export class AuthenticationService {
     var address = await this.provider.eth.personal.newAccount(password);
     this.provider.eth.personal.unlockAccount(address, password, 100);
 
+    console.log(this.provider.utils.toWei(INITIAL_BALANCE.toString(), "ether"));
+
     const transactionObject = {
       from: environment.ethereumMasterAccount,
       to: address,
@@ -36,10 +38,11 @@ export class AuthenticationService {
 
     try  {
       const transactionReceipt = await this.userContract.createUser(username, password, address);
+      console.log(transactionReceipt)
+      return transactionReceipt.from;
     } catch (exc) {
       throw (exc)
     }
 
-    return address;
   }
 };
