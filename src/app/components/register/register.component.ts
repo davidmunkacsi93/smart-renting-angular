@@ -52,9 +52,11 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loading = true;
         this.authenticationService.register(this.form.username.value, this.form.password.value)
             .then(address => {
+                this.loading = false;
                 this.dialogService.openDialog("Registration successful", "The user was created with the following address: " + address + "\n\nYou can now login.");
             })
             .catch(exc => {
+                this.loading = false;
                 this.dialogService.openDialog("Registration error", exc);
             });
         

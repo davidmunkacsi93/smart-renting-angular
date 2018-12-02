@@ -1,6 +1,6 @@
 <div class="container">
     <form name="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmitForm()">
-        <div class="register-container">
+        <div *ngIf=!loading class="register-container">
             <div class="register-header-row row">
                 <span class="register-title col-sm-12">Smart Renting</span>
             </div>
@@ -24,6 +24,7 @@
                 </button>
             </div>
         </div>
+        <mat-spinner *ngIf=loading class="loading-spinner"></mat-spinner>
         <img class="background-logo img-fluid" src="../../../assets/images/ethereum-icon.png" />
     </form>
 </div>
