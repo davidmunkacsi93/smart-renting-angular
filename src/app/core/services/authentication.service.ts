@@ -40,11 +40,9 @@ export class AuthenticationService {
 
     try  {
       const transactionReceipt = await this.userContract.createUser(username, password, address);
-      console.log(transactionReceipt)
       return transactionReceipt.from;
     } catch (exc) {
       throw (exc)
     }
-
   }
 };
