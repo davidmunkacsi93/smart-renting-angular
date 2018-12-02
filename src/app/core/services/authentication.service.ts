@@ -33,7 +33,12 @@ export class AuthenticationService {
 
     // Transferring the new account initial balance;
     await this.provider.eth.sendTransaction(transactionObject);
-    this.userContract.createUser(username, password, address);
+
+    try  {
+      const transactionReceipt = await this.userContract.createUser(username, password, address);
+    } catch (exc) {
+      throw (exc)
+    }
 
     return address;
   }

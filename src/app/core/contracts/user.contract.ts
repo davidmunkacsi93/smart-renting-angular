@@ -2,6 +2,8 @@ import { Injectable, Inject } from '@angular/core';
 import Web3  from 'web3'
 import { Web3Provider } from '../providers/web3.provider'
 import Contract from 'web3/eth/contract';
+import { environment } from 'src/environments/environment';
+import { MatExpansionPanelDescription } from '@angular/material';
 
 @Injectable()
 export class UserContract {
@@ -27,9 +29,15 @@ export class UserContract {
 
         const transactionObject = {
             from: userAddress,
-            gas: 500000
+            gas: 5000000,
+            gasPrice: estimatedGas
         };
 
-        this.contract.methods.createUser(username, password).send(transactionObject).then(result => console.log(result));
+        try  {
+            var transactionReceipt = await this.contract.methods.createUser(username, password).send(transactionObject);
+            return transactionReceipt;
+        } catch (exc) {
+            throw("Registration was not successful. " + exc.message)
+        }
     }
 }
