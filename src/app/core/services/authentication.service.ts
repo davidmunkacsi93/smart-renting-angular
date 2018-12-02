@@ -5,6 +5,8 @@ import { UserContract } from "../contracts/user.contract";
 import { environment } from "../../../environments/environment";
 
 const INITIAL_BALANCE = Math.pow(10, 15);
+const CURRENT_USER_KEY = 'currentUser';
+const CURRENT_USER_ADDRESS_KEY = 'currentUserAddress';
 
 @Injectable()
 export class AuthenticationService {
@@ -15,10 +17,15 @@ export class AuthenticationService {
 
   }
 
-  public login(username: string, password: string): void {
+  public async login(username: string, password: string) {
+    const user = await this.userContract.authenticate(username, password);
+    localStorage.setItem(CURRENT_USER_KEY, user.Username);
+    localStorage.setItem(CURRENT_USER_ADDRESS_KEY, user.Address);
   }
 
   public logout(): void {
+    localStorage.removeItem(CURRENT_USER_KEY);
+    localStorage.removeItem(CURRENT_USER_ADDRESS_KEY);
   }
 
   public async register(username: string, password: string) {
