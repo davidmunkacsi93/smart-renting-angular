@@ -1,5 +1,19 @@
 <div *ngIf=authenticationService.isAuthenticated()>
     <div class="header-container">
-        Logged in.
+        <div class="logo-column">
+            <div class="image-row">
+                <div class="logo-container">
+                    <img class="ethereum-logo img-fluid" src="../../../assets/images/ethereum-icon.png" />
+                </div>
+            </div>
+        </div>
+        <div class="header-column">
+            <div class="current-user-row">
+                <span class="current-user">Hello {{username}}!</span>
+            </div>
+            <div class="header-row">
+
+            </div>
+        </div>
     </div>
 </div>

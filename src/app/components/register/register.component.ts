@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#2e4a62';
+        this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#0C374D';
     }
 
     get form() {

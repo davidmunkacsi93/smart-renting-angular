@@ -3,3 +3,41 @@
     position: relative;
     z-index: 1;
 }
+
+.logo-column {
+    width: 10%;
+}
+
+.logo-container {
+    padding-left: 12px;
+    padding-top: 5px;
+}
+
+.header-column {
+    width: 90%;
+}
+
+img.ethereum-logo {
+    width: 60px;
+    height: 60px;
+}
+
+.image-row {
+    background-color:#0C374D;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.current-user-row {
+    background-color:#0C374D;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+span.current-user {
+    color: white;
+    font-size: 20px;
+    margin-right: 4px;
+}
