@@ -1,31 +1,35 @@
 import { Injectable, Inject } from "@angular/core";
-import Web3  from 'web3'
-import { Web3Provider } from '../providers/web3.provider'
+import Web3 from "web3";
+import { Web3Provider } from "../providers/web3.provider";
 import { UserContract } from "../contracts/user.contract";
 import { environment } from "../../../environments/environment";
 import { User } from "../model/user";
 
 const INITIAL_BALANCE = Math.pow(10, 15);
-const CURRENT_USER_KEY = 'currentUser';
-
+const CURRENT_USER_KEY = "currentUser";
 
 @Injectable()
 export class AuthenticationService {
   constructor(
-    @Inject(Web3Provider) private provider : Web3,
-    private userContract : UserContract
-  ) {
+    @Inject(Web3Provider) private provider: Web3,
+    private userContract: UserContract
+  ) {}
 
-  }
-
-  public getCurrentUser() : User {
+  public getCurrentUser(): User {
     var userJSON = localStorage.getItem(CURRENT_USER_KEY);
+    console.log(userJSON);
     if (userJSON === null) return null;
 
-    var currentUser : User = JSON.parse(userJSON);
+    console.log(userJSON);
+
+    var currentUser: User = JSON.parse(userJSON);
+    console.log(currentUser);
+    this.getBalance(currentUser.Address).then(bn => console.log(bn));
+
+    return currentUser;
   }
 
-  public getBalance(userAddress : string) {
+  public getBalance(userAddress: string) {
     return this.provider.eth.getBalance(userAddress);
   }
 
@@ -36,6 +40,7 @@ export class AuthenticationService {
   public async login(username: string, password: string) {
     const user = await this.userContract.authenticate(username, password);
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+    return user;
   }
 
   public logout(): void {
@@ -45,7 +50,7 @@ export class AuthenticationService {
   public async register(username: string, password: string) {
     const isExisting = await this.userContract.isUsernameExisting(username);
     if (isExisting) {
-      throw("Username already exists! Please choose another username.");
+      throw "Username already exists! Please choose another username.";
     }
     var address = await this.provider.eth.personal.newAccount(password);
     this.provider.eth.personal.unlockAccount(address, password, 100);
@@ -54,16 +59,20 @@ export class AuthenticationService {
       from: environment.ethereumMasterAccount,
       to: address,
       value: INITIAL_BALANCE
-    }
+    };
 
     // Transferring the new account initial balance;
     await this.provider.eth.sendTransaction(transactionObject);
 
-    try  {
-      const transactionReceipt = await this.userContract.createUser(username, password, address);
+    try {
+      const transactionReceipt = await this.userContract.createUser(
+        username,
+        password,
+        address
+      );
       return transactionReceipt.from;
     } catch (exc) {
-      throw (exc)
+      throw exc;
     }
   }
-};
+}
