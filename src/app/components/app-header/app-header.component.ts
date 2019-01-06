@@ -13,8 +13,8 @@ export class AppHeaderComponent implements OnInit {
   userSubscription: Subscription;
 
   username: string;
-  balanceInEth: number;
-  balanceInEur: number;
+  balanceInEth: string;
+  balanceInEur: string;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -27,8 +27,8 @@ export class AppHeaderComponent implements OnInit {
       .subscribe(user => {
         if (user) {
           this.username = user.Username;
-          this.balanceInEth = user.BalanceInEth;
-          this.balanceInEur = user.BalanceInEur;
+          this.balanceInEth = user.BalanceInEth.toPrecision(3);
+          this.balanceInEur = user.BalanceInEur.toPrecision(3);
         }
       });
   }

@@ -9,6 +9,8 @@ import { User } from '../model/user';
 export class UserContract {
     private contract : Contract
 
+    private EURO_RATE = 133.14
+
     constructor(
         @Inject(Web3Provider) private provider : Web3
     ) {
@@ -55,7 +57,7 @@ export class UserContract {
         }
     }
 
-    public async authenticate(username: string, password: string) {
+    public async authenticate(username: string, password: string) : Promise<User> {
         var estimatedGas = await this.contract.methods.authenticate(username, password).estimateGas();
 
         const transactionObject = {
@@ -75,12 +77,19 @@ export class UserContract {
         }
     }
 
-    private parseUserResponse(userResponse) : User {
-        return {
+    private async parseUserResponse(userResponse) : Promise<User> {
+        var user : User = {
             Username: userResponse[1],
             Address: userResponse[2],
             BalanceInEth: 0,
             BalanceInEur: 0
         }
+
+        var balanceInWei = await this.provider.eth.getBalance(user.Address);
+        var balanceInEth = this.provider.utils.fromWei(balanceInWei, "ether").toString();
+        user.BalanceInEth = parseInt(balanceInEth);
+        user.BalanceInEur = user.BalanceInEth * this.EURO_RATE;
+
+        return user;
     }
 }

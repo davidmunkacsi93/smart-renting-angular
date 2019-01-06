@@ -5,7 +5,7 @@ import { UserContract } from "../contracts/user.contract";
 import { environment } from "../../../environments/environment";
 import { User } from "../model/user";
 
-const INITIAL_BALANCE = Math.pow(10, 15);
+const INITIAL_BALANCE = Math.pow(10, 19);
 const CURRENT_USER_KEY = "currentUser";
 
 @Injectable()
@@ -37,7 +37,7 @@ export class AuthenticationService {
     return localStorage.getItem(CURRENT_USER_KEY) !== null;
   }
 
-  public async login(username: string, password: string) {
+  public async login(username: string, password: string) : Promise<User> {
     const user = await this.userContract.authenticate(username, password);
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
     return user;

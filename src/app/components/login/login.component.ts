@@ -13,6 +13,7 @@ import { DialogService } from "src/app/core/services/dialog.service";
 import { Store } from "@ngrx/store";
 import { AppState } from "src/app/core/store/state";
 import { AddUserAction } from "../../core/actions/index";
+import { User } from "src/app/core/model/user";
 
 @Component({
   selector: "app-login",
@@ -64,7 +65,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loading = false;
         this.router.navigate(["/home"], { skipLocationChange: false });
         console.log(user);
-        this.store.dispatch(new AddUserAction(user));
+        this.store.dispatch(new AddUserAction(user as User));
       })
       .catch(_ => {
         this.loading = false;
