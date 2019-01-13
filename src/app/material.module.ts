@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { 
     MatButtonModule,
     MatDialogModule,
+    MatMenuModule,
     MatProgressSpinnerModule,
 } from '@angular/material';
 
@@ -11,6 +12,7 @@ import {
     exports: [
         MatButtonModule,
         MatDialogModule,
+        MatMenuModule,
         MatProgressSpinnerModule
     ]
 })

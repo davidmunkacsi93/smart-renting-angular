@@ -12,7 +12,14 @@
                 <span class="current-user">Hello {{username}}! Current balance: {{balanceInEur}} EUR ({{balanceInEth}} ETH)</span>
             </div>
             <div class="header-row">
-                <!--Here comes the menu part.-->
+                <div class="menu-container">
+                    <button mat-icon-button [matMenuTriggerFor]="appMenu" class="menu-button float-right">
+                        <img class="menu-button-icon" src="../../../assets/images/ic_menu.png"/>
+                    </button>
+                    <mat-menu class="app-menu" #appMenu="matMenu" [overlapTrigger]="false">
+                        
+                    </mat-menu>
+                </div>
             </div>
         </div>
     </div>

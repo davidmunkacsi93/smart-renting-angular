@@ -3,6 +3,7 @@ import { AuthenticationService } from "../../core/services/authentication.servic
 import { Store } from "@ngrx/store";
 import { AppState } from "../../core/store/state";
 import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-header",
@@ -18,17 +19,22 @@ export class AppHeaderComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
+    private router: Router,
     private store: Store<AppState>
   ) {}
 
   ngOnInit() {
+    if (this.authenticationService.isAuthenticated() === false) {
+      this.router.navigate(["/"], { skipLocationChange: false });
+    }
+
     this.userSubscription = this.store
       .select(state => state.user)
       .subscribe(user => {
         if (user) {
           this.username = user.Username;
-          this.balanceInEth = user.BalanceInEth.toPrecision(3);
-          this.balanceInEur = user.BalanceInEur.toPrecision(3);
+          this.balanceInEth = user.BalanceInEth.toFixed(3);
+          this.balanceInEur = user.BalanceInEur.toFixed(3);
         }
       });
   }
