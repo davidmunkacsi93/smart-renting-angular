@@ -22,8 +22,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
             this.router.navigate(["/"], { skipLocationChange: false });
         }
 
-        this.apartmentContract.getApartmentIds()
-            .then(result => console.log(result))
+        this.apartmentContract.getApartmentIds().then(ids => console.log(ids));
     }
 
     ngAfterViewInit(): void {

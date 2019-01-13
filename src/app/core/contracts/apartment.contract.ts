@@ -44,7 +44,7 @@ export class ApartmentContract {
 
     public async getApartmentIds() {
         var currentUser = this.authenticationService.getCurrentUser();
-        var estimatedGas = await this.contract.methods.getApartments().estimateGas();
+        var estimatedGas = await this.contract.methods.getApartmentIds().estimateGas();
 
         const transactionObject = {
             from: currentUser.Address,

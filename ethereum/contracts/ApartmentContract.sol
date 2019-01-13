@@ -44,4 +44,11 @@ contract ApartmentContract {
     function getApartmentIds() public view returns(uint32[]) {
         return apartments[msg.sender];
     }
+
+    function getApartmentById(uint32 apartmentId) public view returns(uint32 _id, address _owner, address _tenant,
+        uint32 _postCode, string _city, string _street,
+        uint32 _houseNumber, uint32 _floor, string _description, uint32 _rent, uint32 _deposit, bool _isRented) {
+        ApartmentDetail storage a = apartmentDetails[apartmentId];
+        return (a.id, a.owner, a.tenant, a.postCode, a.city, a.street, a.houseNumber, a.floor, a.description, a.rent, a.deposit, a.isRented);
+    }
 }
