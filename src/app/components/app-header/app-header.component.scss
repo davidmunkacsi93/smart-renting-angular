@@ -41,3 +41,19 @@ span.current-user {
     font-size: 20px;
     margin-right: 4px;
 }
+
+.menu-container {
+    width: 100%;
+}
+
+button.menu-button {
+    background: transparent;
+    border: none;
+    outline: none;
+    padding-right: 18px;
+}
+
+img.menu-button-icon {
+    width: 24px;
+    height: 24px;
+}
