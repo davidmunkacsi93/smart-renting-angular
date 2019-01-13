@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Apartment } from 'src/app/core/model/apartment';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApartmentContract } from 'src/app/core/contracts/apartment.contract';
+import { DialogService } from 'src/app/core/services/dialog.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
   selector: 'app-create-apartment',
@@ -16,7 +19,10 @@ export class CreateApartmentComponent implements OnInit {
   submitted: boolean = false;
 
   constructor(
-    private formBuilder : FormBuilder,
+    private apartmentContract: ApartmentContract,
+    private authenticationService: AuthenticationService,
+    private dialogService: DialogService,
+    private formBuilder: FormBuilder,
     private router: Router
   ) { }
 
@@ -49,6 +55,35 @@ export class CreateApartmentComponent implements OnInit {
     if (this.apartmentForm.invalid) {
       return;
     }
+
+    var currentUser = this.authenticationService.getCurrentUser();
+
+    var apartment : Apartment = {
+      Id: 0,
+      Owner: currentUser.Address,
+      Tenant: null,
+      PostCode: this.form.postCode.value,
+      City: this.form.city.value,
+      Street: this.form.street.value,
+      HouseNumber: this.form.houseNumber.value,
+      Floor: this.form.floor.value,
+      Rent: this.form.rent.value,
+      Deposit: this.form.deposit.value,
+      Description: this.form.description.value,
+      IsRented: false
+    }
+
+    this.loading = true;
+    this.apartmentContract.createApartment(apartment)
+        .then(() => {
+            this.loading = false;
+            this.dialogService.openDialog("Create apartment successful", "Apartment was created successful.");
+            // this.router.navigate(['/home'], { skipLocationChange: true });
+        })
+        .catch(exc => {
+            this.loading = false;
+            this.dialogService.openDialog("Create apartment failed error", exc);
+        });
   }
 
 }

@@ -22,6 +22,7 @@ import { RegisterComponent } from "./components/register/register.component";
 
 import { UserContract } from "./core/contracts/user.contract";
 import { userReducer } from "./core/store/user.reducer";
+import { ApartmentContract } from "./core/contracts/apartment.contract";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,12 @@ import { userReducer } from "./core/store/user.reducer";
       user: userReducer
     })
   ],
-  providers: [AuthenticationService, DialogService, UserContract],
+  providers: [
+    AuthenticationService,
+    DialogService,
+    ApartmentContract,
+    UserContract
+  ],
   entryComponents: [DialogComponent],
   bootstrap: [AppComponent]
 })

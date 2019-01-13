@@ -17,15 +17,9 @@ export class AuthenticationService {
 
   public getCurrentUser(): User {
     var userJSON = localStorage.getItem(CURRENT_USER_KEY);
-    console.log(userJSON);
     if (userJSON === null) return null;
-
-    console.log(userJSON);
-
     var currentUser: User = JSON.parse(userJSON);
-    console.log(currentUser);
-    this.getBalance(currentUser.Address).then(bn => console.log(bn));
-
+    console.log(currentUser)
     return currentUser;
   }
 
