@@ -77,12 +77,12 @@ export class CreateApartmentComponent implements OnInit {
     this.apartmentContract.createApartment(apartment)
         .then(() => {
             this.loading = false;
-            this.dialogService.openDialog("Create apartment successful", "Apartment was created successful.");
+            this.dialogService.openDialog("Create apartment", "Apartment was successfully created.");
             // this.router.navigate(['/home'], { skipLocationChange: true });
         })
         .catch(exc => {
             this.loading = false;
-            this.dialogService.openDialog("Create apartment failed error", exc);
+            this.dialogService.openDialog("Create apartment", exc);
         });
   }
 

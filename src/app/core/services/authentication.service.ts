@@ -19,7 +19,6 @@ export class AuthenticationService {
     var userJSON = localStorage.getItem(CURRENT_USER_KEY);
     if (userJSON === null) return null;
     var currentUser: User = JSON.parse(userJSON);
-    console.log(currentUser)
     return currentUser;
   }
 
