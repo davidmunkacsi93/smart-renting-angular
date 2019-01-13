@@ -11,23 +11,23 @@
             <div class="current-user-row">
                 <span class="current-user">Hello {{username}}! Current balance: {{balanceInEur}} EUR ({{balanceInEth}} ETH)</span>
             </div>
-            <div class="header-row">
-                <div class="menu-container">
-                    <button mat-icon-button [matMenuTriggerFor]="appMenu" class="menu-button float-right">
-                        <img class="menu-button-icon" src="../../../assets/images/ic_menu.png"/>
+        </div>
+        <div class="menu-column">
+            <div class="menu-container">
+                <button mat-icon-button [matMenuTriggerFor]="appMenu" class="menu-button float-right">
+                    <img class="menu-button-icon" src="../../../assets/images/ic_menu.png"/>
+                </button>
+                <mat-menu class="app-menu" #appMenu="matMenu" [overlapTrigger]="false">
+                    <button mat-menu-item class="my-apartments-menu-item">
+                        <span class="app-menu-item-title">My Apartments</span>
                     </button>
-                    <mat-menu class="app-menu" #appMenu="matMenu" [overlapTrigger]="false">
-                        <button mat-menu-item class="my-apartments-menu-item">
-                            <span class="app-menu-item-title">My Apartments</span>
-                        </button>
-                        <button mat-menu-item class="my-rents-menu-item">
-                            <span class="app-menu-item-title">My Rents</span>
-                        </button>
-                        <button mat-menu-item class="logout-menu-item">
-                            <span class="app-menu-item-title">Logout</span>
-                        </button>
-                    </mat-menu>
-                </div>
+                    <button mat-menu-item class="my-rents-menu-item">
+                        <span class="app-menu-item-title">My Rents</span>
+                    </button>
+                    <button mat-menu-item class="logout-menu-item">
+                        <span class="app-menu-item-title">Logout</span>
+                    </button>
+                </mat-menu>
             </div>
         </div>
     </div>

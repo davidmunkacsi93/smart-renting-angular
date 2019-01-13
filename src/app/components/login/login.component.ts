@@ -64,7 +64,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
       .then(user => {
         this.loading = false;
         this.router.navigate(["/home"], { skipLocationChange: false });
-        console.log(user);
         this.store.dispatch(new AddUserAction(user as User));
       })
       .catch(_ => {

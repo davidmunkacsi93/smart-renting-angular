@@ -22,14 +22,9 @@ img.ethereum-logo {
     height: 60px;
 }
 
-.image-row {
-    background-color:#0C374D;
-    height: 80px;
-    display: flex;
-    align-items: center;
-}
-
-.current-user-row {
+.image-row,
+.current-user-row,
+.menu-column {
     background-color:#0C374D;
     height: 80px;
     display: flex;
@@ -42,8 +37,8 @@ span.current-user {
     margin-right: 4px;
 }
 
-.menu-container {
-    width: 100%;
+.menu-column {
+    width: 5%;
 }
 
 button.menu-button {
@@ -56,4 +51,25 @@ button.menu-button {
 img.menu-button-icon {
     width: 24px;
     height: 24px;
+}
+
+mat-menu.app-menu {
+    margin-right: 0px;
+}
+
+::ng-deep .mat-menu-panel {
+    max-width: 372px !important;
+}
+
+::ng-deep .mat-menu-content {
+    padding: 0px !important;
+}
+
+::ng-deep .mat-menu-item {
+    padding: 0 18px !important;
+}
+
+::ng-deep .mat-menu-item:hover {
+    background: #0C374D !important;
+    color: white;
 }
