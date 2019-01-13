@@ -14,10 +14,12 @@ import { AuthenticationService } from "./core/services/authentication.service";
 import { DialogService } from "./core/services/dialog.service";
 
 import { AppHeaderComponent } from "./components/app-header/app-header.component";
+import { CreateApartmentComponent } from './components/create-apartment/create-apartment.component';
 import { DialogComponent } from "./components/dialog/dialog.component";
 import { HomeComponent } from "./components/home/home.component";
 import { LoginComponent } from "./components/login/login.component";
 import { RegisterComponent } from "./components/register/register.component";
+
 import { UserContract } from "./core/contracts/user.contract";
 import { userReducer } from "./core/store/user.reducer";
 
@@ -25,6 +27,7 @@ import { userReducer } from "./core/store/user.reducer";
   declarations: [
     AppComponent,
     AppHeaderComponent,
+    CreateApartmentComponent,
     DialogComponent,
     HomeComponent,
     LoginComponent,

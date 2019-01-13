@@ -38,4 +38,21 @@ export class AppHeaderComponent implements OnInit {
         }
       });
   }
+
+  createApartment() {
+
+  }
+
+  navigateToMyApartments() {
+
+  }
+
+  navigateToMyRents() {
+    
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(["/"], { skipLocationChange: false });
+  }
 }

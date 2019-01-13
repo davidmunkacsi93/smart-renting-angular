@@ -18,16 +18,16 @@
                     <img class="menu-button-icon" src="../../../assets/images/ic_menu.png"/>
                 </button>
                 <mat-menu class="app-menu" #appMenu="matMenu" [overlapTrigger]="false">
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="createApartment()">
                         <span class="app-menu-item-title">Create apartment</span>
                     </button>
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="navigateToMyApartments()">
                         <span class="app-menu-item-title">My Apartments</span>
                     </button>
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="navigateToMyRents()">
                         <span class="app-menu-item-title">My Rents</span>
                     </button>
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="logout()">
                         <span class="app-menu-item-title">Logout</span>
                     </button>
                 </mat-menu>
