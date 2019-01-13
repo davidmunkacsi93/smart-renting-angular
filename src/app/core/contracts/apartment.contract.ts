@@ -34,16 +34,25 @@ export class ApartmentContract {
             gasPrice: estimatedGas
         };
 
-        console.log(transactionObject);
-
         try  {
             var transactionReceipt = await this.callCreateApartment(apartment).send(transactionObject);
-            console.log(transactionReceipt)
             return transactionReceipt;
         } catch (exc) {
-            console.log(exc);
             throw("Creation of the apartment was not successful. " + exc.message)
         }
+    }
+
+    public async getApartmentIds() {
+        var currentUser = this.authenticationService.getCurrentUser();
+        var estimatedGas = await this.contract.methods.getApartments().estimateGas();
+
+        const transactionObject = {
+            from: currentUser.Address,
+            gas: Math.round(estimatedGas*1.5),
+            gasPrice: estimatedGas
+        };
+
+        return this.contract.methods.getApartmentIds().call(transactionObject);
     }
 
     public callCreateApartment(apartment : Apartment) : TransactionObject<any> {

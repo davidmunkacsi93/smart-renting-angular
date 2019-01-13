@@ -41,7 +41,7 @@ contract ApartmentContract {
         apartmentDetails[apartmentId] = apartment;
     }
 
-    function getApartments() public view returns(uint32[]) {
+    function getApartmentIds() public view returns(uint32[]) {
         return apartments[msg.sender];
     }
 }
