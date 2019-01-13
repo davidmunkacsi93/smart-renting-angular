@@ -77,7 +77,7 @@ export class CreateApartmentComponent implements OnInit {
         .then(() => {
             this.loading = false;
             this.dialogService.openDialog("Create apartment", "Apartment was successfully created.");
-            // this.router.navigate(['/home'], { skipLocationChange: true });
+            this.router.navigate(['/home'], { skipLocationChange: true });
         })
         .catch(exc => {
             this.loading = false;
