@@ -1,0 +1,35 @@
+.container {
+    background-color: '#0C374D';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.apartment-form-container {
+    margin-top: 20px;
+    padding: 16px 0 0 0;
+    position: relative;
+    z-index: 1;
+}
+
+.form-group {
+    padding-right: 16px;
+}
+
+span.create-apartment-title {
+    color: white;
+    font-family: 'Roboto-Light';
+    font-size: 36px;
+    align-self: flex-end;
+    text-align: center;
+}
+
+.form-control {
+    width: 300px;
+}
+
+.create-apartment-button {
+    width: 200px;
+}
