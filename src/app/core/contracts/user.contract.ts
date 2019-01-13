@@ -69,7 +69,9 @@ export class UserContract {
         try  {
             var user = await this.contract.methods.authenticate(username, password).call(transactionObject);
             if (user[0]) {
-                return this.parseUserResponse(user);
+                var result = await this.parseUserResponse(user);
+                this.provider.eth.personal.unlockAccount(result.Address, password, 1000);
+                return result;
             }
             throw("Authentication not successful.");
         } catch (exc) {
