@@ -50,7 +50,6 @@ export class CreateApartmentComponent implements OnInit {
   }
 
   onSubmitForm() {
-    console.log(this.apartmentForm);
     this.submitted = true;
     if (this.apartmentForm.invalid) {
       return;

@@ -34,11 +34,14 @@ export class ApartmentContract {
             gasPrice: estimatedGas
         };
 
+        console.log(transactionObject);
+
         try  {
             var transactionReceipt = await this.callCreateApartment(apartment).send(transactionObject);
             console.log(transactionReceipt)
             return transactionReceipt;
         } catch (exc) {
+            console.log(exc);
             throw("Creation of the apartment was not successful. " + exc.message)
         }
     }
