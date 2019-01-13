@@ -5,27 +5,72 @@
                 <span class="create-apartment-title col-sm-12">Create apartment</span>
             </div>
             <div class="margin-top-50">
-                <div class="form-group">
-                    <label for="postCode" class="app-input-label">Post code</label>
-                    <input id="postCode" type="number" class="form-control" formControlName="postCode">
-                    <div *ngIf="form.postCode.errors && submitted" class="validation-message">
-                        <div *ngIf="form.postCode.errors.required">Post code is required.</div>
-                        <div *ngIf="form.postCode.errors.minlength">Post code must be 5 digits.</div>
-                        <div *ngIf="form.postCode.errors.maxlength">Post code must be 5 digits.</div>
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        <label for="postCode" class="app-input-label">Post code</label>
+                        <input id="postCode" type="number" class="form-control" formControlName="postCode">
+                        <div *ngIf="form.postCode.errors && submitted" class="validation-message">
+                            <div *ngIf="form.postCode.errors.required">Post code is required.</div>
+                            <div *ngIf="form.postCode.errors.minlength">Post code must be 5 digits.</div>
+                            <div *ngIf="form.postCode.errors.maxlength">Post code must be 5 digits.</div>
+                        </div>
                     </div>
-                    <label for="city" class="app-input-label">City</label>
-                    <input id="city" type="text" class="form-control" formControlName="city">
-                    <div *ngIf="form.city.errors && submitted" class="validation-message">
-                        <div *ngIf="form.city.errors.required">City is required.</div>
+                    <div class="col-md-9">
+                        <label for="city" class="app-input-label">City</label>
+                        <input id="city" type="text" class="form-control" formControlName="city">
+                        <div *ngIf="form.city.errors && submitted" class="validation-message">
+                            <div *ngIf="form.city.errors.required">City is required.</div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="postCode" class="app-input-label">Post code</label>
-                    <input id="postCode" type="number" class="form-control" formControlName="postCode">
-                    <div *ngIf="form.postCode.errors && submitted" class="validation-message">
-                        <div *ngIf="form.postCode.errors.required">Post code is required.</div>
-                        <div *ngIf="form.postCode.errors.minlength">Post code must be 5 digits.</div>
-                        <div *ngIf="form.postCode.errors.maxlength">Post code must be 5 digits.</div>
+                <div class="form-group row">
+                    <div class="col-md-9">
+                        <label for="street" class="app-input-label">Street</label>
+                        <input id="street" type="text" class="form-control" formControlName="street">
+                        <div *ngIf="form.street.errors && submitted" class="validation-message">
+                            <div *ngIf="form.street.errors.required">Street is required.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="houseNumber" class="app-input-label">House number</label>
+                        <input id="houseNumber" type="number" class="form-control" formControlName="houseNumber">
+                        <div *ngIf="form.houseNumber.errors && submitted" class="validation-message">
+                            <div *ngIf="form.houseNumber.errors.required">House number is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="floor" class="app-input-label">Floor</label>
+                        <input id="floor" type="number" class="form-control" formControlName="floor">
+                        <div *ngIf="form.floor.errors && submitted" class="validation-message">
+                            <div *ngIf="form.floor.errors.required">Floor is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="rent" class="app-input-label">Rent</label>
+                        <input id="rent" type="number" class="form-control" formControlName="rent">
+                        <div *ngIf="form.rent.errors && submitted" class="validation-message">
+                            <div *ngIf="form.rent.errors.required">Rent is required.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="deposit" class="app-input-label">Deposit</label>
+                        <input id="deposit" type="number" class="form-control" formControlName="deposit">
+                        <div *ngIf="form.deposit.errors && submitted" class="validation-message">
+                            <div *ngIf="form.deposit.errors.required">Deposit is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-8">
+                        <label for="description" class="app-input-label">Description</label>
+                        <input id="description" type="textarea" class="form-control" formControlName="description">
+                        <div *ngIf="form.description.errors && submitted" class="validation-message">
+                            <div *ngIf="form.description.errors.required">Description is required.</div>
+                        </div>
                     </div>
                 </div>
                 <button mat-button class="app-button create-apartment-button" type="submit">

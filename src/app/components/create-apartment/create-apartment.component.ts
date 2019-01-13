@@ -22,7 +22,7 @@ export class CreateApartmentComponent implements OnInit {
 
   ngOnInit() {
     this.apartmentForm = this.formBuilder.group({
-      postCode: [0,
+      postCode: ['',
         [
           Validators.required,
           Validators.minLength(5),
@@ -31,11 +31,11 @@ export class CreateApartmentComponent implements OnInit {
       ],
       city: ['', Validators.required],
       street: ['', Validators.required],
-      houseNumber: [0, Validators.required],
-      floor: [0, Validators.required],
+      houseNumber: ['', Validators.required],
+      floor: ['', Validators.required],
       description: ['', Validators.required],
-      rent: [0, Validators.required],
-      deposit: [0, Validators.required]
+      rent: ['', Validators.required],
+      deposit: ['', Validators.required]
     });
   }
 
