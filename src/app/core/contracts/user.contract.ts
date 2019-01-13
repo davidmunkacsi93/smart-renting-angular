@@ -4,6 +4,7 @@ import { Web3Provider } from '../providers/web3.provider'
 import Contract from 'web3/eth/contract';
 import { environment } from 'src/environments/environment';
 import { User } from '../model/user';
+import { Web3Utils, ContractType } from '../utils/web3.utils';
 
 @Injectable()
 export class UserContract {
@@ -12,28 +13,17 @@ export class UserContract {
     private EURO_RATE = 133.14
 
     constructor(
-        @Inject(Web3Provider) private provider : Web3
+        @Inject(Web3Provider) private provider : Web3,
+        private providerUtils : Web3Utils
     ) {
-        var userContractJson = require("../../../contracts-json/UserContract.json");
-        var userContractABI = userContractJson.abi;
-        for (var uKey in userContractJson.networks) {
-            var userContractKey = uKey;
-          }
-        var userContractAddress = userContractJson.networks[userContractKey].address;
-        this.contract = new provider.eth.Contract(userContractABI, userContractAddress);
+        this.contract = this.providerUtils.getContract(ContractType.UserContract);
     }
 
     public async createUser(username : string, password : string, userAddress: string) {
         var estimatedGas = await this.contract.methods.createUser(username, password).estimateGas();
 
-        const transactionObject = {
-            from: userAddress,
-            gas: Math.round(estimatedGas*1.5),
-            gasPrice: estimatedGas
-        };
-
         try  {
-            var transactionReceipt = await this.contract.methods.createUser(username, password).send(transactionObject);
+            var transactionReceipt = await this.contract.methods.createUser(username, password).send(this.providerUtils.createTransaction(estimatedGas, userAddress));
             return transactionReceipt;
         } catch (exc) {
             throw("Registration was not successful. " + exc.message)
@@ -43,14 +33,8 @@ export class UserContract {
     public async isUsernameExisting(username: string) {
         var estimatedGas = await this.contract.methods.isUsernameExisting(username).estimateGas();
 
-        const transactionObject = {
-            from: environment.ethereumMasterAccount,
-            gas: Math.round(estimatedGas*1.5),
-            gasPrice: estimatedGas
-        };
-
         try  {
-            var isExisting = await this.contract.methods.isUsernameExisting(username).call(transactionObject);
+            var isExisting = await this.contract.methods.isUsernameExisting(username).call(this.providerUtils.createTransaction(estimatedGas, environment.ethereumMasterAccount));
             return isExisting;
         } catch (exc) {
             throw("Error during contacting the network. " + exc.message)
@@ -60,14 +44,8 @@ export class UserContract {
     public async authenticate(username: string, password: string) : Promise<User> {
         var estimatedGas = await this.contract.methods.authenticate(username, password).estimateGas();
 
-        const transactionObject = {
-            from: environment.ethereumMasterAccount,
-            gas: Math.round(estimatedGas*1.5),
-            gasPrice: estimatedGas
-        };
-
         try  {
-            var user = await this.contract.methods.authenticate(username, password).call(transactionObject);
+            var user = await this.contract.methods.authenticate(username, password).call(this.providerUtils.createTransaction(estimatedGas, environment.ethereumMasterAccount));
             if (user[0]) {
                 var result = await this.parseUserResponse(user);
                 this.provider.eth.personal.unlockAccount(result.Address, password, 1000);

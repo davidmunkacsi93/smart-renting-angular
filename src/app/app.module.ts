@@ -23,6 +23,7 @@ import { RegisterComponent } from "./components/register/register.component";
 import { UserContract } from "./core/contracts/user.contract";
 import { userReducer } from "./core/store/user.reducer";
 import { ApartmentContract } from "./core/contracts/apartment.contract";
+import { Web3Utils } from "./core/utils/web3.utils";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ApartmentContract } from "./core/contracts/apartment.contract";
     AuthenticationService,
     DialogService,
     ApartmentContract,
-    UserContract
+    UserContract,
+    Web3Utils
   ],
   entryComponents: [DialogComponent],
   bootstrap: [AppComponent]
