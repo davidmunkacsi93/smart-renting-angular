@@ -31,7 +31,9 @@ export class ApartmentContract {
 
     public async getApartmentDetails(apartmentId : number) {
         var estimatedGas = await this.contract.methods.getApartmentIds().estimateGas();
-        return this.contract.methods.getApartmentById(apartmentId).call(this.providerUtils.createTransaction(estimatedGas));
+        return this.contract.methods.getApartmentById(apartmentId)
+            .call(this.providerUtils.createTransaction(estimatedGas))
+            .then(apartment => { return this.parseApartmentResponse(apartment); });
     }
 
     public callCreateApartment(apartment : Apartment) : TransactionObject<any> {

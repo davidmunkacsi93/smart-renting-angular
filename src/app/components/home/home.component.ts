@@ -11,6 +11,8 @@ import { Apartment } from "src/app/core/model/apartment";
 })
 export class HomeComponent implements AfterViewInit, OnInit {
 
+    private apartments : Apartment[];
+
     constructor(
         private apartmentContract: ApartmentContract,
         private authenticationService : AuthenticationService,
@@ -23,14 +25,14 @@ export class HomeComponent implements AfterViewInit, OnInit {
             this.router.navigate(["/"], { skipLocationChange: false });
         }
 
-        var apartmentDetails = [];
+        this.apartments = [];
         this.apartmentContract.getApartmentIds().then(ids => {
             ids.forEach(id => {
-                this.apartmentContract.getApartmentDetails(parseInt(id)).then(apartment => apartmentDetails.push(apartment))
+                this.apartmentContract.getApartmentDetails(parseInt(id)).then(apartment => this.apartments.push(apartment))
             });
         });
 
-        console.log(apartmentDetails);
+        console.log(this.apartments);
     }
 
     ngAfterViewInit(): void {

@@ -40,7 +40,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   navigateToMyApartments() {
-    this.router.navigate(["/"], { skipLocationChange: false });
+    this.router.navigate(["/home"], { skipLocationChange: false });
   }
 
   navigateToMyRents() {
