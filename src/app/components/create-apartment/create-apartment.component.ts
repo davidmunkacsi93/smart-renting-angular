@@ -60,7 +60,9 @@ export class CreateApartmentComponent implements OnInit {
     var apartment : Apartment = {
       Id: 0,
       Owner: currentUser.Address,
+      OwnerName: "",
       Tenant: null,
+      TenantName: "",
       PostCode: this.form.postCode.value,
       City: this.form.city.value,
       Street: this.form.street.value,

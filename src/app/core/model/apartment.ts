@@ -1,7 +1,9 @@
 export class Apartment {
     Id: number;
     Owner: string;
+    OwnerName: string;
     Tenant: string;
+    TenantName: string;
     PostCode: number;
     City: string;
     Street: string;

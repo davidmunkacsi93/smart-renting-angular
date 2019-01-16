@@ -12,11 +12,10 @@ import { UserContract } from "src/app/core/contracts/user.contract";
 })
 export class HomeComponent implements AfterViewInit, OnInit {
 
-    private apartments : Apartment[];
+    private apartments : Apartment[] = [];
 
     constructor(
         private apartmentContract: ApartmentContract,
-        private userContract: UserContract,
         private authenticationService : AuthenticationService,
         private elementRef : ElementRef,
         private router: Router
@@ -30,17 +29,12 @@ export class HomeComponent implements AfterViewInit, OnInit {
         this.apartments = [];
         this.apartmentContract.getApartmentIds().then(ids => {
             ids.forEach(id => {
-                this.apartmentContract.getApartmentDetails(parseInt(id)).then(apartment => this.apartments.push(apartment))
+                this.apartmentContract.getApartmentDetails(parseInt(id)).then(apartment => {
+                    this.apartments.push(apartment)
+                });
             });
         });
-
-        console.log(this.apartments)
-        console.log(this.apartments[0]);
-
-        this.apartments.forEach(app => {
-            console.log(app);
-            this.userContract.getUsername(app.Owner).then(owner => console.log(owner))
-        });
+        console.log(this.apartments);
     }
 
     ngAfterViewInit(): void {
