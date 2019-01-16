@@ -25,24 +25,30 @@
 img.card-icon {
     margin-left: 16px;
     margin-right: 16px;
-    width: 30px;
+    width: 40px;
+}
+
+button.app-button {
+    margin-bottom: 10px;
 }
 
 .card-content {
+    padding-left: 16px;
     padding-top: 16px;
     padding-bottom: 16px;
 }
 
 span.card-title {
     font-family: 'Roboto-Light';
-    font-size: 16px;
-    font-weight: 300;
+    font-size: 30px;
+    font-weight: 400;
 }
 
 span.card-data {
+    padding-top: 16px;
     display: block;
     font-family: 'Roboto-Regular';
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 300;
     white-space: pre-wrap;
 }

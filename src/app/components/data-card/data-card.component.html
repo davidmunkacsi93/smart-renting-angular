@@ -2,10 +2,22 @@
   <div class="row">
       <img class="card-icon" src="../../../assets/images/ic_card_home.png" />
       <div class="card-content">
-          <span class="card-title">{{address}}</span>
-          <div>
-              <span class="card-data">blabla</span>
+        <span class="card-title">{{address}}</span>
+        <div>
+            <span class="card-data">Rent: {{rent}} EUR</span>
+        </div>
+        <div>
+            <span class="card-data">Deposit: {{deposit}} EUR</span>
+        </div>
+        <div *ngIf="isRented">
+            <span class="card-data">Rented by {{tenantName}}</span>
           </div>
+        <div *ngIf="!isRented">
+            <span class="card-data">Not rented yet</span>
+        </div>
       </div>
   </div>
+  <button mat-button class="app-button" (click)="navigateToApartment(apartmentId)">
+      Open
+  </button>
 </div>

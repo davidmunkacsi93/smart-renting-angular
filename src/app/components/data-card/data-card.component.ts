@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Apartment } from 'src/app/core/model/apartment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-data-card',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataCardComponent implements OnInit {
 
-  constructor() { }
+  @Input() apartmentId: number;
+  @Input() address: string;
+  @Input() deposit: number;
+  @Input() rent: number;
+  @Input() isRented: boolean;
+
+  constructor(private router : Router) { }
 
   ngOnInit() {
+  }
+
+  navigateToApartment(apartmentId : number) {
+    this.router.navigate(["/apartmentDetail/" + apartmentId], { skipLocationChange: false })
   }
 
 }

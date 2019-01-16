@@ -34,7 +34,6 @@ export class HomeComponent implements AfterViewInit, OnInit {
                 });
             });
         });
-        console.log(this.apartments);
     }
 
     ngAfterViewInit(): void {
