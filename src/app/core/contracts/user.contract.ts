@@ -21,24 +21,12 @@ export class UserContract {
 
     public async createUser(username : string, password : string, userAddress: string) {
         var estimatedGas = await this.contract.methods.createUser(username, password).estimateGas();
-
-        try  {
-            var transactionReceipt = await this.contract.methods.createUser(username, password).send(this.providerUtils.createTransaction(estimatedGas, userAddress));
-            return transactionReceipt;
-        } catch (exc) {
-            throw("Registration was not successful. " + exc.message)
-        }
+        return this.contract.methods.createUser(username, password).send(this.providerUtils.createTransaction(estimatedGas, userAddress));
     }
 
     public async isUsernameExisting(username: string) {
         var estimatedGas = await this.contract.methods.isUsernameExisting(username).estimateGas();
-
-        try  {
-            var isExisting = await this.contract.methods.isUsernameExisting(username).call(this.providerUtils.createTransaction(estimatedGas, environment.ethereumMasterAccount));
-            return isExisting;
-        } catch (exc) {
-            throw("Error during contacting the network. " + exc.message)
-        }
+        return this.contract.methods.isUsernameExisting(username).call(this.providerUtils.createTransaction(estimatedGas, environment.ethereumMasterAccount));
     }
 
     public async authenticate(username: string, password: string) : Promise<User> {

@@ -2,6 +2,7 @@ import { Component, ElementRef, AfterViewInit, OnInit } from "@angular/core";
 import { AuthenticationService } from "src/app/core/services/authentication.service";
 import { Router } from "@angular/router";
 import { ApartmentContract } from "src/app/core/contracts/apartment.contract";
+import { Apartment } from "src/app/core/model/apartment";
 
 @Component({
     selector: 'app-home',
@@ -22,7 +23,14 @@ export class HomeComponent implements AfterViewInit, OnInit {
             this.router.navigate(["/"], { skipLocationChange: false });
         }
 
-        this.apartmentContract.getApartmentIds().then(ids => console.log(ids));
+        var apartmentDetails = [];
+        this.apartmentContract.getApartmentIds().then(ids => {
+            ids.forEach(id => {
+                this.apartmentContract.getApartmentDetails(parseInt(id)).then(apartment => apartmentDetails.push(apartment))
+            });
+        });
+
+        console.log(apartmentDetails);
     }
 
     ngAfterViewInit(): void {
