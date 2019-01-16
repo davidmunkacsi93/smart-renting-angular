@@ -1,3 +1,5 @@
-<div class="container">
-    <app-data-card *ngFor="let apartment of apartments"></app-data-card>
+<div class="container row">
+    <div *ngFor="let apartment of apartments" class="col-md-6">
+        <app-data-card></app-data-card>
+    </div>
 </div>
