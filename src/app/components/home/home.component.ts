@@ -3,6 +3,7 @@ import { AuthenticationService } from "src/app/core/services/authentication.serv
 import { Router } from "@angular/router";
 import { ApartmentContract } from "src/app/core/contracts/apartment.contract";
 import { Apartment } from "src/app/core/model/apartment";
+import { UserContract } from "src/app/core/contracts/user.contract";
 
 @Component({
     selector: 'app-home',
@@ -15,6 +16,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
     constructor(
         private apartmentContract: ApartmentContract,
+        private userContract: UserContract,
         private authenticationService : AuthenticationService,
         private elementRef : ElementRef,
         private router: Router
@@ -32,7 +34,13 @@ export class HomeComponent implements AfterViewInit, OnInit {
             });
         });
 
-        console.log(this.apartments);
+        console.log(this.apartments)
+        console.log(this.apartments[0]);
+
+        this.apartments.forEach(app => {
+            console.log(app);
+            this.userContract.getUsername(app.Owner).then(owner => console.log(owner))
+        });
     }
 
     ngAfterViewInit(): void {

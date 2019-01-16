@@ -45,6 +45,13 @@ export class UserContract {
         }
     }
 
+    public async getUsername(address: string): Promise<string> {
+        var estimatedGas = await this.contract.methods.getUsername(address).estimateGas();
+        console.log(this.contract.methods);
+        return this.contract.methods.getUsername(address).call(this.providerUtils.createTransaction(estimatedGas));
+
+    }
+
     private async parseUserResponse(userResponse) : Promise<User> {
         var user : User = {
             Username: userResponse[1],
