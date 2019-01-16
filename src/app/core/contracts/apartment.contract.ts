@@ -42,19 +42,18 @@ export class ApartmentContract {
     }
 
     private async parseApartmentResponse(apartmentResponse) : Promise<Apartment> {
-        console.log(apartmentResponse);
         var apartment : Apartment = {
-            Id: apartmentResponse[0],
+            Id: parseInt(apartmentResponse[0]),
             Owner: apartmentResponse[1],
             Tenant: apartmentResponse[2],
-            PostCode: apartmentResponse[3],
+            PostCode: parseInt(apartmentResponse[3]),
             City: apartmentResponse[4],
             Street: apartmentResponse[5],
-            HouseNumber: apartmentResponse[6],
-            Floor: apartmentResponse[7],
+            HouseNumber: parseInt(apartmentResponse[6]),
+            Floor: parseInt(apartmentResponse[7]),
             Description: apartmentResponse[8],
-            Rent: apartmentResponse[9],
-            Deposit: apartmentResponse[10],
+            Rent: parseInt(apartmentResponse[9]),
+            Deposit: parseInt(apartmentResponse[10]),
             IsRented: apartmentResponse[11]
         }
 
