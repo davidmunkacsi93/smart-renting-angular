@@ -29,6 +29,7 @@
             ],
             "styles": [
               "src/themes/app-theme.scss",
+              "node_modules/angular-notifier/styles/core.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []

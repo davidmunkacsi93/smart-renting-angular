@@ -28,6 +28,7 @@ import { DataCardComponent } from './components/data-card/data-card.component';
 import { BrowseApartmentsComponent } from './components/browse-apartments/browse-apartments.component';
 import { AuthenticationGuard } from "./core/guards/authentication-guard";
 import { ApartmentDetailComponent } from './components/apartment-detail/apartment-detail.component';
+import { NotifierModule } from "angular-notifier";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ApartmentDetailComponent } from './components/apartment-detail/apartmen
     BrowserModule,
     FormsModule,
     MaterialModule,
+    NotifierModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     StoreModule.forRoot({

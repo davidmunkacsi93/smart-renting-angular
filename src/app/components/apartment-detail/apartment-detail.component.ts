@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApartmentContract } from 'src/app/core/contracts/apartment.contract';
 import { Apartment } from 'src/app/core/model/apartment';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -16,6 +17,7 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   private loading: boolean;
 
   constructor(
+    private notifierService : NotifierService,
     private elementRef : ElementRef,
     private route: ActivatedRoute,
     private apartmentContract: ApartmentContract,
@@ -42,14 +44,11 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.apartmentContract.rentApartment(this.apartment)
       .then(() => {
-        console.log("Success");
-        // Successful notification.
+        this.notifierService.notify("success", "Succesful payment!");
         this.loading = false;
-
       })
-      .catch(() => {
-        // Error notification.
-        console.log("Error");
+      .catch(exc => {
+        this.notifierService.notify("error", exc.Message);        
         this.loading = false;
       });
   }

@@ -66,6 +66,11 @@ export class ApartmentContract {
 
     public async rentApartment(apartment: Apartment) {
         var currentUser = this.providerUtils.getCurrentUser();
+
+        if (currentUser.BalanceInEur < (apartment.Deposit + apartment.Rent)) {
+            throw "Insufficient funds.";
+        }
+
         await this.transferAmount(currentUser.Address, apartment.Owner, apartment.Deposit, PaymentType.Deposit);
         await this.transferAmount(currentUser.Address, apartment.Owner, apartment.Rent, PaymentType.Rent);
     }
