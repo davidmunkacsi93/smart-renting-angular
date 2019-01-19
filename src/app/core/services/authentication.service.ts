@@ -5,7 +5,7 @@ import { UserContract } from "../contracts/user.contract";
 import { environment } from "../../../environments/environment";
 import { User } from "../model/user";
 
-const INITIAL_BALANCE = Math.pow(10, 19);
+const INITIAL_BALANCE = 5*Math.pow(10, 19);
 const CURRENT_USER_KEY = "currentUser";
 
 @Injectable()
