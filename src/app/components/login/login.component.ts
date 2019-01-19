@@ -44,8 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {}
 
   ngAfterViewInit() {
-    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
-      "#0C374D";
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = "#0C374D";
   }
 
   get form() {
