@@ -7,6 +7,7 @@ import { AuthenticationService } from "../services/authentication.service";
 import { TransactionObject } from "web3/eth/types";
 import { Web3Utils, ContractType, PaymentType } from "../utils/web3.utils";
 import { UserContract } from "./user.contract";
+import { NotifierService } from "angular-notifier";
 
 @Injectable()
 export class ApartmentContract {
@@ -16,7 +17,8 @@ export class ApartmentContract {
     constructor(
         @Inject(Web3Provider) private provider : Web3,
         private providerUtils : Web3Utils,
-        private userContract : UserContract
+        private userContract : UserContract,
+        private notifierService: NotifierService
     ) {
         this.apartmentContract = this.providerUtils.getContract(ContractType.ApartmentContract);
     }
@@ -45,23 +47,14 @@ export class ApartmentContract {
 
     public async transferAmount(from: string, to: string, amount: number, paymentType: PaymentType) {
         var amountInEther = (amount / this.providerUtils.EURO_RATE).toString();
-        try {
-            console.log(amountInEther)
-            var amountInWei = this.provider.utils.toWei(amountInEther, "ether");
-        } catch (exc) {
-            console.log(exc)
-        }
+        var amountInWei = this.provider.utils.toWei(amountInEther, "ether");
 
-        console.log(amountInWei);
         const transactionObject = {
           from: from,
           to: to,
           value: amountInWei
         };
-        console.log(transactionObject);
         return this.provider.eth.sendTransaction(transactionObject)
-            .then(() => console.log("Payment successful."))
-            .catch(() => console.log("Error during payment."))
     }
 
     public async rentApartment(apartment: Apartment) {
@@ -71,8 +64,21 @@ export class ApartmentContract {
             throw "Insufficient funds.";
         }
 
-        await this.transferAmount(currentUser.Address, apartment.Owner, apartment.Deposit, PaymentType.Deposit);
-        await this.transferAmount(currentUser.Address, apartment.Owner, apartment.Rent, PaymentType.Rent);
+        return this.transferAmount(currentUser.Address, apartment.Owner, apartment.Deposit, PaymentType.Deposit)
+        .then(() => {
+            this.notifierService.notify("success", "Transferring " + apartment.Deposit + " € deposit successful.");
+            return this.transferAmount(currentUser.Address, apartment.Owner, apartment.Rent, PaymentType.Rent)
+            .then(() => {
+                this.notifierService.notify("success", "Transferring " + apartment.Rent + " € rent successful.");
+            })
+            .catch(async () => {
+                await this.transferAmount(apartment.Owner, currentUser.Address,  apartment.Deposit, PaymentType.Deposit)
+                this.notifierService.notify("error", "Transferring rent not successful. Payment cancelled.");
+            });
+        })
+        .catch(() => {
+            this.notifierService.notify("error", "Transferring deposit not successful. Payment cancelled.");
+        });
     }
 
     public callCreateApartment(apartment : Apartment) : TransactionObject<any> {

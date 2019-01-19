@@ -28,7 +28,47 @@ import { DataCardComponent } from './components/data-card/data-card.component';
 import { BrowseApartmentsComponent } from './components/browse-apartments/browse-apartments.component';
 import { AuthenticationGuard } from "./core/guards/authentication-guard";
 import { ApartmentDetailComponent } from './components/apartment-detail/apartment-detail.component';
-import { NotifierModule } from "angular-notifier";
+import { NotifierModule, NotifierOptions } from "angular-notifier";
+
+const customNotifierOptions: NotifierOptions = {
+	position: {
+		horizontal: {
+			position: 'right',
+			distance: 20
+		},
+		vertical: {
+			position: 'top',
+			distance: 20,
+			gap: 10
+		}
+	},
+	theme: 'material',
+	behaviour: {
+		autoHide: 5000,
+		onClick: false,
+		onMouseover: 'pauseAutoHide',
+		showDismissButton: true,
+	},
+	animations: {
+		enabled: true,
+		show: {
+			preset: 'slide',
+			speed: 300,
+			easing: 'ease'
+		},
+		hide: {
+			preset: 'fade',
+			speed: 300,
+			easing: 'ease',
+			offset: 50
+		},
+		shift: {
+			speed: 300,
+			easing: 'ease'
+		},
+		overlap: 150
+	}
+};
 
 @NgModule({
   declarations: [
@@ -48,7 +88,7 @@ import { NotifierModule } from "angular-notifier";
     BrowserModule,
     FormsModule,
     MaterialModule,
-    NotifierModule,
+    NotifierModule.withConfig(customNotifierOptions),
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     StoreModule.forRoot({

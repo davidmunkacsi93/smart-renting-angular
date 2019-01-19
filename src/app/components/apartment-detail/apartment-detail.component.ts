@@ -40,16 +40,16 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#829356';
   }
 
-  rentApartment() {
+  async rentApartment() {
     this.loading = true;
     this.apartmentContract.rentApartment(this.apartment)
-      .then(() => {
-        this.notifierService.notify("success", "Succesful payment!");
-        this.loading = false;
-      })
-      .catch(exc => {
-        this.notifierService.notify("error", exc.Message);        
-        this.loading = false;
-      });
+    .then(() => {
+      this.notifierService.notify("success", "Succesful payment!");
+      this.loading = false;
+    })
+    .catch(exc => {
+      this.notifierService.notify("error", exc);        
+      this.loading = false;
+    });
   }
 }
