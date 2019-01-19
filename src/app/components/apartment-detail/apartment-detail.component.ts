@@ -13,6 +13,7 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
 
   private apartment : Apartment;
   private ownApartment : boolean;
+  private loading: boolean;
 
   constructor(
     private elementRef : ElementRef,
@@ -37,7 +38,19 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#829356';
   }
 
-  rentApartment(apartmentId) {
-    console.log("Renting apartment..");
+  rentApartment() {
+    this.loading = true;
+    this.apartmentContract.rentApartment(this.apartment)
+      .then(() => {
+        console.log("Success");
+        // Successful notification.
+        this.loading = false;
+
+      })
+      .catch(() => {
+        // Error notification.
+        console.log("Error");
+        this.loading = false;
+      });
   }
 }

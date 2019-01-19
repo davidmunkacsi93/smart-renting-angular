@@ -43,24 +43,31 @@ export class ApartmentContract {
             .then(apartment => { return this.parseApartmentResponse(apartment); });
     }
 
-    public async payRent(rent: number) {
-
-    }
-
     public async transferAmount(from: string, to: string, amount: number, paymentType: PaymentType) {
-        var amountInEther = this.provider.utils.toWei(amount / this.providerUtils.EURO_RATE, "ether");
+        var amountInEther = (amount / this.providerUtils.EURO_RATE).toString();
+        try {
+            console.log(amountInEther)
+            var amountInWei = this.provider.utils.toWei(amountInEther, "ether");
+        } catch (exc) {
+            console.log(exc)
+        }
+
+        console.log(amountInWei);
         const transactionObject = {
           from: from,
           to: to,
-          value: amountInEther
+          value: amountInWei
         };
+        console.log(transactionObject);
         return this.provider.eth.sendTransaction(transactionObject)
             .then(() => console.log("Payment successful."))
             .catch(() => console.log("Error during payment."))
     }
 
     public async rentApartment(apartment: Apartment) {
-        await this.transferAmount(apartment.Tenant, apartment.Owner, apartment.Deposit, PaymentType.Deposit);
+        var currentUser = this.providerUtils.getCurrentUser();
+        await this.transferAmount(currentUser.Address, apartment.Owner, apartment.Deposit, PaymentType.Deposit);
+        await this.transferAmount(currentUser.Address, apartment.Owner, apartment.Rent, PaymentType.Rent);
     }
 
     public callCreateApartment(apartment : Apartment) : TransactionObject<any> {

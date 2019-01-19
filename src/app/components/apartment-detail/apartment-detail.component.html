@@ -26,4 +26,5 @@
   <button *ngIf="!ownApartment" mat-button class="app-button" (click)="rentApartment(apartmentId)">
       Rent apartment
   </button>
+  <mat-spinner *ngIf=loading class="loading-spinner"></mat-spinner>
 </div>
