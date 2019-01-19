@@ -22,10 +22,6 @@ export class HomeComponent implements AfterViewInit, OnInit {
     ) {}
 
     ngOnInit() {
-        if (this.authenticationService.isAuthenticated() === false) {
-            this.router.navigate(["/"], { skipLocationChange: false });
-        }
-
         this.apartments = [];
         this.apartmentContract.getApartmentIds().then(ids => {
             ids.forEach(id => {

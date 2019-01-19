@@ -23,7 +23,7 @@ export class DataCardComponent implements OnInit {
   }
 
   navigateToApartment(apartmentId : number) {
-    this.router.navigate(["/apartmentDetail/" + apartmentId], { skipLocationChange: false })
+    this.router.navigate(["/apartment-detail/" + apartmentId], { skipLocationChange: false })
   }
 
 }

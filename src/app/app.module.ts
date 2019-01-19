@@ -27,6 +27,7 @@ import { Web3Utils } from "./core/utils/web3.utils";
 import { DataCardComponent } from './components/data-card/data-card.component';
 import { BrowseApartmentsComponent } from './components/browse-apartments/browse-apartments.component';
 import { AuthenticationGuard } from "./core/guards/authentication-guard";
+import { ApartmentDetailComponent } from './components/apartment-detail/apartment-detail.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AuthenticationGuard } from "./core/guards/authentication-guard";
     LoginComponent,
     RegisterComponent,
     DataCardComponent,
-    BrowseApartmentsComponent
+    BrowseApartmentsComponent,
+    ApartmentDetailComponent
   ],
   imports: [
     BrowserAnimationsModule,

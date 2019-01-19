@@ -24,6 +24,9 @@ export class AppHeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (this.authenticationService.isAuthenticated() === false) {
+      this.router.navigate(["/"], { skipLocationChange: false });
+    }
     this.userSubscription = this.store
       .select(state => state.user)
       .subscribe(user => {
