@@ -34,11 +34,16 @@ export class Web3Utils {
         return new this.provider.eth.Contract(contractABI, contractAddress);
     }
 
+    public getCurrentUser = () : User => {
+        var userJSON = localStorage.getItem(CURRENT_USER_KEY);
+        if (userJSON === null) return null;
+        var currentUser : User = JSON.parse(userJSON);
+        return currentUser;
+    }
+
     public createTransaction =  (estimatedGas, address?) => {
         if (address === undefined) {
-            var userJSON = localStorage.getItem(CURRENT_USER_KEY);
-            if (userJSON === null) return null;
-            var currentUser : User = JSON.parse(userJSON);
+            var currentUser = this.getCurrentUser();
         }
 
         return {

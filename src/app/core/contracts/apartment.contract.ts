@@ -31,7 +31,12 @@ export class ApartmentContract {
         return this.apartmentContract.methods.getApartmentIds().call(this.providerUtils.createTransaction(estimatedGas));
     }
 
-    public async getApartmentDetails(apartmentId : number) {
+    public async getApartmentIdsByAddress(address : string) {
+        var estimatedGas = await this.apartmentContract.methods.getApartmentIds().estimateGas();
+        return this.apartmentContract.methods.getApartmentIds().call(this.providerUtils.createTransaction(estimatedGas, address));
+    }
+
+    public async getApartmentDetails(apartmentId) {
         var estimatedGas = await this.apartmentContract.methods.getApartmentIds().estimateGas();
         return this.apartmentContract.methods.getApartmentById(apartmentId)
             .call(this.providerUtils.createTransaction(estimatedGas))
@@ -41,6 +46,27 @@ export class ApartmentContract {
     public callCreateApartment(apartment : Apartment) : TransactionObject<any> {
         return this.apartmentContract.methods.createApartment(apartment.PostCode, apartment.City, apartment.Street, apartment.HouseNumber, apartment.Floor, apartment.Description,
             apartment.Rent, apartment.Deposit);
+    }
+
+    public async getAvailableApartments() : Promise<Apartment[]> {
+        var accounts = await this.provider.eth.getAccounts();
+        var currentUser = this.providerUtils.getCurrentUser();
+
+        var availableApartments = [];
+        var otherAccounts = accounts.filter(val => val !== currentUser.Address)
+        
+        await otherAccounts.forEach(async (account) => {
+            var apartmentIds = await this.getApartmentIdsByAddress(account);
+
+            await apartmentIds.forEach(async (apartmentId) => {
+                var apartment = await this.getApartmentDetails(apartmentId);
+                if (apartment.IsRented === false) {
+                    availableApartments.push(apartment);
+                }
+            });
+        });
+
+        return availableApartments;
     }
 
     private async parseApartmentResponse(apartmentResponse) : Promise<Apartment> {

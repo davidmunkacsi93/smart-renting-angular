@@ -25,6 +25,7 @@ import { userReducer } from "./core/store/user.reducer";
 import { ApartmentContract } from "./core/contracts/apartment.contract";
 import { Web3Utils } from "./core/utils/web3.utils";
 import { DataCardComponent } from './components/data-card/data-card.component';
+import { BrowseApartmentsComponent } from './components/browse-apartments/browse-apartments.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { DataCardComponent } from './components/data-card/data-card.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    DataCardComponent
+    DataCardComponent,
+    BrowseApartmentsComponent
   ],
   imports: [
     BrowserAnimationsModule,
