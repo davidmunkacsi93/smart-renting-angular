@@ -5,7 +5,7 @@ import { Web3Provider } from "../providers/web3.provider";
 import { Apartment } from "../model/apartment";
 import { AuthenticationService } from "../services/authentication.service";
 import { TransactionObject } from "web3/eth/types";
-import { Web3Utils, ContractType } from "../utils/web3.utils";
+import { Web3Utils, ContractType, PaymentType } from "../utils/web3.utils";
 import { UserContract } from "./user.contract";
 
 @Injectable()
@@ -41,6 +41,26 @@ export class ApartmentContract {
         return this.apartmentContract.methods.getApartmentById(apartmentId)
             .call(this.providerUtils.createTransaction(estimatedGas))
             .then(apartment => { return this.parseApartmentResponse(apartment); });
+    }
+
+    public async payRent(rent: number) {
+
+    }
+
+    public async transferAmount(from: string, to: string, amount: number, paymentType: PaymentType) {
+        var amountInEther = this.provider.utils.toWei(amount / this.providerUtils.EURO_RATE, "ether");
+        const transactionObject = {
+          from: from,
+          to: to,
+          value: amountInEther
+        };
+        return this.provider.eth.sendTransaction(transactionObject)
+            .then(() => console.log("Payment successful."))
+            .catch(() => console.log("Error during payment."))
+    }
+
+    public async rentApartment(apartment: Apartment) {
+        await this.transferAmount(apartment.Tenant, apartment.Owner, apartment.Deposit, PaymentType.Deposit);
     }
 
     public callCreateApartment(apartment : Apartment) : TransactionObject<any> {

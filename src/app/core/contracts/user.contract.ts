@@ -10,8 +10,6 @@ import { Web3Utils, ContractType } from '../utils/web3.utils';
 export class UserContract {
     private contract : Contract
 
-    private EURO_RATE = 133.14
-
     constructor(
         @Inject(Web3Provider) private provider : Web3,
         private providerUtils : Web3Utils
@@ -61,7 +59,7 @@ export class UserContract {
         var balanceInWei = await this.provider.eth.getBalance(user.Address);
         var balanceInEth = this.provider.utils.fromWei(balanceInWei, "ether").toString();
         user.BalanceInEth = parseInt(balanceInEth);
-        user.BalanceInEur = user.BalanceInEth * this.EURO_RATE;
+        user.BalanceInEur = user.BalanceInEth * this.providerUtils.EURO_RATE;
 
         return user;
     }

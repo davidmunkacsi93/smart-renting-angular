@@ -10,8 +10,14 @@ export const enum ContractType {
     ApartmentContract, UserContract
 }
 
+export const enum PaymentType {
+    Rent, Deposit
+}
+
 @Injectable()
 export class Web3Utils {
+
+    public EURO_RATE = 133.14;
 
     constructor(
         @Inject(Web3Provider) private provider : Web3
