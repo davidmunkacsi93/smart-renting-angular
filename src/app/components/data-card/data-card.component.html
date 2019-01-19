@@ -2,6 +2,9 @@
   <div class="row">
       <img class="card-icon" src="../../../assets/images/ic_card_home.png" />
       <div class="card-content">
+        <div *ngIf="browsing">
+            <span class="card-title">Owner {{ownerName}}</span>
+        </div>
         <span class="card-title">{{address}}</span>
         <div>
             <span class="card-data">Rent: {{rent}} EUR</span>

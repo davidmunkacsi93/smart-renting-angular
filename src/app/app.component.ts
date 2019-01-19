@@ -10,12 +10,11 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private router : Router
+    private authenticationService: AuthenticationService
   ) {}
 
   @HostListener('window:beforeunload')
   autoLogout() {
-
+    this.authenticationService.logout();
   }
 }
