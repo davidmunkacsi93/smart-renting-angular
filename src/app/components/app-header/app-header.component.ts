@@ -43,8 +43,12 @@ export class AppHeaderComponent implements OnInit {
     this.router.navigate(["/home"], { skipLocationChange: false });
   }
 
+  navigateToBrowseApartments() {
+    this.router.navigate(["/browse-apartments"], { skipLocationChange: false });
+  }
+
   navigateToMyRents() {
-    this.router.navigate(["/"], { skipLocationChange: false });
+    this.router.navigate(["/my-rents"], { skipLocationChange: false });
   }
 
   logout() {
