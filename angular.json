@@ -32,6 +32,7 @@
               "node_modules/angular-notifier/styles/core.css",
               "node_modules/angular-notifier/styles/themes/theme-material.css",
               "node_modules/angular-notifier/styles/types/type-error.css",
+              "node_modules/angular-notifier/styles/types/type-info.css",
               "node_modules/angular-notifier/styles/types/type-success.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],

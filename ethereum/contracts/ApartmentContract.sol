@@ -24,6 +24,13 @@ contract ApartmentContract {
         bool isRented;
     }
 
+    event PaymentReceived(
+        address from,
+        address to,
+        string username,
+        uint32 value
+    );
+
     function getId() private returns(uint32) {
         return apartmentCounter++;
     }
@@ -50,5 +57,9 @@ contract ApartmentContract {
         uint32 _houseNumber, uint32 _floor, string _description, uint32 _rent, uint32 _deposit, bool _isRented) {
         ApartmentDetail storage a = apartmentDetails[apartmentId];
         return (a.id, a.owner, a.tenant, a.postCode, a.city, a.street, a.houseNumber, a.floor, a.description, a.rent, a.deposit, a.isRented);
+    }
+
+    function firePayment(address _to, string _username, uint32 _value) public {
+        emit PaymentReceived(msg.sender, _to, _username, _value);
     }
 }
