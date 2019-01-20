@@ -5,5 +5,5 @@ import { environment } from "../../../environments/environment";
 
 export const Web3Provider = new InjectionToken<Web3>('web3', {
   providedIn: 'root',
-  factory: () => new Web3(environment.ethereumDevelopmentUrl)
+  factory: () => new Web3(new Web3.providers.HttpProvider(environment.ethereumDevelopmentUrl))
 });

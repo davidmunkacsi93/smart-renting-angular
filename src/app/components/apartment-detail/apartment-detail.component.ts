@@ -34,6 +34,10 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
         this.ownApartment = apartment.Owner == currentUser.Address;
       });
     });
+    this.apartmentContract.getContract().events.Payment({fromBlock: 0}, (err, res) => {
+      console.log(err);
+      console.log(res);
+    })
   }
 
   ngAfterViewInit(): void {
