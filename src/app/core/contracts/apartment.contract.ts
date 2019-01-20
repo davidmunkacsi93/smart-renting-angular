@@ -67,8 +67,9 @@ export class ApartmentContract {
         return this.transferAmount(currentUser.Address, apartment.Owner, apartment.Deposit, PaymentType.Deposit)
         .then(() => {
             this.notifierService.notify("success", "Transferring " + apartment.Deposit + " € deposit successful.");
+
             return this.transferAmount(currentUser.Address, apartment.Owner, apartment.Rent, PaymentType.Rent)
-            .then(() => {
+            .then(async () => {
                 this.notifierService.notify("success", "Transferring " + apartment.Rent + " € rent successful.");
             })
             .catch(async () => {
@@ -76,7 +77,8 @@ export class ApartmentContract {
                 this.notifierService.notify("error", "Transferring rent not successful. Payment cancelled.");
             });
         })
-        .catch(() => {
+        .catch((exc) => {
+            console.log(exc);
             this.notifierService.notify("error", "Transferring deposit not successful. Payment cancelled.");
         });
     }
@@ -107,8 +109,15 @@ export class ApartmentContract {
         return availableApartments;
     }
 
-    public paymentEvent() { 
-        return this.apartmentContract.events.Payment();
+    public async firePaymentEvent(to, amount) {
+        var currentUser = this.providerUtils.getCurrentUser();
+        var paymentEstimatedGas = await this.apartmentContract.methods.firePayment(to, currentUser.Username, amount).estimateGas();
+        return this.apartmentContract.methods.firePayment(to, currentUser.Username, amount)
+            .send(this.providerUtils.createTransaction(paymentEstimatedGas));
+    }
+
+    public getContract() : Contract {
+        return this.apartmentContract;
     }
 
     private async parseApartmentResponse(apartmentResponse) : Promise<Apartment> {

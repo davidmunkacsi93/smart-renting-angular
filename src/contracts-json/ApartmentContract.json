@@ -1069,7 +1069,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 228,
+                          "referencedDeclaration": 446,
                           "src": "1155:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -1397,7 +1397,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 228,
+                            "referencedDeclaration": 446,
                             "src": "1300:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1803,7 +1803,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 228,
+                        "referencedDeclaration": 446,
                         "src": "1483:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -2748,7 +2748,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 228,
+                          "referencedDeclaration": 446,
                           "src": "2116:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -3859,7 +3859,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 228,
+                          "referencedDeclaration": 446,
                           "src": "1155:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -4187,7 +4187,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 228,
+                            "referencedDeclaration": 446,
                             "src": "1300:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -4593,7 +4593,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 228,
+                        "referencedDeclaration": 446,
                         "src": "1483:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -5538,7 +5538,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 228,
+                          "referencedDeclaration": 446,
                           "src": "2116:3:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -5770,10 +5770,10 @@
     "5": {
       "events": {},
       "links": {},
-      "address": "0x7ace882f4ca0dd53faa2b903c3b40d8c6f1176d8",
-      "transactionHash": "0x207cb7b2bee14221c7c796a6debaa361bece83e6aef0f10173ff7eb3046f027e"
+      "address": "0xc7ecedbb9b2a4941ba8017e535de8850a53803de",
+      "transactionHash": "0xa7e3eacd2ec6320cfca6405fa963c1a1ee8a4afaa7fb3eba13a608ed7ea5aa9c"
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-20T11:52:29.552Z"
+  "updatedAt": "2019-01-20T13:24:02.501Z"
 }
