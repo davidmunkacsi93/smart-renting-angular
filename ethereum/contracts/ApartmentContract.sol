@@ -24,7 +24,7 @@ contract ApartmentContract {
         bool isRented;
     }
 
-    event PaymentReceived(
+    event Payment(
         address from,
         address to,
         string username,
@@ -60,6 +60,6 @@ contract ApartmentContract {
     }
 
     function firePayment(address _to, string _username, uint32 _value) public {
-        emit PaymentReceived(msg.sender, _to, _username, _value);
+        emit Payment(msg.sender, _to, _username, _value);
     }
 }

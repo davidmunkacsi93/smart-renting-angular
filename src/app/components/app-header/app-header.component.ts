@@ -1,9 +1,12 @@
-import { OnInit, Component, AfterViewInit } from "@angular/core";
+import { OnInit, Component, AfterViewInit, Inject } from "@angular/core";
 import { AuthenticationService } from "../../core/services/authentication.service";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../core/store/state";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
+import { ApartmentContract } from "src/app/core/contracts/apartment.contract";
+import { Web3Provider } from "src/app/core/providers/web3.provider";
+import Web3 from "web3";
 
 @Component({
   selector: "app-header",
@@ -18,6 +21,7 @@ export class AppHeaderComponent implements OnInit {
   balanceInEur: string;
 
   constructor(
+    private apartmentContract: ApartmentContract,
     private authenticationService: AuthenticationService,
     private router: Router,
     private store: Store<AppState>
@@ -33,6 +37,11 @@ export class AppHeaderComponent implements OnInit {
           this.balanceInEur = user.BalanceInEur.toFixed(3);
         }
       });
+      this.apartmentContract.paymentEvent().on("data", this.handlePaymentEvent);
+  }
+
+  handlePaymentEvent() {
+    console.log("Payment");
   }
 
   createApartment() {

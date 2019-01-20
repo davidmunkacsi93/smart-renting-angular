@@ -1,30 +1,32 @@
-<div>
-    <span class="app-title">Apartment details</span>
+<div *ngIf=!loading>
+    <div>
+        <span class="app-title">Apartment details</span>
+    </div>
+    <div class="container data-card-container">
+        <div class="card-content">
+          <div *ngIf="!ownApartment" class="owner-box">
+              <span class="card-title font-bold">Owner: {{apartment?.OwnerName}}</span>
+          </div>
+          <span class="card-title">{{apartment?.PostCode + ' ' + apartment?.City + ' ' + apartment?.Street + ' ' + apartment?.HouseNumber}}</span>
+          <div>
+              <span class="card-data">Rent: {{apartment?.Rent}} EUR</span>
+          </div>
+          <div>
+              <span class="card-data">Deposit: {{apartment?.Deposit}} EUR</span>
+          </div>
+          <div *ngIf="apartment?.IsRented">
+              <span class="card-data">Rented by {{apartment?.TenantName}}</span>
+            </div>
+          <div *ngIf="!apartment?.IsRented">
+              <span class="card-data">Not rented yet</span>
+          </div>
+          <div *ngIf="ownApartment" class="owner-box">
+              <span class="card-data font-bold">This is your own apartment!</span>
+          </div>
+      </div>
+      <button *ngIf="!ownApartment" mat-button class="app-button" (click)="rentApartment(apartmentId)">
+          Rent apartment
+      </button>
+    </div>
 </div>
-<div class="container data-card-container">
-    <div class="card-content">
-      <div *ngIf="!ownApartment" class="owner-box">
-          <span class="card-title font-bold">Owner: {{apartment?.OwnerName}}</span>
-      </div>
-      <span class="card-title">{{apartment?.PostCode + ' ' + apartment?.City + ' ' + apartment?.Street + ' ' + apartment?.HouseNumber}}</span>
-      <div>
-          <span class="card-data">Rent: {{apartment?.Rent}} EUR</span>
-      </div>
-      <div>
-          <span class="card-data">Deposit: {{apartment?.Deposit}} EUR</span>
-      </div>
-      <div *ngIf="apartment?.IsRented">
-          <span class="card-data">Rented by {{apartment?.TenantName}}</span>
-        </div>
-      <div *ngIf="!apartment?.IsRented">
-          <span class="card-data">Not rented yet</span>
-      </div>
-      <div *ngIf="ownApartment" class="owner-box">
-          <span class="card-data font-bold">This is your own apartment!</span>
-      </div>
-  </div>
-  <button *ngIf="!ownApartment" mat-button class="app-button" (click)="rentApartment(apartmentId)">
-      Rent apartment
-  </button>
-  <mat-spinner *ngIf=loading class="loading-spinner"></mat-spinner>
-</div>
+<mat-spinner *ngIf=loading class="loading-spinner"></mat-spinner>

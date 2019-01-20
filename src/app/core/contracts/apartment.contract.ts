@@ -107,6 +107,10 @@ export class ApartmentContract {
         return availableApartments;
     }
 
+    public paymentEvent() { 
+        return this.apartmentContract.events.Payment();
+    }
+
     private async parseApartmentResponse(apartmentResponse) : Promise<Apartment> {
         var apartment : Apartment = {
             Id: parseInt(apartmentResponse[0]),
