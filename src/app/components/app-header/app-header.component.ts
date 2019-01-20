@@ -30,7 +30,7 @@ export class AppHeaderComponent implements OnInit {
     private store: Store<AppState>
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.userSubscription = this.store
       .select(state => state.user)
       .subscribe(user => {
@@ -40,12 +40,8 @@ export class AppHeaderComponent implements OnInit {
           this.balanceInEur = user.BalanceInEur.toFixed(3);
         }
       });
-  }
-
-  handlePaymentEvent(err, res) {
-    console.log("Payment");
-    console.log(err)
-    console.log(res)
+      const logs = await this.apartmentContract.getContract().getPastEvents("Payment");
+      console.log(logs);
   }
 
   createApartment() {
