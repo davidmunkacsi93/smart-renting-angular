@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "ethereumHost": "localhost",
   "ethereumPort": "8545",
+  "ethereumWsPort": "8546",
   "ethereumMasterAccount": "0x8ade7d546792c1964c8bbc1b100c35bea8a01cd2",
   "scripts": {
     "ng": "ng",
