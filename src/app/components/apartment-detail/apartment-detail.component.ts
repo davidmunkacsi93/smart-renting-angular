@@ -1,9 +1,10 @@
-import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApartmentContract } from 'src/app/core/contracts/apartment.contract';
 import { Apartment } from 'src/app/core/model/apartment';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { NotifierService } from 'angular-notifier';
+import { WebSocketProvider } from 'src/app/core/providers/websocket.provider';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -17,6 +18,7 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   private loading: boolean;
 
   constructor(
+    @Inject(WebSocketProvider) private socket : any,
     private notifierService : NotifierService,
     private elementRef : ElementRef,
     private route: ActivatedRoute,
@@ -44,15 +46,9 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.apartmentContract.rentApartment(this.apartment)
     .then(() => {
-      this.apartmentContract.firePaymentEvent(this.apartment.Owner, this.apartment.Deposit + this.apartment.Rent)
-        .then(res => {
-          console.log(res);
-          this.notifierService.notify("success", "Succesful payment!");
-          this.loading = false;
-        })
-        .catch(err =>  {
-          console.log(err);
-        })
+      this.socket.emit("payment", { random: "data" });
+      this.notifierService.notify("success", "Succesful payment!");
+      this.loading = false;
     })
     .catch(exc => {
       this.notifierService.notify("error", exc);        

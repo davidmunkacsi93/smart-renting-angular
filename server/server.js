@@ -1,10 +1,17 @@
 const express = require('express');
 const app = express();
-const http = require('http').Server(app)
 const port = process.env.PORT || 5000;
 
-const io = require('socket.io').listen(http);
-var clientDict = {};
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+  });
+
+const ioPort = 8000;
+const io = require('socket.io').listen(ioPort);
 io.on('connection', (client) => {
   var address = client.request._query["address"];
   console.log("[" + address + "] connected.")
