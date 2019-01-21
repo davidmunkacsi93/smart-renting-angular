@@ -16,6 +16,10 @@ io.on('connection', (client) => {
       console.log("Handshake with " + data.to);
       client.broadcast.emit('handshake', data);
   });
+  client.on('payment', (data) => {
+    console.log("Payment " + data.to);
+    client.broadcast.emit('payment', data);
+});
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

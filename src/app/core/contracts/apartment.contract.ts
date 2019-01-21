@@ -8,6 +8,7 @@ import { TransactionObject } from "web3/eth/types";
 import { Web3Utils, ContractType, PaymentType } from "../utils/web3.utils";
 import { UserContract } from "./user.contract";
 import { NotifierService } from "angular-notifier";
+import { WebSocketProvider } from "../providers/websocket.provider";
 
 @Injectable()
 export class ApartmentContract {
@@ -16,6 +17,7 @@ export class ApartmentContract {
 
     constructor(
         @Inject(Web3Provider) private provider : Web3,
+        @Inject(WebSocketProvider) private socket : any,
         private providerUtils : Web3Utils,
         private userContract : UserContract,
         private notifierService: NotifierService
@@ -110,10 +112,7 @@ export class ApartmentContract {
     }
 
     public async firePaymentEvent(to, amount) {
-        var currentUser = this.providerUtils.getCurrentUser();
-        var paymentEstimatedGas = await this.apartmentContract.methods.firePayment(to, currentUser.Username, amount).estimateGas();
-        return this.apartmentContract.methods.firePayment(to, currentUser.Username, amount)
-            .send(this.providerUtils.createTransaction(paymentEstimatedGas));
+        this.socket.emit("payment", { to: to, amount: amount });
     }
 
     public getContract() : Contract {

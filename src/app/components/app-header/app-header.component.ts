@@ -9,6 +9,7 @@ import Web3 from "web3";
 import { EventLog } from "web3/types";
 import { Subscription } from "rxjs";
 import { EventEmitter } from "protractor";
+import { WebSocketProvider } from "src/app/core/providers/websocket.provider";
 
 @Component({
   selector: "app-header",
@@ -23,7 +24,7 @@ export class AppHeaderComponent implements OnInit {
   balanceInEur: string;
 
   constructor(
-    @Inject(Web3Provider) private provider : Web3,
+    @Inject(WebSocketProvider) private socket : any,
     private apartmentContract: ApartmentContract,
     private authenticationService: AuthenticationService,
     private router: Router,
@@ -40,10 +41,9 @@ export class AppHeaderComponent implements OnInit {
           this.balanceInEur = user.BalanceInEur.toFixed(3);
         }
       });
-      this.apartmentContract.getContract().events.Payment()
-        .on("data", log => { console.log(log)})
-        .on("changed", log => { console.log(log)})
-        .on("error", log => { console.log(log)})
+      this.socket.on("payment", data => {
+        console.log(data)
+      });
   }
 
   createApartment() {
