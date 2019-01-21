@@ -30,7 +30,6 @@ services:
     container_name: eth-dev-node
     ports:
       - 8545:8545
-      - 9100:9100
     healthcheck:
       test: wget http://localhost:8545
       interval: 2s

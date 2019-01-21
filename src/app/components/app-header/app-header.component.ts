@@ -40,10 +40,10 @@ export class AppHeaderComponent implements OnInit {
           this.balanceInEur = user.BalanceInEur.toFixed(3);
         }
       });
-      this.provider.eth.subscribe("pendingTransactions", (err, res) => {
-        console.log(err);
-        console.log(res);
-      })
+      this.apartmentContract.getContract().events.Payment()
+        .on("data", log => { console.log(log)})
+        .on("changed", log => { console.log(log)})
+        .on("error", log => { console.log(log)})
   }
 
   createApartment() {

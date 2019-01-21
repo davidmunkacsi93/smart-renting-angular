@@ -47,10 +47,16 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   async rentApartment() {
     this.loading = true;
     this.apartmentContract.rentApartment(this.apartment)
-    .then(async () => {
-      await this.apartmentContract.firePaymentEvent(this.apartment.Owner, this.apartment.Deposit + this.apartment.Rent)
-      this.notifierService.notify("success", "Succesful payment!");
-      this.loading = false;
+    .then(() => {
+      this.apartmentContract.firePaymentEvent(this.apartment.Owner, this.apartment.Deposit + this.apartment.Rent)
+        .then(res => {
+          console.log(res);
+          this.notifierService.notify("success", "Succesful payment!");
+          this.loading = false;
+        })
+        .catch(err =>  {
+          console.log(err);
+        })
     })
     .catch(exc => {
       this.notifierService.notify("error", exc);        
