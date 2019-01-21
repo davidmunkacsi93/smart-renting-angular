@@ -8,7 +8,7 @@ var config = require("../../package.json");
 
 export const environment = {
   production: false,
-  ethereumWsUrl: "ws://" + config.ethereumWsHost + ":" + config.ethereumWsPort,
+  wsUrl: "ws://" + config.ethereumWsHost + ":" + config.ethereumWsPort,
   ethereumDevelopmentUrl: "http://" + config.ethereumHost + ":" + config.ethereumPort,
   ethereumMasterAccount: config.ethereumMasterAccount
 };
