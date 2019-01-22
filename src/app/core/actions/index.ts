@@ -3,8 +3,9 @@ import { User } from "../model/user";
 
 export const enum ActionType {
   ADD_USER = "ADD_USER",
-  CLEAR_UESR = "CLEAR_USER",
-  ADD_APARTMENT = "ADD_APARTMENT"
+  CLEAR_USER = "CLEAR_USER",
+  ADD_APARTMENT = "ADD_APARTMENT",
+  REFRESH_BALANCE = "REFRESH_BALANCE"
 }
 
 export class AddUserAction implements Action {
@@ -13,7 +14,12 @@ export class AddUserAction implements Action {
 }
 
 export class ClearUserAction implements Action {
-  type = ActionType.CLEAR_UESR;
+  type = ActionType.CLEAR_USER;
+}
+
+export class RefreshBalanceAction implements Action {
+  type = ActionType.REFRESH_BALANCE;
+  constructor(public payload: { balanceInEth: number, balanceInEur: number }) {}
 }
 
 export class AddApartmentAction implements Action {
@@ -21,4 +27,4 @@ export class AddApartmentAction implements Action {
 }
 
 export type AppActions = AddUserAction | ClearUserAction
-| AddApartmentAction;
+| AddApartmentAction | RefreshBalanceAction;

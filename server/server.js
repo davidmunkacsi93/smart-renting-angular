@@ -12,8 +12,11 @@ app.use(function(req, res, next) {
 
 const ioPort = 8000;
 const io = require('socket.io').listen(ioPort);
+var clientDict = {};
 io.on('connection', (client) => {
   var address = client.request._query["address"];
+  clientDict[address] = client.id;
+
   console.log("[" + address + "] connected.")
   client.on('sendMessage', (data) => {
       console.log("Message to " + data.address);
@@ -25,7 +28,7 @@ io.on('connection', (client) => {
   });
   client.on('payment', (data) => {
     console.log("Payment " + data.to);
-    client.broadcast.emit('payment', data);
+    client.broadcast.to(clientDict[data.address]).emit('payment', data);
 });
 });
 

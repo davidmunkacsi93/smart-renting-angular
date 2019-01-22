@@ -43,6 +43,15 @@ export class UserContract {
         }
     }
 
+    public async getCurrentUserBalance()  : Promise<any> {
+        var currentUser = this.providerUtils.getCurrentUser();
+        var balanceInWei = await this.provider.eth.getBalance(currentUser.Address);
+        var balanceInEthStr = this.provider.utils.fromWei(balanceInWei, "ether").toString();
+        var balanceInEth = parseInt(balanceInEthStr);
+        var balanceInEur = currentUser.BalanceInEth * this.providerUtils.EURO_RATE;
+        return { balanceInEth, balanceInEur }
+    }
+
     public async getUsername(address: string): Promise<string> {
         var estimatedGas = await this.contract.methods.getUsername(address).estimateGas();
         return this.contract.methods.getUsername(address).call(this.providerUtils.createTransaction(estimatedGas));

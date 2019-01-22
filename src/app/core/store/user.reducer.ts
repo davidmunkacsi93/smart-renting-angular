@@ -1,5 +1,5 @@
 import { User } from "../model/user";
-import { AppActions, ActionType, AddUserAction } from "../actions";
+import { AppActions, ActionType, AddUserAction, RefreshBalanceAction } from "../actions";
 
 export function userReducer(state: User, action: AppActions) {
   switch (action.type) {
@@ -12,8 +12,14 @@ export function userReducer(state: User, action: AppActions) {
         BalanceInEur: addUserAction.payload.BalanceInEur,
         BalanceInEth: addUserAction.payload.BalanceInEth
       };
-
-    case ActionType.CLEAR_UESR:
+    case ActionType.REFRESH_BALANCE:
+      const refreshBalanceAction: RefreshBalanceAction = action as RefreshBalanceAction;
+      return {
+        ...state,
+        BalanceInEur: refreshBalanceAction.payload.balanceInEur,
+        BalanceInEth: refreshBalanceAction.payload.balanceInEth
+      };
+    case ActionType.CLEAR_USER:
       return {};
     default:
       return state;

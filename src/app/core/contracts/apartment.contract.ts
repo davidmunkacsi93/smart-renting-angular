@@ -17,7 +17,6 @@ export class ApartmentContract {
 
     constructor(
         @Inject(Web3Provider) private provider : Web3,
-        @Inject(WebSocketProvider) private socket : any,
         private providerUtils : Web3Utils,
         private userContract : UserContract,
         private notifierService: NotifierService
@@ -109,14 +108,6 @@ export class ApartmentContract {
         });
 
         return availableApartments;
-    }
-
-    public async firePaymentEvent(to, amount) {
-        this.socket.emit("payment", { to: to, amount: amount });
-    }
-
-    public getContract() : Contract {
-        return this.apartmentContract;
     }
 
     private async parseApartmentResponse(apartmentResponse) : Promise<Apartment> {

@@ -5,6 +5,10 @@ import { Apartment } from 'src/app/core/model/apartment';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { NotifierService } from 'angular-notifier';
 import { WebSocketProvider } from 'src/app/core/providers/websocket.provider';
+import { UserContract } from 'src/app/core/contracts/user.contract';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/core/store/state';
+import { RefreshBalanceAction } from 'src/app/core/actions';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -23,6 +27,8 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     private elementRef : ElementRef,
     private route: ActivatedRoute,
     private apartmentContract: ApartmentContract,
+    private userContract: UserContract,
+    private store: Store<AppState>,
     private authenticationSerice : AuthenticationService
   ) { }
 
@@ -45,8 +51,11 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   async rentApartment() {
     this.loading = true;
     this.apartmentContract.rentApartment(this.apartment)
-    .then(() => {
-      this.socket.emit("payment", { random: "data" });
+    .then(async () => {
+      this.socket.emit("payment", { to: this.apartment.Owner, amount: (this.apartment.Deposit + this.apartment.Rent) });
+      var newBalance = await this.userContract.getCurrentUserBalance();
+      console.log(newBalance);
+      this.store.dispatch(new RefreshBalanceAction(newBalance));
       this.notifierService.notify("success", "Succesful payment!");
       this.loading = false;
     })

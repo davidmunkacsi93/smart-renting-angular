@@ -10,6 +10,9 @@ import { EventLog } from "web3/types";
 import { Subscription } from "rxjs";
 import { EventEmitter } from "protractor";
 import { WebSocketProvider } from "src/app/core/providers/websocket.provider";
+import { NotifierService } from "angular-notifier";
+import { UserContract } from "src/app/core/contracts/user.contract";
+import { RefreshBalanceAction } from "src/app/core/actions";
 
 @Component({
   selector: "app-header",
@@ -20,13 +23,15 @@ export class AppHeaderComponent implements OnInit {
   userSubscription: Subscription;
 
   username: string;
+  address: string;
   balanceInEth: string;
   balanceInEur: string;
 
   constructor(
     @Inject(WebSocketProvider) private socket : any,
-    private apartmentContract: ApartmentContract,
+    private userContract: UserContract,
     private authenticationService: AuthenticationService,
+    private notifierService: NotifierService,
     private router: Router,
     private store: Store<AppState>
   ) {}
@@ -37,12 +42,17 @@ export class AppHeaderComponent implements OnInit {
       .subscribe(user => {
         if (user) {
           this.username = user.Username;
+          this.address = user.Address;
           this.balanceInEth = user.BalanceInEth.toFixed(3);
           this.balanceInEur = user.BalanceInEur.toFixed(3);
         }
       });
-      this.socket.on("payment", data => {
-        console.log(data)
+      this.socket.on("payment", async data => {
+        if (data.to === this.address) {
+          this.notifierService.notify("info", data.username + " transferred you " + data.amount + "€.");
+          var newBalance = await this.userContract.getCurrentUserBalance();
+          this.store.dispatch(new RefreshBalanceAction(newBalance));
+        }
       });
   }
 

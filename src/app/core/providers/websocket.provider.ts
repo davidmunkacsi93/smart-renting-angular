@@ -2,10 +2,18 @@ import { Injectable, InjectionToken } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { User } from '../model/user';
+
+const CURRENT_USER_KEY = "currentUser";
 
 export const WebSocketProvider = new InjectionToken<any>('webSocketProvider', {
     providedIn: 'root',
     factory: () => {
-      return io(environment.wsUrl)
+      var userJSON = localStorage.getItem(CURRENT_USER_KEY);
+      if (userJSON === null) 
+        return io(environment.wsUrl);
+      var currentUser : User = JSON.parse(userJSON);
+      console.log(currentUser.Address);
+      return io(environment.wsUrl + "?address=" + currentUser.Address);
     }
   });
