@@ -27,8 +27,7 @@ io.on('connection', (client) => {
       client.broadcast.emit('handshake', data);
   });
   client.on('payment', (data) => {
-    console.log("Payment " + data.to);
-    client.broadcast.to(clientDict[data.address]).emit('payment', data);
+    client.broadcast.to(clientDict[data.to]).emit('payment', data);
 });
 });
 

@@ -13,7 +13,6 @@ export const WebSocketProvider = new InjectionToken<any>('webSocketProvider', {
       if (userJSON === null) 
         return io(environment.wsUrl);
       var currentUser : User = JSON.parse(userJSON);
-      console.log(currentUser.Address);
       return io(environment.wsUrl + "?address=" + currentUser.Address);
     }
   });
