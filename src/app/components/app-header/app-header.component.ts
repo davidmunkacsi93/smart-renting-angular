@@ -48,12 +48,11 @@ export class AppHeaderComponent implements OnInit {
         }
       });
       this.socket.on("payment", data => {
-        console.log("Payment")
-        console.log(data)
         if (data.to === this.address) {
           this.notifierService.notify("info", data.username + " transferred you " + data.amount + "€.");
-          //var newBalance = await this.userContract.getCurrentUserBalance();
-          this.store.dispatch(new RefreshBalanceAction(null));
+          this.userContract.getCurrentUserBalance().then(balances => {
+            this.store.dispatch(new RefreshBalanceAction(balances))
+          });
         }
       });
   }

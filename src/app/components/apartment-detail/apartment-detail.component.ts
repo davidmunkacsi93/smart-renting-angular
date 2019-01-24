@@ -9,6 +9,7 @@ import { UserContract } from 'src/app/core/contracts/user.contract';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/core/store/state';
 import { RefreshBalanceAction } from 'src/app/core/actions';
+import { User } from 'src/app/core/model/user';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -20,6 +21,7 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   private apartment : Apartment;
   private ownApartment : boolean;
   private loading: boolean;
+  private user : User;
 
   constructor(
     @Inject(WebSocketProvider) private socket : any,
@@ -42,6 +44,10 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
         this.ownApartment = apartment.Owner == currentUser.Address;
       });
     });
+
+    this.store.select(state => state.user).subscribe(user => {
+      this.user = user;
+    });
   }
 
   ngAfterViewInit(): void {
@@ -51,13 +57,17 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   async rentApartment() {
     this.loading = true;
     this.apartmentContract.rentApartment(this.apartment)
-    .then(async () => {
-      this.socket.emit("payment", { to: this.apartment.Owner, amount: (this.apartment.Deposit + this.apartment.Rent) });
-      var newBalance = await this.userContract.getCurrentUserBalance();
-      console.log(newBalance);
-      this.store.dispatch(new RefreshBalanceAction(newBalance));
-      this.notifierService.notify("success", "Succesful payment!");
-      this.loading = false;
+    .then(() => {
+      this.socket.emit("payment",  { 
+        to: this.apartment.Owner, 
+        amount: (this.apartment.Deposit + this.apartment.Rent),
+        username: this.user.Username
+      });
+      this.userContract.getCurrentUserBalance().then(balances => {
+        this.store.dispatch(new RefreshBalanceAction(balances));
+        this.notifierService.notify("success", "Succesful payment!");
+        this.loading = false;
+      });
     })
     .catch(exc => {
       this.notifierService.notify("error", exc);        

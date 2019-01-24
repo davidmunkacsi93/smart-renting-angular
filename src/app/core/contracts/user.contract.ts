@@ -48,7 +48,7 @@ export class UserContract {
         var balanceInWei = await this.provider.eth.getBalance(currentUser.Address);
         var balanceInEthStr = this.provider.utils.fromWei(balanceInWei, "ether").toString();
         var balanceInEth = parseInt(balanceInEthStr);
-        var balanceInEur = currentUser.BalanceInEth * this.providerUtils.EURO_RATE;
+        var balanceInEur = balanceInEth * this.providerUtils.EURO_RATE;
         return { balanceInEth, balanceInEur }
     }
 

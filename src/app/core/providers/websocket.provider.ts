@@ -9,7 +9,7 @@ const CURRENT_USER_KEY = "currentUser";
 export const WebSocketProvider = new InjectionToken<any>('webSocketProvider', {
     providedIn: 'root',
     factory: () => {
-      var userJSON = localStorage.getItem(CURRENT_USER_KEY);
+      var userJSON = sessionStorage.getItem(CURRENT_USER_KEY);
       if (userJSON === null) 
         return io(environment.wsUrl);
       var currentUser : User = JSON.parse(userJSON);
