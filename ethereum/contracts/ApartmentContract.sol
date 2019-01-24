@@ -65,11 +65,24 @@ contract ApartmentContract {
         return apartments[msg.sender];
     }
 
+    function getRentedApartments() public view returns(uint32[]) {
+        return rentedApartments[msg.sender];
+    }
+
     function getApartmentById(uint32 apartmentId) public view returns(uint32 _id, address _owner, address _tenant,
         uint32 _postCode, string _city, string _street,
         uint32 _houseNumber, uint32 _floor, string _description, uint32 _rent, uint32 _deposit, bool _isRented) {
         ApartmentDetail storage a = apartmentDetails[apartmentId];
         return (a.id, a.owner, a.tenant, a.postCode, a.city, a.street, a.houseNumber, a.floor, a.description, a.rent, a.deposit, a.isRented);
+    }
+
+    function getTransactionIds(uint32 apartmentId) public view returns(uint32[]) {
+        return apartmentTransactionMappings[apartmentId];
+    }
+
+    function getTransactionById(uint32 transactionId) public view returns(uint32 _id, uint32 _apartmentId, string _message, uint _timestamp) {
+        ApartmentTransaction storage t = apartmentTransactions[transactionId];
+        return (t.id, t.apartmentId, t.message, t.timestamp);
     }
 
     // Update functions.
