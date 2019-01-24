@@ -16,7 +16,7 @@ export class AuthenticationService {
   ) {}
 
   public getCurrentUser(): User {
-    var userJSON = localStorage.getItem(CURRENT_USER_KEY);
+    var userJSON = sessionStorage.getItem(CURRENT_USER_KEY);
     if (userJSON === null) return null;
     var currentUser: User = JSON.parse(userJSON);
     return currentUser;
@@ -27,17 +27,17 @@ export class AuthenticationService {
   }
 
   public isAuthenticated(): boolean {
-    return localStorage.getItem(CURRENT_USER_KEY) !== null;
+    return sessionStorage.getItem(CURRENT_USER_KEY) !== null;
   }
 
   public async login(username: string, password: string) : Promise<User> {
     const user = await this.userContract.authenticate(username, password);
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+    sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
     return user;
   }
 
   public logout(): void {
-    localStorage.removeItem(CURRENT_USER_KEY);
+    sessionStorage.removeItem(CURRENT_USER_KEY);
   }
 
   public async register(username: string, password: string) {

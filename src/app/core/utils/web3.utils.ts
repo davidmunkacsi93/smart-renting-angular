@@ -41,7 +41,7 @@ export class Web3Utils {
     }
 
     public getCurrentUser = () : User => {
-        var userJSON = localStorage.getItem(CURRENT_USER_KEY);
+        var userJSON = sessionStorage.getItem(CURRENT_USER_KEY);
         if (userJSON === null) return null;
         var currentUser : User = JSON.parse(userJSON);
         return currentUser;
