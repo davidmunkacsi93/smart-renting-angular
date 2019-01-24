@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, AfterViewInit } from '@angular/core';
 import { AuthenticationService } from './core/services/authentication.service';
 import { Router } from '@angular/router';
 
@@ -11,10 +11,11 @@ export class AppComponent {
 
   constructor(
     private authenticationService: AuthenticationService
-  ) {}
+  ) {
+  }
 
   @HostListener('window:beforeunload')
-  autoLogout() {
+  onBeforeUnload() {
     this.authenticationService.logout();
   }
 }
