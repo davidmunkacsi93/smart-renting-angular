@@ -4,7 +4,11 @@ pragma solidity ^0.4.23;
 contract ApartmentContract {
     uint32 private apartmentCounter = 0;
     mapping(address => uint32[]) apartments;
+    mapping(address => uint32[]) rentedApartments;
+    mapping(uint32 => uint32[]) apartmentTransactionMappings;
+    
     mapping(uint32 => ApartmentDetail) apartmentDetails;
+    mapping(uint32 => ApartmentTransaction) apartmentTransactions;
 
     constructor() public {
     }
@@ -24,17 +28,18 @@ contract ApartmentContract {
         bool isRented;
     }
 
-    event Payment(
-        address from,
-        address to,
-        string username,
-        uint32 value
-    );
+    struct ApartmentTransaction {
+        uint32 id;
+        uint32 apartmentId;
+        string message;
+        uint timestamp;
+    }
 
     function getId() private returns(uint32) {
         return apartmentCounter++;
     }
 
+    // Create functions.
     function createApartment(
         uint32 _postCode, string _city, string _street,
         uint32 _houseNumber, uint32 _floor, string _description, uint32 _rent,
@@ -48,6 +53,14 @@ contract ApartmentContract {
         apartmentDetails[apartmentId] = apartment;
     }
 
+    function createTransaction(uint32 _apartmentId, string _transactionMessage) public {
+        uint32 transactionId = getId();
+        ApartmentTransaction memory transaction = ApartmentTransaction(transactionId, _apartmentId, _transactionMessage, now);
+        apartmentTransactionMappings[_apartmentId].push(transactionId);
+        apartmentTransactions[transactionId] = transaction;
+    }
+
+    // Read functions.
     function getApartmentIds() public view returns(uint32[]) {
         return apartments[msg.sender];
     }
@@ -59,7 +72,13 @@ contract ApartmentContract {
         return (a.id, a.owner, a.tenant, a.postCode, a.city, a.street, a.houseNumber, a.floor, a.description, a.rent, a.deposit, a.isRented);
     }
 
-    function firePayment(address _to, string _username, uint32 _value) public {
-        emit Payment(msg.sender, _to, _username, _value);
+    // Update functions.
+    function updateApartment(uint32 _apartmentId, address _tenant) public {
+        if (apartmentDetails[_apartmentId].isRented == false) {
+            apartmentDetails[_apartmentId].tenant = _tenant;
+            apartmentDetails[_apartmentId].isRented = true;
+            rentedApartments[_tenant].push(_apartmentId);
+        }
+        createTransaction(_apartmentId, "The owner approved the rent.");
     }
 }
