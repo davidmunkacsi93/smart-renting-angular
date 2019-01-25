@@ -8,6 +8,11 @@
 # dependencies
 /node_modules
 
+
+#Contract JSONs
+/src/contracts-json
+/ethereum/build
+
 # IDEs and editors
 /.idea
 .project
