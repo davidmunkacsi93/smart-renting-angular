@@ -84,7 +84,6 @@ const customNotifierOptions: NotifierOptions = {
     DataCardComponent,
     BrowseApartmentsComponent,
     ApartmentDetailComponent,
-    MyRents.Component.TsComponent,
     MyRentsComponent
   ],
   imports: [

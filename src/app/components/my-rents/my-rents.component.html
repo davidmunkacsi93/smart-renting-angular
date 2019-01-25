@@ -1,3 +1,16 @@
-<p>
-  my-rents works!
-</p>
+<div>
+  <span class="app-title">My rents</span>
+</div>
+<div class="container row">
+  <div *ngFor="let apartment of apartments" class="col-md-6">
+      <app-data-card 
+          [browsing]=true
+          [address]="apartment.PostCode + ' ' + apartment.City + ' ' + apartment.Street + ' ' + apartment.HouseNumber"
+          [isRented]="apartment.IsRented"
+          [rent]="apartment.Rent"
+          [deposit]="apartment.Deposit"
+          [apartmentId]="apartment.Id"
+          [ownerName]="apartment.OwnerName">
+      </app-data-card>
+  </div>
+</div>
