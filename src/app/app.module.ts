@@ -30,7 +30,7 @@ import { AuthenticationGuard } from "./core/guards/authentication-guard";
 import { ApartmentDetailComponent } from './components/apartment-detail/apartment-detail.component';
 import { NotifierModule, NotifierOptions } from "angular-notifier";
 import { WebSocketUtils } from "./core/utils/websocket.utils";
-import { MyRents } from './components/my-rents.component.ts/my-rents.component.ts.component';
+import { MyRentsComponent } from './components/my-rents/my-rents.component';
 
 const customNotifierOptions: NotifierOptions = {
 	position: {
@@ -84,7 +84,8 @@ const customNotifierOptions: NotifierOptions = {
     DataCardComponent,
     BrowseApartmentsComponent,
     ApartmentDetailComponent,
-    MyRents.Component.TsComponent
+    MyRents.Component.TsComponent,
+    MyRentsComponent
   ],
   imports: [
     BrowserAnimationsModule,
