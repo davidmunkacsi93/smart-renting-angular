@@ -14,21 +14,18 @@ const ioPort = 8000;
 const io = require('socket.io').listen(ioPort);
 var clientDict = {};
 io.on('connection', (client) => {
-  var address = client.request._query["address"];
-  clientDict[address] = client.id;
+    var address = client.request._query["address"];
+    clientDict[address] = client.id;
+    console.log("[" + address + "] connected.")
 
-  console.log("[" + address + "] connected.")
-  client.on('sendMessage', (data) => {
-      console.log("Message to " + data.address);
-      client.broadcast.emit('receiveMessage', data.message);
-  });
-  client.on('handshake', (data) => {
-      console.log("Handshake with " + data.to);
-      client.broadcast.emit('handshake', data);
-  });
-  client.on('payment', (data) => {
-    client.broadcast.to(clientDict[data.to]).emit('payment', data);
+    onEvent('payment');
+    onEvent('paymentApproved');
 });
-});
+
+function onEvent(eventName) {
+    client.on(eventName, data => {
+        client.broadcast.to(clientDict[data.to]).emit(eventName, data);
+    });
+}
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

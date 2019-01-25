@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/core/store/state';
 import { RefreshBalanceAction } from 'src/app/core/actions';
 import { User } from 'src/app/core/model/user';
+import { ApartmentTransaction } from 'src/app/core/model/apartmentTransaction.contract';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -21,6 +22,7 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   private apartment : Apartment;
   private ownApartment : boolean;
   private loading: boolean;
+  private transactions: ApartmentTransaction[];
   private user : User;
 
   constructor(
@@ -48,6 +50,10 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     this.store.select(state => state.user).subscribe(user => {
       this.user = user;
     });
+
+    this.socket.on("paymentApproved", data => {
+      this.notifierService.notify("success", "Payment approved by " + data.username +"! You are the owner of the apartment.");
+    });
   }
 
   ngAfterViewInit(): void {
@@ -65,7 +71,6 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
       });
       this.userContract.getCurrentUserBalance().then(balances => {
         this.store.dispatch(new RefreshBalanceAction(balances));
-        this.notifierService.notify("success", "Succesful payment!");
         this.loading = false;
       });
     })
