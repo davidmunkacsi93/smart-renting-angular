@@ -22,6 +22,7 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
 
   private apartment : Apartment;
   private ownApartment : boolean;
+  private rentedByCurrentUser: boolean;
   private loading: boolean;
   private transactions: ApartmentTransaction[];
   private user : User;
@@ -65,6 +66,7 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
       this.apartmentContract.getApartmentDetails(apartmentId).then(apartment => {
         this.apartment = apartment;
         this.ownApartment = apartment.Owner == this.user.Address;
+        this.rentedByCurrentUser = apartment.Tenant == this.user.Address;
       });
     });
   }
@@ -84,5 +86,13 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
       this.notifierService.notify("error", exc);        
       this.loading = false;
     });
+  }
+
+  async payRent() {
+
+  }
+
+  async terminateContract() {
+    
   }
 }

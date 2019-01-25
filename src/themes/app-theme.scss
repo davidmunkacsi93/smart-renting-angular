@@ -84,7 +84,8 @@ button.app-button {
     border: none;
     align-self: baseline;
     text-align: center;
-    margin-top: 28px; 
+    margin-top: 28px;
+    margin-left: 20px;
 }
 
 .margin-left-10 {
@@ -97,6 +98,10 @@ button.app-button {
 
 .margin-top-50 {
     margin-top: 50px !important;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px !important;
 }
 
 .validation-message {
