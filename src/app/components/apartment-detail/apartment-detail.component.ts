@@ -10,8 +10,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/core/store/state';
 import { RefreshBalanceAction } from 'src/app/core/actions';
 import { User } from 'src/app/core/model/user';
-import { ApartmentTransaction } from 'src/app/core/model/apartmentTransaction.contract';
 import { WebSocketUtils } from 'src/app/core/utils/websocket.utils';
+import { ApartmentTransaction } from 'src/app/core/model/apartmentTransaction';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -39,23 +39,37 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    var currentUser = this.authenticationSerice.getCurrentUser();
-
-    this.route.params.subscribe(params => {
-      var apartmentId = +params['id'];
-      this.apartmentContract.getApartmentDetails(apartmentId).then(apartment => {
-        this.apartment = apartment;
-        this.ownApartment = apartment.Owner == currentUser.Address;
-      });
+    this.store.select(state => state).subscribe(state => {
+      this.user = state.user;
     });
 
-    this.store.select(state => state.user).subscribe(user => {
-      this.user = user;
+    this.initialize();
+
+    this.socket.on("paymentApproved", data => {
+      this.notifierService.notify("info", data.username + " approved your payment. You own the apartment.");
+      console.log(data.to);
+      this.apartmentContract.updateApartment(this.apartment.Id, data.to)
+      .then(() => {
+        console.log("Apartment updated.");
+        this.initialize();
+      })
+      .catch(exc => console.error(exc));
     });
   }
 
   ngAfterViewInit(): void {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#829356';
+  }
+
+  initialize() {
+    this.route.params.subscribe(params => {
+      var apartmentId = +params['id'];
+      this.apartmentContract.getApartmentDetails(apartmentId).then(apartment => {
+        console.log(apartment);
+        this.apartment = apartment;
+        this.ownApartment = apartment.Owner == this.user.Address;
+      });
+    });
   }
 
   async rentApartment() {
@@ -64,7 +78,7 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     .then(() => {
       this.socket.emit("payment", this.webSocketUtils.createPaymentData(this.user.Address, this.apartment.Owner,
         (this.apartment.Deposit + this.apartment.Rent), this.user.Username));
-      this.userContract.getCurrentUserBalance().then(balances => {
+        this.userContract.getCurrentUserBalance().then(balances => {
         this.store.dispatch(new RefreshBalanceAction(balances));
         this.loading = false;
       });

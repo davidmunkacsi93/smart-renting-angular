@@ -47,8 +47,10 @@ export class ApartmentContract {
     }
 
     public async updateApartment(apartmentId: number, tenantAddress: string) {
-                var estimatedGas = await this.apartmentContract.methods.getApartmentIds().estimateGas();
-        return this.apartmentContract.methods.getApartmentIds().call(this.providerUtils.createTransaction(estimatedGas, tenantAddress));
+        console.log(tenantAddress);
+        var estimatedGas = await this.apartmentContract.methods.updateApartment(apartmentId, tenantAddress).estimateGas();
+        return this.apartmentContract.methods.updateApartment(apartmentId, tenantAddress)
+            .send(this.providerUtils.createTransaction(estimatedGas*3));
     }
 
     public async transferAmount(from: string, to: string, amount: number, paymentType: PaymentType) {
@@ -100,7 +102,9 @@ export class ApartmentContract {
 
         var availableApartments = [];
         var otherAccounts = accounts.filter(val => val !== currentUser.Address)
-        
+
+        console.log(otherAccounts);
+
         await otherAccounts.forEach(async (account) => {
             var apartmentIds = await this.getApartmentIdsByAddress(account);
 

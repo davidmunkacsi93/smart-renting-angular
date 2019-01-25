@@ -51,15 +51,11 @@ export class AppHeaderComponent implements OnInit {
       });
       this.socket.on("payment", data => {
           this.notifierService.notify("info", data.username + " transferred you " + data.amount + "€.");
-          this.socket.emit('paymentApproved', this.webSocketUtils.createWebSocketData(data.to, data.from, this.username))
+          this.socket.emit('paymentApproved', this.webSocketUtils.createWebSocketData(data.to, data.from, this.username));
           this.userContract.getCurrentUserBalance().then(balances => {
             this.store.dispatch(new RefreshBalanceAction(balances))
           });
       });
-
-      this.socket.on("paymentApproved", data => {
-        this.notifierService.notify("info", data.username + " approved your payment. You own the apartment.");
-    });
   }
 
   createApartment() {
