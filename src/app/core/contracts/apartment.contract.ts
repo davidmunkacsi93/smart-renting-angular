@@ -9,6 +9,7 @@ import { Web3Utils, ContractType, PaymentType } from "../utils/web3.utils";
 import { UserContract } from "./user.contract";
 import { NotifierService } from "angular-notifier";
 import { WebSocketProvider } from "../providers/websocket.provider";
+import { ApartmentTransaction } from "../model/apartmentTransaction";
 
 @Injectable()
 export class ApartmentContract {
@@ -55,6 +56,34 @@ export class ApartmentContract {
         return this.apartmentContract.methods.getApartmentById(apartmentId)
             .call(this.providerUtils.createTransaction(estimatedGas))
             .then(apartment => { return this.parseApartmentResponse(apartment); })
+    }
+
+    public async getApartmentTransactionIds(apartmentId) {
+        var estimatedGas = await this.apartmentContract.methods.getTransactionIds(apartmentId).estimateGas();
+        return this.apartmentContract.methods.getTransactionIds(apartmentId)
+            .call(this.providerUtils.createTransaction(estimatedGas));
+    }
+
+    public async getApartmentTransactionDetail(transactionId) : Promise<ApartmentTransaction> {
+        var estimatedGas = await this.apartmentContract.methods.getTransactionById(transactionId).estimateGas();
+        return this.apartmentContract.methods.getTransactionById(transactionId)
+            .call(this.providerUtils.createTransaction(estimatedGas))
+            .then(apartmentTransaction => { 
+                return this.parseApartmentTransactionResponse(apartmentTransaction);
+            });
+    }
+
+    public async getApartmentTransaction(apartmentId) : Promise<ApartmentTransaction[]> {
+        var apartmentTransactions = [];
+        await this.getApartmentTransactionIds(apartmentId)
+            .then(async apartmentTransactionIds => {
+                await apartmentTransactionIds.forEach(async (apartmentTransactionId) => {
+                    var apartmentTransaction = await this.getApartmentTransactionDetail(apartmentTransactionId);
+                    apartmentTransactions.push(apartmentTransaction);
+                });
+            });
+
+        return apartmentTransactions;
     }
 
     public async getAvailableApartments() : Promise<Apartment[]> {
@@ -175,5 +204,17 @@ export class ApartmentContract {
         }
 
         return apartment;
+    }
+
+    private parseApartmentTransactionResponse(apartmentTransactionResponse) : ApartmentTransaction {
+        var apartmentTransaction : ApartmentTransaction = {
+            Id: parseInt(apartmentTransactionResponse[0]),
+            ApartmentId: parseInt(apartmentTransactionResponse[1]),
+            Message: apartmentTransactionResponse[2],
+            Timestamp: parseInt(apartmentTransactionResponse[3])
+        }
+
+        console.log(apartmentTransaction);
+        return apartmentTransaction;
     }
 }

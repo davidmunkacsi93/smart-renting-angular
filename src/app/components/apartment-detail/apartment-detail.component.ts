@@ -63,10 +63,16 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   initialize() {
     this.route.params.subscribe(params => {
       var apartmentId = +params['id'];
-      this.apartmentContract.getApartmentDetails(apartmentId).then(apartment => {
+      this.apartmentContract.getApartmentDetails(apartmentId)
+      .then(apartment => {
         this.apartment = apartment;
         this.ownApartment = apartment.Owner == this.user.Address;
         this.rentedByCurrentUser = apartment.Tenant == this.user.Address;
+      });
+
+      this.apartmentContract.getApartmentTransaction(apartmentId)
+      .then(apartmentTransactions => {
+        this.transactions = apartmentTransactions;
       });
     });
   }
@@ -93,6 +99,6 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   }
 
   async terminateContract() {
-    
+
   }
 }
