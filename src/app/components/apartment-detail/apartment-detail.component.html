@@ -39,5 +39,15 @@
     <div class="margin-top-50">
         <span class="app-title">Transaction history</span>
     </div>
+    <div>
+        <mat-list class="data-card-container container">
+            <mat-list-item *ngFor="let transaction of transactions">
+                <div>
+                    <span>{{transaction.Timestamp}} - {{transaction.Message}}</span>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </div>
+
 </div>
 <mat-spinner *ngIf=loading class="loading-spinner"></mat-spinner>

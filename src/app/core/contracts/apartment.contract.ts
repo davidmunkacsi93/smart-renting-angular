@@ -207,11 +207,12 @@ export class ApartmentContract {
     }
 
     private parseApartmentTransactionResponse(apartmentTransactionResponse) : ApartmentTransaction {
+        var parsedDate = new Date(parseInt(apartmentTransactionResponse[3])*1000);
         var apartmentTransaction : ApartmentTransaction = {
             Id: parseInt(apartmentTransactionResponse[0]),
             ApartmentId: parseInt(apartmentTransactionResponse[1]),
             Message: apartmentTransactionResponse[2],
-            Timestamp: parseInt(apartmentTransactionResponse[3])
+            Timestamp: parsedDate.toLocaleDateString() + " " + parsedDate.toLocaleTimeString()
         }
 
         console.log(apartmentTransaction);
