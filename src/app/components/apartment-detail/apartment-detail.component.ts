@@ -47,7 +47,6 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
 
     this.socket.on("paymentApproved", data => {
       this.notifierService.notify("info", data.username + " approved your payment. You own the apartment.");
-      console.log(data.to);
       this.apartmentContract.updateApartment(this.apartment.Id)
       .then(() => {
         console.log("Apartment updated.");
@@ -64,7 +63,6 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   initialize() {
     this.route.params.subscribe(params => {
       var apartmentId = +params['id'];
-      console.log(apartmentId);
       this.apartmentContract.getApartmentDetails(apartmentId).then(apartment => {
         console.log(apartment);
         this.apartment = apartment;

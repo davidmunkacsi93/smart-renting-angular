@@ -43,7 +43,7 @@ export class ApartmentContract {
         var estimatedGas = await this.apartmentContract.methods.getApartmentIds().estimateGas();
         return this.apartmentContract.methods.getApartmentById(apartmentId)
             .call(this.providerUtils.createTransaction(estimatedGas))
-            .then(apartment => { return this.parseApartmentResponse(apartment); });
+            .then(apartment => { return this.parseApartmentResponse(apartment); })
     }
 
     public async updateApartment(apartmentId: number) {
@@ -137,7 +137,7 @@ export class ApartmentContract {
 
         apartment.OwnerName = await this.userContract.getUsername(apartment.Owner);
         if (apartment.IsRented) {
-            apartment.TenantName = await this.userContract.getUsername(apartment.TenantName);
+            apartment.TenantName = await this.userContract.getUsername(apartment.Tenant);
         }
 
         return apartment;
