@@ -24,9 +24,15 @@ export class ApartmentContract {
         this.apartmentContract = this.providerUtils.getContract(ContractType.ApartmentContract);
     }
 
-    public async createApartment(apartment : Apartment) {
+    public async createApartment(apartment: Apartment) {
         var estimatedGas = await this.callCreateApartment(apartment).estimateGas();
         return this.callCreateApartment(apartment).send(this.providerUtils.createTransaction(estimatedGas));
+    }
+
+    public async createTransaction(apartmentId: number, transactionMessage: string) {
+        var estimatedGas = await this.apartmentContract.methods.createTransaction(apartmentId, transactionMessage).estimateGas();
+        return this.apartmentContract.methods.createTransaction(apartmentId, transactionMessage)
+            .send(this.providerUtils.createTransaction(estimatedGas));
     }
 
     public async getApartmentIds() {
@@ -91,9 +97,10 @@ export class ApartmentContract {
             .send(this.providerUtils.createTransaction(estimatedGas));
     }
 
-    public async transferAmount(from: string, to: string, amount: number, paymentType: PaymentType) {
+    public async transferAmount(apartmentId: number, from: string, to: string, amount: number, paymentType: PaymentType) {
         var amountInEther = (amount / this.providerUtils.EURO_RATE).toString();
         var amountInWei = this.provider.utils.toWei(amountInEther, "ether");
+        var currentUser = this.providerUtils.getCurrentUser();
 
         const transactionObject = {
           from: from,
@@ -101,6 +108,16 @@ export class ApartmentContract {
           value: amountInWei
         };
         return this.provider.eth.sendTransaction(transactionObject)
+        .then(async () => {
+            switch (paymentType) {
+                case PaymentType.Deposit:
+                    await this.createTransaction(apartmentId, currentUser.Username + " transferred the deposit of " + amount + " €.")
+                    break;
+                case PaymentType.Rent:
+                    await this.createTransaction(apartmentId, currentUser.Username + " transferred the rent of " + amount + " €.")
+                    break;
+            }
+        })
     }
 
     public async rentApartment(apartment: Apartment) {
@@ -110,20 +127,20 @@ export class ApartmentContract {
             throw "Insufficient funds.";
         }
 
-        return this.transferAmount(currentUser.Address, apartment.Owner, apartment.Deposit, PaymentType.Deposit)
+        return this.transferAmount(apartment.Id, currentUser.Address, apartment.Owner, apartment.Deposit, PaymentType.Deposit)
         .then(() => {
             this.notifierService.notify("success", "Transferring " + apartment.Deposit + " € deposit successful.");
 
-            return this.transferAmount(currentUser.Address, apartment.Owner, apartment.Rent, PaymentType.Rent)
+            return this.transferAmount(apartment.Id, currentUser.Address, apartment.Owner, apartment.Rent, PaymentType.Rent)
             .then(async () => {
                 this.notifierService.notify("success", "Transferring " + apartment.Rent + " € rent successful.");
             })
             .catch(async () => {
-                await this.transferAmount(apartment.Owner, currentUser.Address,  apartment.Deposit, PaymentType.Deposit)
+                await this.transferAmount(apartment.Id, apartment.Owner, currentUser.Address,  apartment.Deposit, PaymentType.Deposit)
                 this.notifierService.notify("error", "Transferring rent not successful. Payment cancelled.");
             });
         })
-        .catch((exc) => {
+        .catch(exc => {
             console.log(exc);
             this.notifierService.notify("error", "Transferring deposit not successful. Payment cancelled.");
         });

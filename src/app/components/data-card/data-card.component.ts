@@ -16,6 +16,7 @@ export class DataCardComponent implements OnInit {
   @Input() isRented: boolean;
   @Input() browsing: boolean;
   @Input() ownerName: string;
+  @Input() tenantName: string;
 
   constructor(private router : Router) { }
 
