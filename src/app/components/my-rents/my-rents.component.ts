@@ -19,7 +19,7 @@ export class MyRentsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.apartmentContract.getAvailableApartments().then(apartments => {
+    this.apartmentContract.getRentedApartments().then(apartments => {
       this.apartments = apartments;
     });
   }
