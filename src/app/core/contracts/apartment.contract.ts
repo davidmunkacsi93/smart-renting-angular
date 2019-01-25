@@ -46,6 +46,11 @@ export class ApartmentContract {
             .then(apartment => { return this.parseApartmentResponse(apartment); });
     }
 
+    public async updateApartment(apartmentId: number, tenantAddress: string) {
+                var estimatedGas = await this.apartmentContract.methods.getApartmentIds().estimateGas();
+        return this.apartmentContract.methods.getApartmentIds().call(this.providerUtils.createTransaction(estimatedGas, tenantAddress));
+    }
+
     public async transferAmount(from: string, to: string, amount: number, paymentType: PaymentType) {
         var amountInEther = (amount / this.providerUtils.EURO_RATE).toString();
         var amountInWei = this.provider.utils.toWei(amountInEther, "ether");

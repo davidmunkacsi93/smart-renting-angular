@@ -13,16 +13,16 @@ app.use(function(req, res, next) {
 const ioPort = 8000;
 const io = require('socket.io').listen(ioPort);
 var clientDict = {};
-io.on('connection', (client) => {
+io.on('connection', client => {
     var address = client.request._query["address"];
     clientDict[address] = client.id;
     console.log("[" + address + "] connected.")
 
-    onEvent('payment');
-    onEvent('paymentApproved');
+    onEvent(client, 'payment');
+    onEvent(client, 'paymentApproved');
 });
 
-function onEvent(eventName) {
+function onEvent(client, eventName) {
     client.on(eventName, data => {
         client.broadcast.to(clientDict[data.to]).emit(eventName, data);
     });

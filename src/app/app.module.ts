@@ -29,6 +29,7 @@ import { BrowseApartmentsComponent } from './components/browse-apartments/browse
 import { AuthenticationGuard } from "./core/guards/authentication-guard";
 import { ApartmentDetailComponent } from './components/apartment-detail/apartment-detail.component';
 import { NotifierModule, NotifierOptions } from "angular-notifier";
+import { WebSocketUtils } from "./core/utils/websocket.utils";
 
 const customNotifierOptions: NotifierOptions = {
 	position: {
@@ -101,7 +102,8 @@ const customNotifierOptions: NotifierOptions = {
     DialogService,
     ApartmentContract,
     UserContract,
-    Web3Utils
+	Web3Utils,
+	WebSocketUtils
   ],
   entryComponents: [DialogComponent],
   bootstrap: [AppComponent]

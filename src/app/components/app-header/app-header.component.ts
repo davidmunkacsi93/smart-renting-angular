@@ -13,6 +13,7 @@ import { WebSocketProvider } from "src/app/core/providers/websocket.provider";
 import { NotifierService } from "angular-notifier";
 import { UserContract } from "src/app/core/contracts/user.contract";
 import { RefreshBalanceAction } from "src/app/core/actions";
+import { WebSocketUtils } from "src/app/core/utils/websocket.utils";
 
 @Component({
   selector: "app-header",
@@ -33,7 +34,8 @@ export class AppHeaderComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private notifierService: NotifierService,
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private webSocketUtils: WebSocketUtils
   ) {}
 
   async ngOnInit() {
@@ -48,13 +50,16 @@ export class AppHeaderComponent implements OnInit {
         }
       });
       this.socket.on("payment", data => {
-        if (data.to === this.address) {
           this.notifierService.notify("info", data.username + " transferred you " + data.amount + "€.");
+          this.socket.emit('paymentApproved', this.webSocketUtils.createWebSocketData(data.to, data.from, this.username))
           this.userContract.getCurrentUserBalance().then(balances => {
             this.store.dispatch(new RefreshBalanceAction(balances))
           });
-        }
       });
+
+      this.socket.on("paymentApproved", data => {
+        this.notifierService.notify("info", data.username + " approved your payment. You own the apartment.");
+    });
   }
 
   createApartment() {

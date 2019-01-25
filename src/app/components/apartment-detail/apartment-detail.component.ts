@@ -11,6 +11,7 @@ import { AppState } from 'src/app/core/store/state';
 import { RefreshBalanceAction } from 'src/app/core/actions';
 import { User } from 'src/app/core/model/user';
 import { ApartmentTransaction } from 'src/app/core/model/apartmentTransaction.contract';
+import { WebSocketUtils } from 'src/app/core/utils/websocket.utils';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -33,7 +34,8 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     private apartmentContract: ApartmentContract,
     private userContract: UserContract,
     private store: Store<AppState>,
-    private authenticationSerice : AuthenticationService
+    private authenticationSerice : AuthenticationService,
+    private webSocketUtils: WebSocketUtils
   ) { }
 
   ngOnInit() {
@@ -50,10 +52,6 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     this.store.select(state => state.user).subscribe(user => {
       this.user = user;
     });
-
-    this.socket.on("paymentApproved", data => {
-      this.notifierService.notify("success", "Payment approved by " + data.username +"! You are the owner of the apartment.");
-    });
   }
 
   ngAfterViewInit(): void {
@@ -64,11 +62,8 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.apartmentContract.rentApartment(this.apartment)
     .then(() => {
-      this.socket.emit("payment",  { 
-        to: this.apartment.Owner, 
-        amount: (this.apartment.Deposit + this.apartment.Rent),
-        username: this.user.Username
-      });
+      this.socket.emit("payment", this.webSocketUtils.createPaymentData(this.user.Address, this.apartment.Owner,
+        (this.apartment.Deposit + this.apartment.Rent), this.user.Username));
       this.userContract.getCurrentUserBalance().then(balances => {
         this.store.dispatch(new RefreshBalanceAction(balances));
         this.loading = false;
