@@ -86,11 +86,11 @@ contract ApartmentContract {
     }
 
     // Update functions.
-    function updateApartment(uint32 _apartmentId, address _tenant) public {
+    function updateApartment(uint32 _apartmentId) public {
         if (apartmentDetails[_apartmentId].isRented == false) {
-            apartmentDetails[_apartmentId].tenant = _tenant;
+            apartmentDetails[_apartmentId].tenant = msg.sender;
             apartmentDetails[_apartmentId].isRented = true;
-            rentedApartments[_tenant].push(_apartmentId);
+            rentedApartments[msg.sender].push(_apartmentId);
         }
         createTransaction(_apartmentId, "The owner approved the rent.");
     }

@@ -35,6 +35,7 @@ export class UserContract {
             if (user[0]) {
                 var result = await this.parseUserResponse(user);
                 this.provider.eth.personal.unlockAccount(result.Address, password, 1000);
+                this.provider.eth.defaultAccount = result.Address;
                 return result;
             }
             throw("Authentication not successful.");
