@@ -75,7 +75,6 @@ export class ApartmentContract {
 
     public async getRentedApartments() : Promise<Apartment[]> {
         var apartmentIds = await this.getRentedApartmentIds();
-        console.log(apartmentIds);
         var rentedApartments = [];
 
         await apartmentIds.forEach(async (apartmentId) => {
