@@ -1,6 +1,9 @@
 <div>
   <span class="app-title">Browse Apartments</span>
 </div>
+<div *ngIf="apartments.length === 0">
+  <span class="margin-top-50 app-title">There are no available apartments.</span>
+</div>
 <div class="container row">
   <div *ngFor="let apartment of apartments" class="col-md-6">
       <app-data-card 
