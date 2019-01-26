@@ -12,6 +12,7 @@ import { RefreshBalanceAction } from 'src/app/core/actions';
 import { User } from 'src/app/core/model/user';
 import { WebSocketUtils } from 'src/app/core/utils/websocket.utils';
 import { ApartmentTransaction } from 'src/app/core/model/apartmentTransaction';
+import { PaymentType } from 'src/app/core/utils/web3.utils';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -95,7 +96,21 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
   }
 
   async payRent() {
-
+    this.loading = true;
+    this.apartmentContract.transferAmount(this.apartment.Id, this.apartment.Tenant, this.apartment.Owner, this.apartment.Rent, PaymentType.Rent)
+    .then(() => {
+      this.socket.emit("rentPaid", this.webSocketUtils.createPaymentData(this.user.Address, this.apartment.Owner,
+        this.apartment.Rent, this.user.Username));
+        this.userContract.getCurrentUserBalance().then(balances => {
+        this.store.dispatch(new RefreshBalanceAction(balances));
+        this.initialize();
+        this.loading = false;
+      });
+    })
+    .catch(exc => {
+      this.notifierService.notify("error", exc);        
+      this.loading = false;
+    });
   }
 
   async terminateContract() {

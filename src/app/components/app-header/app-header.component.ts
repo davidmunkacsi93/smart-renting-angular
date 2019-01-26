@@ -57,6 +57,13 @@ export class AppHeaderComponent implements OnInit {
           });
       });
 
+      this.socket.on("rentPaid", data => {
+        this.notifierService.notify("info", data.username + " transferred you " + data.amount + "€.");
+        this.userContract.getCurrentUserBalance().then(balances => {
+          this.store.dispatch(new RefreshBalanceAction(balances))
+        });
+    });
+
       this.socket.on("contractTerminated", data => {
         this.notifierService.notify("info", data.username + " terminated his/her contract.");
         this.userContract.getCurrentUserBalance().then(balances => {

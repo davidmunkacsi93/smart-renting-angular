@@ -22,6 +22,7 @@ io.on('connection', client => {
     onEvent(client, 'depositTransferred');
     onEvent(client, 'payment');
     onEvent(client, 'paymentApproved');
+    onEvent(client, 'rentPaid');
 });
 
 function onEvent(client, eventName) {
