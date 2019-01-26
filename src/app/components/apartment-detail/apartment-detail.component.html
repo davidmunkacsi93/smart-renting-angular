@@ -7,6 +7,9 @@
           <div *ngIf="!ownApartment" class="owner-box">
               <span class="card-title font-bold">Owner: {{apartment?.OwnerName}}</span>
           </div>
+          <div *ngIf="apartment?.IsRented && !rentedByCurrentUser" class="margin-bottom-20">
+            <span class="card-title font-bold">Rented by {{apartment?.TenantName}}</span>
+            </div>
           <div *ngIf="apartment?.IsRented && rentedByCurrentUser" class="margin-bottom-20">
             <span class="card-title font-bold">Rented by you</span>
           </div>
@@ -32,7 +35,7 @@
       <button *ngIf="rentedByCurrentUser" mat-button class="app-button" (click)="payRent()">
             Pay Rent
       </button>
-      <button *ngIf="rentedByCurrentUser" mat-button class="app-button" (click)="terminateContract()">
+      <button *ngIf="rentedByCurrentUser" mat-button class="app-button app-button-danger" (click)="terminateContract()">
         Terminate Contract
         </button>
     </div>

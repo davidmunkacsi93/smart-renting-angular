@@ -88,6 +88,10 @@ button.app-button {
     margin-left: 20px;
 }
 
+button.app-button-danger {
+    background: linear-gradient(180deg, rgb(186, 6, 6) 0%, rgb(186, 6, 6) 0%, rgb(145, 4, 4) 100%, rgb(145, 4, 4) 100%) !important;
+}
+
 .margin-left-10 {
     margin-left: 10px !important;
 }

@@ -12,7 +12,7 @@
         <div>
             <span class="card-data">Deposit: {{deposit}} EUR</span>
         </div>
-        <div *ngIf="isRented">
+        <div *ngIf="isRented && !myRents">
             <span class="card-data">Rented by {{tenantName}}</span>
           </div>
         <div *ngIf="!isRented">

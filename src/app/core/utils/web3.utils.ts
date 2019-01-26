@@ -11,7 +11,7 @@ export const enum ContractType {
 }
 
 export const enum PaymentType {
-    Rent, Deposit
+    Rent, Deposit, DepositBack
 }
 
 @Injectable()

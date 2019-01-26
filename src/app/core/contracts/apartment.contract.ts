@@ -142,6 +142,9 @@ export class ApartmentContract {
                 case PaymentType.Deposit:
                     await this.createTransaction(apartmentId, currentUser.Username + " transferred the deposit of " + amount + " €.")
                     break;
+                case PaymentType.DepositBack:
+                    await this.createTransaction(apartmentId, currentUser.Username + " transferred back the deposit of " + amount + " €.")
+                    break;
                 case PaymentType.Rent:
                     await this.createTransaction(apartmentId, currentUser.Username + " transferred the rent of " + amount + " €.")
                     break;
@@ -165,7 +168,7 @@ export class ApartmentContract {
                 this.notifierService.notify("success", "Transferring " + apartment.Rent + " € rent successful.");
             })
             .catch(async () => {
-                await this.transferAmount(apartment.Id, apartment.Owner, currentUser.Address,  apartment.Deposit, PaymentType.Deposit)
+                await this.transferAmount(apartment.Id, apartment.Owner, currentUser.Address,  apartment.Deposit, PaymentType.DepositBack)
                 this.notifierService.notify("error", "Transferring rent not successful. Payment cancelled.");
             });
         })
@@ -173,6 +176,19 @@ export class ApartmentContract {
             console.log(exc);
             this.notifierService.notify("error", "Transferring deposit not successful. Payment cancelled.");
         });
+    }
+
+    public async terminateContract(apartment: Apartment) {
+        var estimatedGas = await this.apartmentContract.methods.terminateContract(apartment.Id, apartment.TenantName + " terminated the contract.")
+            .estimateGas();
+        return this.apartmentContract.methods.terminateContract(apartment.Id, apartment.TenantName + " terminated the contract.")
+            .send(this.providerUtils.createTransaction(estimatedGas))
+            .then(async () => {
+                await this.transferAmount(apartment.Id, apartment.Owner, apartment.Tenant,  apartment.Deposit, PaymentType.DepositBack)
+                .then(() => {
+                    this.notifierService.notify("info", apartment.Owner + " transferred the deposit back.");
+                });
+            });
     }
 
     public callCreateApartment(apartment : Apartment) : TransactionObject<any> {
@@ -215,7 +231,6 @@ export class ApartmentContract {
             Timestamp: parsedDate.toLocaleDateString() + " " + parsedDate.toLocaleTimeString()
         }
 
-        console.log(apartmentTransaction);
         return apartmentTransaction;
     }
 }

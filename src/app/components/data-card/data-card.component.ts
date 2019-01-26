@@ -15,6 +15,7 @@ export class DataCardComponent implements OnInit {
   @Input() rent: number;
   @Input() isRented: boolean;
   @Input() browsing: boolean;
+  @Input() myRents: boolean;
   @Input() ownerName: string;
   @Input() tenantName: string;
 

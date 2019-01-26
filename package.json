@@ -8,8 +8,8 @@
   "ethereumMasterAccount": "0x8ade7d546792c1964c8bbc1b100c35bea8a01cd2",
   "scripts": {
     "ng": "ng",
-    "start": "xcopy /F /Y /s \"./ethereum/build/contracts/*.*\" \"./src/contracts-json/\" && ng serve",
-    "build": "xcopy /F /Y /s \"./ethereum/build/contracts/*.*\" \"./src/contracts-json/\" && ng build",
+    "start": "xcopy /F /Y /s \"./ethereum/build/contracts/*.*\" \"./src/contracts-json/\" && ng serve && node server/server.js",
+    "build": "xcopy /F /Y /s \"./ethereum/build/contracts/*.*\" \"./src/contracts-json/\" && ng build && node server/server.js",
     "test": "ng test",
     "server": "node server/server.js",
     "lint": "ng lint",

@@ -18,6 +18,8 @@ io.on('connection', client => {
     clientDict[address] = client.id;
     console.log("[" + address + "] connected.")
 
+    onEvent(client, 'contractTerminated');
+    onEvent(client, 'depositTransferred');
     onEvent(client, 'payment');
     onEvent(client, 'paymentApproved');
 });
