@@ -42,10 +42,10 @@
     <div class="margin-top-50">
         <span class="app-title">Transaction history</span>
     </div>
-    <div *ngIf="transactions.length === 0">
+    <div *ngIf="transactions?.length === 0">
         <span class="margin-top-50 app-title">There are no transactions for this apartment.</span>
     </div>
-    <div *ngIf="transactions.length > 0">
+    <div *ngIf="transactions?.length > 0">
         <mat-list class="data-card-container container">
             <mat-list-item *ngFor="let transaction of transactions">
                 <div>

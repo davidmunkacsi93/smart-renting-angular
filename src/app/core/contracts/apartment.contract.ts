@@ -74,7 +74,7 @@ export class ApartmentContract {
     }
 
     public async getApartmentTransaction(apartmentId) : Promise<ApartmentTransaction[]> {
-        var apartmentTransactions = [];
+        var apartmentTransactions : ApartmentTransaction[] = [];
         await this.getApartmentTransactionIds(apartmentId)
             .then(async apartmentTransactionIds => {
                 await apartmentTransactionIds.forEach(async (apartmentTransactionId) => {
@@ -83,7 +83,11 @@ export class ApartmentContract {
                 });
             });
 
-        return apartmentTransactions;
+        var sortedApartmentTransactions = apartmentTransactions.sort((a, b) => {
+            return a.Timestamp - b.Timestamp;
+        });
+
+        return sortedApartmentTransactions;
     }
 
     public async getAvailableApartments() : Promise<Apartment[]> {
@@ -186,7 +190,7 @@ export class ApartmentContract {
             .then(async () => {
                 await this.transferAmount(apartment.Id, apartment.Owner, apartment.Tenant,  apartment.Deposit, PaymentType.DepositBack)
                 .then(() => {
-                    this.notifierService.notify("info", apartment.Owner + " transferred the deposit back.");
+                    this.notifierService.notify("info", apartment.OwnerName + " transferred the deposit back.");
                 });
             });
     }
@@ -230,7 +234,8 @@ export class ApartmentContract {
             Id: parseInt(apartmentTransactionResponse[0]),
             ApartmentId: parseInt(apartmentTransactionResponse[1]),
             Message: apartmentTransactionResponse[2],
-            Timestamp: parsedDate.toLocaleDateString() + " " + parsedDate.toLocaleTimeString()
+            Timestamp: apartmentTransactionResponse[3],
+            DateString: parsedDate.toLocaleDateString() + " " + parsedDate.toLocaleTimeString()
         }
 
         return apartmentTransaction;

@@ -102,6 +102,7 @@ export class ApartmentDetailComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.apartmentContract.terminateContract(this.apartment)
     .then(() => {
+      this.initialize();
       this.socket.emit("contractTerminated", this.webSocketUtils.createWebSocketData(this.user.Address, this.apartment.Owner, this.user.Username));
         this.userContract.getCurrentUserBalance().then(balances => {
         this.store.dispatch(new RefreshBalanceAction(balances));
