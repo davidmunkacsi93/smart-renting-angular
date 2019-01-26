@@ -9,6 +9,7 @@ import { AppComponent } from "./app.component";
 import { appRoutes } from "./app.routes";
 
 import { MaterialModule } from "./material.module";
+import { OrderModule } from "ngx-order-pipe"
 
 import { AuthenticationService } from "./core/services/authentication.service";
 import { DialogService } from "./core/services/dialog.service";
@@ -91,7 +92,8 @@ const customNotifierOptions: NotifierOptions = {
     BrowserModule,
     FormsModule,
     MaterialModule,
-    NotifierModule.withConfig(customNotifierOptions),
+	NotifierModule.withConfig(customNotifierOptions),
+	OrderModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     StoreModule.forRoot({

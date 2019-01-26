@@ -47,9 +47,9 @@
     </div>
     <div *ngIf="transactions?.length > 0">
         <mat-list class="data-card-container container">
-            <mat-list-item *ngFor="let transaction of transactions">
+            <mat-list-item *ngFor="let transaction of transactions | orderBy: 'Timestamp'">
                 <div>
-                    <span>{{transaction.Timestamp}} - {{transaction.Message}}</span>
+                    <span>{{transaction.DateString}} - {{transaction.Message}}</span>
                 </div>
             </mat-list-item>
         </mat-list>
