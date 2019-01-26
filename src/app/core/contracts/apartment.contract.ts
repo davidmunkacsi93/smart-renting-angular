@@ -192,8 +192,10 @@ export class ApartmentContract {
     }
 
     public callCreateApartment(apartment : Apartment) : TransactionObject<any> {
+        var currentUser = this.providerUtils.getCurrentUser();
         return this.apartmentContract.methods.createApartment(apartment.PostCode, apartment.City, apartment.Street, apartment.HouseNumber, apartment.Floor, apartment.Description,
-            apartment.Rent, apartment.Deposit);
+            apartment.Rent, apartment.Deposit,
+            currentUser.Username + " create the apartment with " + apartment.Rent + " € rent and " + apartment.Deposit + " € deposit.");
     }
 
     private async parseApartmentResponse(apartmentResponse) : Promise<Apartment> {

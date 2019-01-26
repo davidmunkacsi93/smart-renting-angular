@@ -1,4 +1,6 @@
 // solium-disable linebreak-style
+// solium-disable indentation
+// solium-disable security/no-assign-params
 pragma solidity ^0.4.23;
 
 contract ApartmentContract {
@@ -43,7 +45,7 @@ contract ApartmentContract {
     function createApartment(
         uint32 _postCode, string _city, string _street,
         uint32 _houseNumber, uint32 _floor, string _description, uint32 _rent,
-        uint32 _deposit) public {
+        uint32 _deposit, string _transactionMessage) public {
 
         uint32 apartmentId = getId();
         ApartmentDetail memory apartment = ApartmentDetail(
@@ -51,6 +53,7 @@ contract ApartmentContract {
             _postCode, _city, _street, _houseNumber, _floor, _description, _rent, _deposit, false);
         apartments[msg.sender].push(apartmentId);
         apartmentDetails[apartmentId] = apartment;
+        createTransaction(apartmentId, _transactionMessage);
     }
 
     function createTransaction(uint32 _apartmentId, string _transactionMessage) public {
