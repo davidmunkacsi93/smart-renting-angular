@@ -8,6 +8,7 @@ import { StoreModule } from "@ngrx/store";
 import { AppComponent } from "./app.component";
 import { appRoutes } from "./app.routes";
 
+import { NgChatModule } from 'ng-chat';
 import { MaterialModule } from "./material.module";
 import { OrderModule } from "ngx-order-pipe"
 
@@ -32,6 +33,7 @@ import { ApartmentDetailComponent } from './components/apartment-detail/apartmen
 import { NotifierModule, NotifierOptions } from "angular-notifier";
 import { WebSocketUtils } from "./core/utils/websocket.utils";
 import { MyRentsComponent } from './components/my-rents/my-rents.component';
+import { SocketAdapter } from "./core/adapters/socket.adapter";
 
 const customNotifierOptions: NotifierOptions = {
 	position: {
@@ -91,7 +93,8 @@ const customNotifierOptions: NotifierOptions = {
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
-    MaterialModule,
+	MaterialModule,
+	NgChatModule,
 	NotifierModule.withConfig(customNotifierOptions),
 	OrderModule,
     ReactiveFormsModule,
@@ -105,7 +108,7 @@ const customNotifierOptions: NotifierOptions = {
     AuthenticationService,
     DialogService,
     ApartmentContract,
-    UserContract,
+	UserContract,
 	Web3Utils,
 	WebSocketUtils
   ],

@@ -38,3 +38,4 @@
         </div>
     </div>
 </div>
+<ng-chat *ngIf="authenticationService.isAuthenticated() && userId" [adapter]="adapter" [userId]="userId" [historyEnabled]="false" [fileUploadUrl]="'http://localhost:3000/uploadFile'"></ng-chat>

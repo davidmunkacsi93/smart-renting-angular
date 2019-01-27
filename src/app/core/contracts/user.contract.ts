@@ -27,6 +27,28 @@ export class UserContract {
         return this.contract.methods.isUsernameExisting(username).call(this.providerUtils.createTransaction(estimatedGas, environment.ethereumMasterAccount));
     }
 
+    public async getUsers() : Promise<User[]> {
+        var accounts = await this.provider.eth.getAccounts();
+        var currentUser = this.providerUtils.getCurrentUser();
+
+        var users : User[] = [];
+        var otherAccounts = accounts.filter(val => val !== currentUser.Address)
+
+        await otherAccounts.forEach(async (account) => {
+            var username = await this.getUsername(account);
+            if (username == "") return;
+            var user : User = {
+                Address: account,
+                Username: username,
+                BalanceInEth: 0,
+                BalanceInEur: 0
+            }
+            users.push(user);
+        });
+
+        return users;
+    }
+
     public async authenticate(username: string, password: string) : Promise<User> {
         var estimatedGas = await this.contract.methods.authenticate(username, password).estimateGas();
 

@@ -37,6 +37,7 @@
     "contract": "^0.1.2",
     "core-js": "^2.5.4",
     "express": "^4.16.4",
+    "ng-chat": "^2.0.0-rc.1",
     "ngx-order-pipe": "^2.0.2",
     "rxjs": "^6.3.3",
     "socket.io": "^2.2.0",

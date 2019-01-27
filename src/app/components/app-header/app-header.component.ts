@@ -14,6 +14,8 @@ import { NotifierService } from "angular-notifier";
 import { UserContract } from "src/app/core/contracts/user.contract";
 import { RefreshBalanceAction } from "src/app/core/actions";
 import { WebSocketUtils } from "src/app/core/utils/websocket.utils";
+import { SocketAdapter } from "src/app/core/adapters/socket.adapter";
+import { ParticipantResponse, ParticipantMetadata, ChatParticipantStatus, ChatParticipantType, User } from "ng-chat";
 
 @Component({
   selector: "app-header",
@@ -27,6 +29,10 @@ export class AppHeaderComponent implements OnInit {
   address: string;
   balanceInEth: string;
   balanceInEur: string;
+
+  userId: string;
+
+  adapter : SocketAdapter;
 
   constructor(
     @Inject(WebSocketProvider) private socket : any,
@@ -69,7 +75,32 @@ export class AppHeaderComponent implements OnInit {
         this.userContract.getCurrentUserBalance().then(balances => {
           this.store.dispatch(new RefreshBalanceAction(balances))
         });
-      })
+      });
+
+      this.userId = this.address;
+      var users = await this.userContract.getUsers();
+      var participants : ParticipantResponse[] = [];
+      var temp = await users.map(u => {
+          var us : User = {
+              id: u.Address,
+              participantType: ChatParticipantType.User,
+              avatar: undefined,
+              displayName: u.Username,
+              status: ChatParticipantStatus.Online
+          }
+          var metadata : ParticipantMetadata = {
+              totalUnreadMessages: 0
+          }
+          var response : ParticipantResponse = {
+              participant: us,
+              metadata: metadata
+          }
+          return response;
+      });
+
+      console.log(temp);
+
+      this.adapter = new SocketAdapter(this.socket, participants);
   }
 
   createApartment() {
