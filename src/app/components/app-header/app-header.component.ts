@@ -32,13 +32,12 @@ export class AppHeaderComponent implements OnInit {
 
   userId: string;
 
-  adapter : SocketAdapter;
-
   constructor(
     @Inject(WebSocketProvider) private socket : any,
     private userContract: UserContract,
     private authenticationService: AuthenticationService,
     private notifierService: NotifierService,
+    private adapter : SocketAdapter,
     private router: Router,
     private store: Store<AppState>,
     private webSocketUtils: WebSocketUtils
@@ -78,29 +77,6 @@ export class AppHeaderComponent implements OnInit {
       });
 
       this.userId = this.address;
-      var users = await this.userContract.getUsers();
-      var participants : ParticipantResponse[] = [];
-      var temp = await users.map(u => {
-          var us : User = {
-              id: u.Address,
-              participantType: ChatParticipantType.User,
-              avatar: undefined,
-              displayName: u.Username,
-              status: ChatParticipantStatus.Online
-          }
-          var metadata : ParticipantMetadata = {
-              totalUnreadMessages: 0
-          }
-          var response : ParticipantResponse = {
-              participant: us,
-              metadata: metadata
-          }
-          return response;
-      });
-
-      console.log(temp);
-
-      this.adapter = new SocketAdapter(this.socket, participants);
   }
 
   createApartment() {
