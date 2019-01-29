@@ -14,6 +14,7 @@ import { Http, Response } from "@angular/http";
 import { WebSocketProvider } from "../providers/websocket.provider";
 import { Inject, Injectable } from "@angular/core";
 import { UserContract } from "../contracts/user.contract";
+import { Web3Utils } from "../utils/web3.utils";
 
 @Injectable()
 export class SocketAdapter extends ChatAdapter {
@@ -28,8 +29,6 @@ export class SocketAdapter extends ChatAdapter {
   listFriends(): Observable<ParticipantResponse[]> {
     return from(this.userContract.getUsers()).pipe(
       map(users => {
-        console.log(users);
-        console.log(users.length);
         return users
           .filter(user => user !== null)
           .map(user => {

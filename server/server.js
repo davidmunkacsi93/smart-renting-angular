@@ -12,17 +12,45 @@ app.use(function(req, res, next) {
 
 const ioPort = 8000;
 const io = require('socket.io').listen(ioPort);
+
 var clientDict = {};
+var usersCollection = [];
+
 io.on('connection', client => {
     var address = client.request._query["address"];
     clientDict[address] = client.id;
-    console.log("[" + address + "] connected.")
 
     onEvent(client, 'contractTerminated');
     onEvent(client, 'depositTransferred');
     onEvent(client, 'payment');
     onEvent(client, 'paymentApproved');
     onEvent(client, 'rentPaid');
+
+    client.on('join', function(data) {
+        usersCollection.push({  
+          id: data.address,
+          displayName: data.username,
+          status: 0,
+          avatar: null
+        });
+    
+        client.broadcast.emit("friendsListChanged", usersCollection);
+        console.log(data.username + " has joined the chat room. With Id: " + client.id);
+    });
+
+    client.on("sendMessage", function(message){
+        
+        console.log(message);
+
+        var to = clientDict[message.toId];
+        var user = usersCollection.find(x => x.id == message.fromId);
+
+        console.log(user);
+        client.broadcast.to(to).emit("messageReceived", {
+          user: user,
+          message: message
+        });
+      });
 });
 
 function onEvent(client, eventName) {

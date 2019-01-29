@@ -77,6 +77,8 @@ export class AppHeaderComponent implements OnInit {
       });
 
       this.userId = this.address;
+
+      this.socket.emit("join", { username: this.username, address: this.address});
   }
 
   createApartment() {
