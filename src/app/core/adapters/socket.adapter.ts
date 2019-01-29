@@ -17,9 +17,10 @@ import { UserContract } from "../contracts/user.contract";
 
 @Injectable()
 export class SocketAdapter extends ChatAdapter {
-  private userId: string;
-
-  constructor(private socket: any, private userContract: UserContract) {
+  constructor(
+    @Inject(WebSocketProvider) private socket: any,
+    private userContract: UserContract
+  ) {
     super();
     this.InitializeSocketListerners();
   }
@@ -27,25 +28,28 @@ export class SocketAdapter extends ChatAdapter {
   listFriends(): Observable<ParticipantResponse[]> {
     return from(this.userContract.getUsers()).pipe(
       map(users => {
-        var result: ParticipantResponse[] = [];
-        users.forEach(user => {
-          var us: User = {
-            id: user.Address,
-            participantType: ChatParticipantType.User,
-            avatar: undefined,
-            displayName: user.Username,
-            status: ChatParticipantStatus.Online
-          };
-          var metadata: ParticipantMetadata = {
-            totalUnreadMessages: 0
-          };
-          var response: ParticipantResponse = {
-            participant: us,
-            metadata: metadata
-          };
-          result.push(response);
-        });
-        return result;
+        console.log(users);
+        console.log(users.length);
+        return users
+          .filter(user => user !== null)
+          .map(user => {
+            if (user == null) return null;
+            var us: User = {
+              id: user.Address,
+              participantType: ChatParticipantType.User,
+              avatar: undefined,
+              displayName: user.Username,
+              status: ChatParticipantStatus.Online
+            };
+            var metadata: ParticipantMetadata = {
+              totalUnreadMessages: 0
+            };
+            var response: ParticipantResponse = {
+              participant: us,
+              metadata: metadata
+            };
+            return response;
+          });
       })
     );
   }

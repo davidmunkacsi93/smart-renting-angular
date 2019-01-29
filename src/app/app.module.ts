@@ -8,15 +8,15 @@ import { StoreModule } from "@ngrx/store";
 import { AppComponent } from "./app.component";
 import { appRoutes } from "./app.routes";
 
-import { NgChatModule } from 'ng-chat';
+import { NgChatModule } from "ng-chat";
 import { MaterialModule } from "./material.module";
-import { OrderModule } from "ngx-order-pipe"
+import { OrderModule } from "ngx-order-pipe";
 
 import { AuthenticationService } from "./core/services/authentication.service";
 import { DialogService } from "./core/services/dialog.service";
 
 import { AppHeaderComponent } from "./components/app-header/app-header.component";
-import { CreateApartmentComponent } from './components/create-apartment/create-apartment.component';
+import { CreateApartmentComponent } from "./components/create-apartment/create-apartment.component";
 import { DialogComponent } from "./components/dialog/dialog.component";
 import { HomeComponent } from "./components/home/home.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -26,53 +26,53 @@ import { UserContract } from "./core/contracts/user.contract";
 import { userReducer } from "./core/store/user.reducer";
 import { ApartmentContract } from "./core/contracts/apartment.contract";
 import { Web3Utils } from "./core/utils/web3.utils";
-import { DataCardComponent } from './components/data-card/data-card.component';
-import { BrowseApartmentsComponent } from './components/browse-apartments/browse-apartments.component';
+import { DataCardComponent } from "./components/data-card/data-card.component";
+import { BrowseApartmentsComponent } from "./components/browse-apartments/browse-apartments.component";
 import { AuthenticationGuard } from "./core/guards/authentication-guard";
-import { ApartmentDetailComponent } from './components/apartment-detail/apartment-detail.component';
+import { ApartmentDetailComponent } from "./components/apartment-detail/apartment-detail.component";
 import { NotifierModule, NotifierOptions } from "angular-notifier";
 import { WebSocketUtils } from "./core/utils/websocket.utils";
-import { MyRentsComponent } from './components/my-rents/my-rents.component';
+import { MyRentsComponent } from "./components/my-rents/my-rents.component";
 import { SocketAdapter } from "./core/adapters/socket.adapter";
 
 const customNotifierOptions: NotifierOptions = {
-	position: {
-		horizontal: {
-			position: 'right',
-			distance: 20
-		},
-		vertical: {
-			position: 'top',
-			distance: 20,
-			gap: 10
-		}
-	},
-	theme: 'material',
-	behaviour: {
-		autoHide: 5000,
-		onClick: false,
-		onMouseover: 'pauseAutoHide',
-		showDismissButton: true,
-	},
-	animations: {
-		enabled: true,
-		show: {
-			preset: 'slide',
-			speed: 300,
-			easing: 'ease'
-		},
-		hide: {
-			preset: 'fade',
-			speed: 300,
-			easing: 'ease',
-			offset: 50
-		},
-		shift: {
-			speed: 300,
-			easing: 'ease'
-		},
-		overlap: 150
-	}
+  position: {
+    horizontal: {
+      position: "right",
+      distance: 20
+    },
+    vertical: {
+      position: "top",
+      distance: 20,
+      gap: 10
+    }
+  },
+  theme: "material",
+  behaviour: {
+    autoHide: 5000,
+    onClick: false,
+    onMouseover: "pauseAutoHide",
+    showDismissButton: true
+  },
+  animations: {
+    enabled: true,
+    show: {
+      preset: "slide",
+      speed: 300,
+      easing: "ease"
+    },
+    hide: {
+      preset: "fade",
+      speed: 300,
+      easing: "ease",
+      offset: 50
+    },
+    shift: {
+      speed: 300,
+      easing: "ease"
+    },
+    overlap: 150
+  }
 };
 
 @NgModule({
@@ -93,10 +93,10 @@ const customNotifierOptions: NotifierOptions = {
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
-	MaterialModule,
-	NgChatModule,
-	NotifierModule.withConfig(customNotifierOptions),
-	OrderModule,
+    MaterialModule,
+    NgChatModule,
+    NotifierModule.withConfig(customNotifierOptions),
+    OrderModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     StoreModule.forRoot({
@@ -108,9 +108,10 @@ const customNotifierOptions: NotifierOptions = {
     AuthenticationService,
     DialogService,
     ApartmentContract,
-	UserContract,
-	Web3Utils,
-	WebSocketUtils
+    SocketAdapter,
+    UserContract,
+    Web3Utils,
+    WebSocketUtils
   ],
   entryComponents: [DialogComponent],
   bootstrap: [AppComponent]
