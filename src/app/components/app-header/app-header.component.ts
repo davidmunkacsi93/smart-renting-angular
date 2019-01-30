@@ -15,7 +15,13 @@ import { UserContract } from "src/app/core/contracts/user.contract";
 import { RefreshBalanceAction } from "src/app/core/actions";
 import { WebSocketUtils } from "src/app/core/utils/websocket.utils";
 import { SocketAdapter } from "src/app/core/adapters/socket.adapter";
-import { ParticipantResponse, ParticipantMetadata, ChatParticipantStatus, ChatParticipantType, User } from "ng-chat";
+import {
+  ParticipantResponse,
+  ParticipantMetadata,
+  ChatParticipantStatus,
+  ChatParticipantType,
+  User
+} from "ng-chat";
 
 @Component({
   selector: "app-header",
@@ -33,11 +39,11 @@ export class AppHeaderComponent implements OnInit {
   userId: string;
 
   constructor(
-    @Inject(WebSocketProvider) private socket : any,
+    @Inject(WebSocketProvider) private socket: any,
     private userContract: UserContract,
     private authenticationService: AuthenticationService,
     private notifierService: NotifierService,
-    private adapter : SocketAdapter,
+    private adapter: SocketAdapter,
     private router: Router,
     private store: Store<AppState>,
     private webSocketUtils: WebSocketUtils
@@ -54,31 +60,53 @@ export class AppHeaderComponent implements OnInit {
           this.balanceInEur = user.BalanceInEur.toFixed(3);
         }
       });
-      this.socket.on("payment", data => {
-          this.notifierService.notify("info", data.username + " transferred you " + data.amount + "€.");
-          this.socket.emit('paymentApproved', this.webSocketUtils.createWebSocketData(data.to, data.from, this.username));
-          this.userContract.getCurrentUserBalance().then(balances => {
-            this.store.dispatch(new RefreshBalanceAction(balances))
-          });
-      });
+    this.socket.on("payment", data => {
+      console.log(data);
 
-      this.socket.on("rentPaid", data => {
-        this.notifierService.notify("info", data.username + " transferred you " + data.amount + "€.");
-        this.userContract.getCurrentUserBalance().then(balances => {
-          this.store.dispatch(new RefreshBalanceAction(balances))
-        });
+      if (data.to != this.address) return;
+      this.notifierService.notify(
+        "info",
+        data.username + " transferred you " + data.amount + "€."
+      );
+      this.socket.emit(
+        "paymentApproved",
+        this.webSocketUtils.createWebSocketData(
+          data.to,
+          data.from,
+          this.username
+        )
+      );
+      this.userContract.getCurrentUserBalance().then(balances => {
+        this.store.dispatch(new RefreshBalanceAction(balances));
+      });
     });
 
-      this.socket.on("contractTerminated", data => {
-        this.notifierService.notify("info", data.username + " terminated his/her contract.");
-        this.userContract.getCurrentUserBalance().then(balances => {
-          this.store.dispatch(new RefreshBalanceAction(balances))
-        });
+    this.socket.on("rentPaid", data => {
+      this.notifierService.notify(
+        "info",
+        data.username + " transferred you " + data.amount + "€."
+      );
+      this.userContract.getCurrentUserBalance().then(balances => {
+        this.store.dispatch(new RefreshBalanceAction(balances));
       });
+    });
 
-      this.userId = this.address;
+    this.socket.on("contractTerminated", data => {
+      this.notifierService.notify(
+        "info",
+        data.username + " terminated his/her contract."
+      );
+      this.userContract.getCurrentUserBalance().then(balances => {
+        this.store.dispatch(new RefreshBalanceAction(balances));
+      });
+    });
 
-      this.socket.emit("join", { username: this.username, address: this.address});
+    this.userId = this.address;
+
+    this.socket.emit("join", {
+      username: this.username,
+      address: this.address
+    });
   }
 
   createApartment() {
